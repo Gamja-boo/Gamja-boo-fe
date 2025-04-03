@@ -1,10 +1,15 @@
-import { View, Text, StatusBar, StyleSheet } from "react-native";
+import { View, Text, StatusBar, TouchableOpacity, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
-export default function HomeScreen() {
+export default function App() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <Text style={styles.text}>Hello, Gamja-boo!</Text>
+      <TouchableOpacity onPress={() => router.push("/screens")}>
+        <Text style={styles.text}>Hello, Gamja-boo!</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -12,7 +17,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#FCFFF6",
     justifyContent: "center",
     alignItems: "center",
   },
