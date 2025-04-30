@@ -1,6 +1,7 @@
 import { View, Text, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
 import { BottomAppbar } from "@/components/BottomAppbar";
+import CustomCalendarScreen from "./calendar_screen/CustomCalendarScreen";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -11,7 +12,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <TouchableOpacity onPress={() => router.push("/screens")}>
-        <Text style={styles.text}>Main Screen</Text>
+        < CustomCalendarScreen/>
       </TouchableOpacity>
       {/* 화면 가운데 십자선 가이드 라인: x축 */}
       <View
