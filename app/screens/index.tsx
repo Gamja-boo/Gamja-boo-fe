@@ -2,7 +2,7 @@ import { View, Text, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from 
 import { useRouter } from "expo-router";
 import { BottomAppbar } from "@/components/BottomAppbar";
 import CustomCalendarScreen from "./calendar_screen/CustomCalendarScreen";
-// import ExpenseBar from "@/components/ExpenseBar";
+import ExpenseBar from "@/components/ExpenseBar";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -18,9 +18,9 @@ export default function HomeScreen() {
         <CustomCalendarScreen />
       </View>
 
-      {/* 지출을 표시하는 부분 */}
+      {/* 지출을 표시하는 바 */}
       <View style={styles.expenseBarContainer}>
-        {/*<ExpenseBar today={50000} compare={3000} balance={100000}/>*/}
+        <ExpenseBar today={50000} compare={3000} balance={100000}/>
       </View>
 
       <TouchableOpacity onPress={() => router.push("/screens")}>
