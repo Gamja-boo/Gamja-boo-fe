@@ -33,6 +33,17 @@ export default function MonthPicker({ visible, selectedMonth, onSelect, onClose 
 }
 
 const styles = StyleSheet.create({
-  modalBg: { flex: 1, backgroundColor: "rgba(0,0,0,0.16)", justifyContent: "center", alignItems: "center" },
-  modalBox: { backgroundColor: "#fff", borderRadius: 14, padding: 24, alignItems: "center", elevation: 5 }
+  modalBg: { 
+    flex: 1, 
+    backgroundColor: "rgba(0,0,0,0.16)",
+    justifyContent: "center", 
+    alignItems: "center" 
+  },
+  modalBox: { 
+    backgroundColor: "#fff", 
+    borderRadius: 14, 
+    padding: 24, 
+    alignItems: "center", 
+    elevation: 5 
+  }
 });
