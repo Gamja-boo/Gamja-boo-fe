@@ -14,7 +14,7 @@ export default function ExpenseRecord() {
 
   return (
     <View style={styles.container}>
-      {/* 뒤로 가기 버튼 (달력 화면) */}
+      {/* 뒤로 가기 버튼 */}
       <View style={styles.btnContainer}>
         <TouchableOpacity 
           style={styles.backButton} 
