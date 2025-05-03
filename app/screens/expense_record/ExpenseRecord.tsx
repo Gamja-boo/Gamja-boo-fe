@@ -1,11 +1,14 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from "react-native";
+import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
+import Button from "@/app_assets/write_screen_icon/backButton.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function ExpenseRecord() {
+  const router = useRouter();
   const { day, month } = useLocalSearchParams();
   const navigation = useNavigation();
 
@@ -16,7 +19,7 @@ export default function ExpenseRecord() {
         <TouchableOpacity 
           style={styles.backButton} 
           onPress={() => navigation.goBack()}>
-          <Text style={styles.backText}>{'<'}</Text>
+          <Button />
         </TouchableOpacity>
       </View>
 
@@ -31,7 +34,7 @@ export default function ExpenseRecord() {
       </View>
 
       <View style={styles.squareBox}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/screens/write_screen/WriteScreen")}>
           <Image 
           source={require('@/assets/images/writeIcon.png')}
             style={styles.iconBox}>
@@ -82,10 +85,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginBottom: 20,
-  },
-  backText: {
-    fontSize: screenWidth * 0.1,
-    color: "#329257",
   },
   imageBox: {
     width: screenWidth * 0.3, 
