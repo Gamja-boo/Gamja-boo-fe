@@ -33,7 +33,7 @@ export default function ExpenseRecord() {
       <View style={styles.squareBox}>
         <TouchableOpacity>
           <Image 
-          source={require('@/app_assets/expense_record_icon/writeIcon.png')}
+          source={require('@/assets/images/writeIcon.png')}
             style={styles.iconBox}>
           </Image>
         </TouchableOpacity>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   backText: {
-    fontSize: 40,
+    fontSize: screenWidth * 0.1,
     color: "#329257",
   },
   imageBox: {
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     height: screenWidth * 0.3,
     borderRadius: (screenWidth * 0.3) / 2,
     overflow: "hidden",
-    marginBottom: screenHeight * 0.025,
+    marginBottom: screenHeight * 0.05,
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
@@ -103,25 +103,25 @@ const styles = StyleSheet.create({
   },
   dateText: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: screenWidth * 0.07,
     fontWeight: "bold",
     color: "#329257"
   },
   recordText: {
     textAlign: "center",
-    marginTop: 22,
-    fontSize: 15,
+    marginTop: screenHeight * 0.025,
+    fontSize: screenWidth * 0.04,
     fontFamily: "pretendard",
-    color: "#1c482D"
+    color: "#1c482d"
   },
   squareBox: {
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.85,
     height: screenHeight * 0.2,          
     backgroundColor: "#ffffff",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: screenHeight * 0.08,
-    borderRadius: 30,
+    marginTop: screenHeight * 0.1,
+    borderRadius: (screenWidth * 0.3) / 4,
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   iconBox: {
-    width: screenWidth * 0.13, 
-    height: screenWidth * 0.13,
+    width: screenWidth * 0.1, 
+    height: screenWidth * 0.1,
+    color: "#1c482d"
   }
 })
