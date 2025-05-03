@@ -1,13 +1,20 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
 const cellSize = Math.floor((Dimensions.get('window').width - 60) / 7);
 
 interface CustomCalendarGridProps {
   rows: (number | null)[][];
+  selectedMonth: number;
 }
 
-export default function CustomCalendarGrid({ rows }: CustomCalendarGridProps) {
+export default function CustomCalendarGrid({ rows, selectedMonth }: CustomCalendarGridProps) {
+  const router = useRouter();
+  const today = new Date();
+  const todayDate = today.getDate();
+  const todayMonth = today.getMonth() + 1;
+
   return (
     <View style={{ marginTop: 20 }}>
       {rows.map((row, rowIdx) => (
@@ -16,12 +23,24 @@ export default function CustomCalendarGrid({ rows }: CustomCalendarGridProps) {
             d === null ? (
               <View key={colIdx} style={styles.emptyCell} />
             ) : (
-              <View
+              // 날짜 누르면 지출 작성 화면으로 넘어감
+              <TouchableOpacity 
                 key={colIdx}
-                style={[styles.dayCell]}
-              >
-                <Text style={styles.dayText}>{d}</Text>
-              </View>
+                onPress={() => 
+                  router.push({
+                    pathname: "/screens/expense_record/ExpenseRecord",
+                    params: { day: d.toString(), month: selectedMonth.toString() }
+                  })
+                }
+                style={[
+                  styles.dayCell,
+                  d === todayDate && selectedMonth === todayMonth && styles.todayCell]}>
+                <Text style={[
+                    styles.dayText,
+                    d === todayDate && selectedMonth === todayMonth && styles.todayText]}>
+                    {d}
+                </Text>
+              </TouchableOpacity>
             )
           )}
         </View>
@@ -43,13 +62,23 @@ const styles = StyleSheet.create({
     marginVertical: 2, 
     borderRadius: cellSize / 2, 
     justifyContent: "center", 
-    alignItems: "center" 
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
   dayText: { 
-    fontSize: 16, 
+    fontSize: 15, 
     color: "#222", 
     fontWeight: "500" 
   },
+  todayCell: {
+    backgroundColor: "#4CAF50",
+    borderColor: "#4CAF50",
+  },
+  todayText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+  },  
   emptyCell: { 
     width: cellSize, 
     height: cellSize, 

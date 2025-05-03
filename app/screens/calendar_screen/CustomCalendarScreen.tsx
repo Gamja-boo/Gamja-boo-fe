@@ -22,9 +22,11 @@ export default function CustomCalendarScreen() {
 
   return (
     <View style={styles.container}>
-      
+
       {/* 월 선택 버튼 */}
-      <TouchableOpacity style={styles.monthPickerBtn} onPress={() => setModalVisible(true)} activeOpacity={0.7}>
+      <TouchableOpacity 
+        style={styles.monthPickerBtn} 
+        onPress={() => setModalVisible(true)} activeOpacity={0.7}>
         <Text style={styles.monthText}>{`${selectedMonth}월`}</Text>
         <Text style={styles.arrow}>▼</Text>
       </TouchableOpacity>
@@ -38,7 +40,7 @@ export default function CustomCalendarScreen() {
       />
 
       {/* 달력 그리드 */}
-      <CustomCalendarGrid rows={rows} />
+      <CustomCalendarGrid rows={rows} selectedMonth={selectedMonth} />
     </View>
   );
 }
@@ -54,20 +56,20 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     alignItems: "center", 
     backgroundColor: "#fff", 
-    borderRadius: 24, 
-    paddingVertical: 14, 
-    paddingHorizontal: 36, 
-    marginBottom: 8, 
+    borderRadius: 30, 
+    paddingVertical: 10, 
+    paddingHorizontal: 40, 
+    marginBottom: 10, 
     elevation: 3 
   },
   monthText: { 
     fontSize: 22, 
     fontWeight: "bold", 
-    color: "#6FB979", 
-    marginRight: 6 
+    color: "#469F37",
   },
   arrow: { 
-    fontSize: 16, 
-    color: "#B2B2B2" 
+    fontSize: 15, 
+    color: "#49B875", 
+    marginLeft: 15,
   }
 });
