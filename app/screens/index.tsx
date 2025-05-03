@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontSize: 30,
+    fontSize: screenWidth * 0.075,
     fontWeight: "bold",
   },
   calendar: {

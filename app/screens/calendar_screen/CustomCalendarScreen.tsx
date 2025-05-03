@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
 import { getDaysInMonth, getFirstDayOfWeek } from "@/components/calendarUtils";
 import MonthPicker from "@/components/MonthPicker";
 import CustomCalendarGrid from "@/components/CustomCalendarGrid";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function CustomCalendarScreen() {
   const today = new Date();
@@ -50,26 +52,26 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: "#FCFDF6", 
     alignItems: "center", 
-    paddingTop: 60 
+    paddingTop: screenHeight * 0.07,
   },
   monthPickerBtn: { 
     flexDirection: "row", 
     alignItems: "center", 
     backgroundColor: "#fff", 
-    borderRadius: 30, 
-    paddingVertical: 10, 
-    paddingHorizontal: 40, 
-    marginBottom: 10, 
+    borderRadius: screenWidth * 0.08,
+    paddingVertical: screenHeight * 0.012,
+    paddingHorizontal: screenWidth * 0.1,
+    marginBottom: screenHeight * 0.015,
     elevation: 3 
   },
   monthText: { 
-    fontSize: 22, 
+    fontSize: screenWidth * 0.055,
     fontWeight: "bold", 
     color: "#469F37",
   },
   arrow: { 
-    fontSize: 15, 
+    fontSize: screenWidth * 0.038,
     color: "#49B875", 
-    marginLeft: 15,
+    marginLeft: screenWidth * 0.03,
   }
 });

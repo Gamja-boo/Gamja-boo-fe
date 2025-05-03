@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const cellSize = Math.floor((Dimensions.get('window').width - 60) / 7);
 
 interface CustomCalendarGridProps {
@@ -53,13 +54,13 @@ const styles = StyleSheet.create({
   row: { 
     flexDirection: "row", 
     justifyContent: "flex-start", 
-    marginBottom: 12 
+    marginBottom: screenHeight * 0.015,
   },
   dayCell: { 
     width: cellSize, 
     height: cellSize, 
-    marginHorizontal: 2, 
-    marginVertical: 2, 
+    marginHorizontal: screenWidth * 0.005, 
+    marginVertical: screenHeight * 0.005,
     borderRadius: cellSize / 2, 
     justifyContent: "center", 
     alignItems: "center",
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
   },
   dayText: { 
-    fontSize: 15, 
+    fontSize: screenWidth * 0.04, 
     color: "#222", 
     fontWeight: "500" 
   },
@@ -82,8 +83,8 @@ const styles = StyleSheet.create({
   emptyCell: { 
     width: cellSize, 
     height: cellSize, 
-    marginHorizontal: 2, 
-    marginVertical: 2, 
+    marginHorizontal: screenWidth * 0.005, 
+    marginVertical: screenHeight * 0.005, 
     borderRadius: cellSize / 2, 
     backgroundColor: "transparent" 
   }
