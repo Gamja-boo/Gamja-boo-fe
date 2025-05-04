@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "@/app_assets/write_screen_icon/backButton.svg"
 import CheckButton from "@/app_assets/write_screen_icon/checkButton.svg"
-import UploadImage from "@/app_assets/write_screen_icon/UploadImage.svg"
+import UploadImage from "@/components/UploadImage";
+
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -33,11 +34,7 @@ export default function WriteScreen() {
       </View>
 
       {/* 이미지 업로드 박스 (백엔드 연결 필요) */}
-      <View style={styles.imageBox}>
-        <TouchableOpacity>
-          <UploadImage />
-        </TouchableOpacity>
-      </View>
+      <UploadImage />
 
       {/* 글을 적을 수 있는 박스 (백엔드 연결 필요)*/}
       <View style={styles.writeBox}>
@@ -107,21 +104,6 @@ const styles = StyleSheet.create({
   },
   checkButton: {
     marginBottom: 20,
-  },
-  imageBox: {
-    width: screenWidth,
-    height: screenHeight * 0.55,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-    marginTop: screenHeight * 0.05,
-    // shadow at ios
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    // shadow at Android
-    elevation: 5,
   },
   writeBox: {
     width: screenWidth * 0.8,
