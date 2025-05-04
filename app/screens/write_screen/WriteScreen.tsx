@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput } from "react-native"
+import React from "react";
+import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native"
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "@/app_assets/write_screen_icon/backButton.svg"
 import CheckButton from "@/app_assets/write_screen_icon/checkButton.svg"
 import UploadImage from "@/components/UploadImage";
+import WritingBox from "@/components/WritingBox";
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function WriteScreen() {
   const navigation = useNavigation();
-  const [isInputVisible, setIsInputVisible] = useState(false);
-  const [text, setText] = useState("");
-
+  
   return (
     <View style={styles.container}>
       {/* 뒤로 가기 버튼 */}
@@ -33,23 +32,12 @@ export default function WriteScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* 이미지 업로드 박스 (백엔드 연결 필요) */}
+      {/* 이미지 업로드 박스 */}
       <UploadImage />
 
-      {/* 글을 적을 수 있는 박스 (백엔드 연결 필요)*/}
+      {/* 글을 적을 수 있는 박스 */}
       <View style={styles.writeBox}>
-        <TouchableOpacity onPress={() => setIsInputVisible(true)}>
-          <Text style={styles.writeText}>구매를 하고 어떤 기분이 들었나요?{"\n"}자유롭게 적어주세요!</Text>
-        </TouchableOpacity>
-
-        {isInputVisible && (
-          <TextInput
-            style={styles.inputBox}
-            placeholder="아무거나 적어버리기~"
-            value={text}
-            onChangeText={setText}
-          />
-        )}
+        <WritingBox />
       </View>
       
       {/* 화면 가운데 십자선 가이드 라인: x축 */}
@@ -115,18 +103,5 @@ const styles = StyleSheet.create({
     borderRadius: screenWidth * 0.08,
     borderColor: "#959595",
     borderWidth: 1,
-  },
-  writeText: {
-    color: "#959595",
-  },
-  inputBox: {
-    width: screenWidth,
-    height: screenHeight * 0.5,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    fontSize: 16,
-    backgroundColor: "#fff",
   },
 })
