@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-nati
 import { getDaysInMonth, getFirstDayOfWeek } from "@/components/calendarUtils";
 import MonthPicker from "@/components/MonthPicker";
 import CustomCalendarGrid from "@/components/CustomCalendarGrid";
+import DropDown from "@/app_assets/main_screen/dropDown.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -30,7 +31,7 @@ export default function CustomCalendarScreen() {
         style={styles.monthPickerBtn} 
         onPress={() => setModalVisible(true)} activeOpacity={0.7}>
         <Text style={styles.monthText}>{`${selectedMonth}월`}</Text>
-        <Text style={styles.arrow}>▼</Text>
+        <DropDown />
       </TouchableOpacity>
 
       {/* MonthPicker 모달 */}
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     alignItems: "center", 
     backgroundColor: "#fff", 
+    width: screenWidth * 0.3,
     borderRadius: screenWidth * 0.08,
     paddingVertical: screenHeight * 0.012,
     paddingHorizontal: screenWidth * 0.1,
@@ -68,10 +70,6 @@ const styles = StyleSheet.create({
     fontSize: screenWidth * 0.055,
     fontWeight: "bold", 
     color: "#469F37",
+    marginRight: screenWidth * 0.02,
   },
-  arrow: { 
-    fontSize: screenWidth * 0.038,
-    color: "#49B875", 
-    marginLeft: screenWidth * 0.03,
-  }
 });
