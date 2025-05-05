@@ -1,7 +1,7 @@
 import { View, Text, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
 import { BottomAppbar } from "@/components/BottomAppbar";
-import CustomCalendarScreen from "./calendar_screen/CustomCalendarScreen";
+import CustomCalendarScreen from "./calendar_screen";
 import ExpenseBar from "@/components/ExpenseBar";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
