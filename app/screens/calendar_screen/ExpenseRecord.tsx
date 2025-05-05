@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from "rea
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import Button from "@/app_assets/write_screen_icon/backButton.svg"
+import Button from "@/app_assets/write_screen/backButton.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 

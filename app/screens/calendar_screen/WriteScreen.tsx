@@ -1,8 +1,8 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native"
 import { useNavigation } from "@react-navigation/native";
-import BackButton from "@/app_assets/write_screen_icon/backButton.svg"
-import CheckButton from "@/app_assets/write_screen_icon/checkButton.svg"
+import BackButton from "@/app_assets/write_screen/backButton.svg"
+import CheckButton from "@/app_assets/write_screen/checkButton.svg"
 import UploadImage from "@/components/UploadImage";
 import WritingBox from "@/components/WritingBox";
 

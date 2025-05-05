@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker"
-import UploadIcon from "@/app_assets/write_screen_icon/UploadImage.svg"
+import UploadIcon from "@/app_assets/write_screen/UploadImage.svg"
 import { View, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");

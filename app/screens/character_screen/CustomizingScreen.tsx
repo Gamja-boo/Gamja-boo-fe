@@ -1,15 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import CustomizingBar from "@/components/CustomizingBar";
+import PurchaseBtn from "@/components/PurchaseBtn";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function CustomizingScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.characterBox} />
+
       <View style={styles.customizingBarContainer}>
         <CustomizingBar />
       </View>
+
 
       {/* 화면 가운데 십자선 가이드 라인: x축 */}
       <View
@@ -35,6 +39,12 @@ export default function CustomizingScreen() {
           zIndex: 3,
         }}
       />
+
+      <View style={styles.purchaseBtnContainer}>
+        <TouchableOpacity>
+          <PurchaseBtn />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -46,9 +56,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  characterBox: {
+    position: "absolute",
+    width: screenWidth * 0.55,
+    height: screenWidth * 0.55,
+    top: screenHeight * 0.15,
+    backgroundColor: "#000",
+  },
   customizingBarContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.46,
+    bottom: screenHeight * 0.4,
     backgroundColor: "transparent",
   },
+  purchaseBtnContainer: {
+    position: "absolute",
+    bottom: screenHeight * 0.1,
+    backgroundColor: "transparent",
+  }
 }) 
