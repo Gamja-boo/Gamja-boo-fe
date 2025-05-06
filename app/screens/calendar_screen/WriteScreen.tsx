@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
   },
   backContainer: {
     position: "absolute",
-    top: 30,
-    left: 30,
+    top: screenHeight * 0.04,
+    left: screenWidth * 0.08,
     zIndex: 10,
   },
   backButton: {
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   },
   checkContainer: {
     position: "absolute",
-    top: 30,
-    right: 30,
+    top: screenHeight * 0.04,
+    right: screenWidth * 0.08,
     zIndex: 10,
   },
   checkButton: {

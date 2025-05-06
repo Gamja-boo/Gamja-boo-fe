@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     position: "absolute",
-    top: 30,
-    left: 30,
+    top: screenHeight * 0.04,
+    left: screenWidth * 0.08,
     zIndex: 10,
   },
   backButton: {
