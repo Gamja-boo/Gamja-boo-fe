@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import Skin from "@/app_assets/customizing_bar/skin.svg"
-import Cloth from "@/app_assets/customizing_bar/cloth.svg"
-import Accessory from "@/app_assets/customizing_bar/accessory.svg"
+import Skin from "@/app_assets/customizing_screen/skin.svg"
+import Cloth from "@/app_assets/customizing_screen/cloth.svg"
+import Accessory from "@/app_assets/customizing_screen/accessory.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
