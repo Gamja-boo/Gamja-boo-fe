@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import CustomizingBar from "@/components/CustomizingBar";
-import PurchaseBtn from "@/components/PurchaseBtn";
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { CustomizingBar } from "@/app_components/main_screen/character_screen/customizing_screen/CustomizingBar";
+import { PurchaseBtn } from "@/app_components/main_screen/character_screen/customizing_screen/PurchaseBtn";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 

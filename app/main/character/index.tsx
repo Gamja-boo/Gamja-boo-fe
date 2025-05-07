@@ -1,28 +1,23 @@
 import { View, Text, StatusBar, TouchableOpacity, Image, StyleSheet, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
-import { BottomAppbar } from "@/components/BottomAppbar";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function HomeScreen() {
+export default function CharacterScreen() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
       <TouchableOpacity 
         style={styles.clothBtn}
-        onPress={() => router.push("/main_screen/character_screen/customizing_screen")}>
+        onPress={() => router.push("/main/character/customizing")}>
         <Image source={require("@/assets/images/cloth.png")} />
       </TouchableOpacity>
 
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <TouchableOpacity onPress={() => router.push("/main_screen")}>
+      <TouchableOpacity onPress={() => router.push("/main")}>
         <Text style={styles.text}>Character Screen</Text>
       </TouchableOpacity>
-
-      <View style={styles.bottomAppbarContainer}>
-        <BottomAppbar />
-      </View>
     </View>
   );
 }
@@ -55,10 +50,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     // shadow at Android
     elevation: 5,
-  },
-  bottomAppbarContainer: {
-    position: "absolute",
-    bottom: screenHeight * 0.07,
-    backgroundColor: "transparent",
   },
 });

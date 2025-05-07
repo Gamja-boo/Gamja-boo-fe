@@ -1,7 +1,6 @@
-import { View, Text, StatusBar, TouchableOpacity, Dimensions, StyleSheet } from "react-native";
+import { View, Text, StatusBar, Dimensions, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { PieChart } from "react-native-chart-kit";
-import { BottomAppbar } from "@/components/BottomAppbar";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -138,9 +137,6 @@ export default function ChartScreen() {
           ))}
         </View>
       </ View>
-      <View style={styles.bottomAppbarContainer}>
-        <BottomAppbar />
-      </View>
     </View>
   );
 }
@@ -186,10 +182,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: screenWidth,
     height: screenHeight * 0.1,
-  },
-  bottomAppbarContainer: {
-    position: "absolute",
-    bottom: screenHeight * 0.07,
-    backgroundColor: "transparent",
   },
 });
