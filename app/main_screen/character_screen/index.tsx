@@ -11,12 +11,12 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <TouchableOpacity 
         style={styles.clothBtn}
-        onPress={() => router.push("/screens/character_screen/CustomizingScreen")}>
+        onPress={() => router.push("/main_screen/character_screen/customizing_screen")}>
         <Image source={require("@/assets/images/cloth.png")} />
       </TouchableOpacity>
 
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <TouchableOpacity onPress={() => router.push("/screens")}>
+      <TouchableOpacity onPress={() => router.push("/main_screen")}>
         <Text style={styles.text}>Character Screen</Text>
       </TouchableOpacity>
 

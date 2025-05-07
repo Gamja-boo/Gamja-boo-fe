@@ -12,13 +12,13 @@ export const BottomAppbar = () => {
 
   return (
     <View style={styles.bottomAppBar}>
-      <TouchableOpacity onPress={() => router.push("/screens/character_screen")}>
+      <TouchableOpacity onPress={() => router.push("/main_screen/character_screen")}>
         <Character height={screenWidth * 0.083} width={screenWidth * 0.083}/>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push("/screens")}>
+      <TouchableOpacity onPress={() => router.push("/main_screen")}>
         <Home height={screenWidth * 0.08} width={screenWidth * 0.08}/>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push("/screens/chart_screen")}>
+      <TouchableOpacity onPress={() => router.push("/main_screen/chart_screen")}>
         <Chart height={screenWidth * 0.08} width={screenWidth * 0.08}/>
       </TouchableOpacity>
     </View>

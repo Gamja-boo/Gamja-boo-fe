@@ -29,7 +29,7 @@ export default function CustomCalendarGrid({ rows, selectedMonth }: CustomCalend
                 key={colIdx}
                 onPress={() => 
                   router.push({
-                    pathname: "/screens/calendar_screen/ExpenseRecord",
+                    pathname: "/main_screen/calendar_screen/expense_record_screen",
                     params: { day: d.toString(), month: selectedMonth.toString() }
                   })
                 }

@@ -23,7 +23,7 @@ export default function HomeScreen() {
         <ExpenseBar today={50000} compare={3000} balance={100000}/>
       </View>
 
-      <TouchableOpacity onPress={() => router.push("/screens")}>
+      <TouchableOpacity onPress={() => router.push("/main_screen")}>
       </TouchableOpacity>
 
       {/* 화면 가운데 십자선 가이드 라인: x축 */}

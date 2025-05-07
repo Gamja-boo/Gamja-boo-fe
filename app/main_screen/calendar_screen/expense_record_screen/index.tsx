@@ -34,7 +34,7 @@ export default function ExpenseRecord() {
       </View>
 
       <View style={styles.squareBox}>
-        <TouchableOpacity onPress={() => router.push("/screens/calendar_screen/WriteScreen")}>
+        <TouchableOpacity onPress={() => router.push("/main_screen/calendar_screen/expense_record_screen/write_screen")}>
           <Image 
           source={require('@/assets/images/writeIcon.png')}
             style={styles.iconBox}>

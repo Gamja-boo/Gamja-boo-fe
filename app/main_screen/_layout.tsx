@@ -19,7 +19,7 @@ export default function Layout() {
           { text: "확인", onPress: () => BackHandler.exitApp() },
         ]);
         return true;
-      } else if (currentRoute === "/screens") {
+      } else if (currentRoute === "/main_screen") {
         // 홈 화면일 때, 앱 종료
         Alert.alert("앱 종료", "앱을 종료하시겠습니까?", [
           { text: "취소", style: "cancel" },
@@ -28,7 +28,7 @@ export default function Layout() {
         return true;
       } else {
         // 다른 화면일 때, 홈으로 이동
-        router.push("/screens");
+        router.push("/main_screen");
         return true;
       }
     };

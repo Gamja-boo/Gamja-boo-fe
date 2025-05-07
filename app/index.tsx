@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <TouchableOpacity onPress={() => router.push("/screens")}>
+      <TouchableOpacity onPress={() => router.push("/main_screen")}>
         <Text style={styles.text}>Hello, Gamja-boo!</Text>
       </TouchableOpacity>
     </View>
