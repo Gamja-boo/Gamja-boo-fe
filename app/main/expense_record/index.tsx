@@ -7,7 +7,7 @@ import Button from "@/app_assets/write_screen/backButton.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function ExpenseRecord() {
+export default function ExpenseRecordScreen() {
   const router = useRouter();
   const { day, month } = useLocalSearchParams();
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ export default function ExpenseRecord() {
       </View>
 
       <View style={styles.squareBox}>
-        <TouchableOpacity onPress={() => router.push("/screens/calendar_screen/WriteScreen")}>
+        <TouchableOpacity onPress={() => router.push("/main/expense_record/write")}>
           <Image 
           source={require('@/assets/images/writeIcon.png')}
             style={styles.iconBox}>

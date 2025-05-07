@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
-import { getDaysInMonth, getFirstDayOfWeek } from "@/components/calendarUtils";
-import MonthPicker from "@/components/MonthPicker";
-import CustomCalendarGrid from "@/components/CustomCalendarGrid";
+import { getDaysInMonth, getFirstDayOfWeek } from "@/app_utils/calendarUtils";
+import { MonthPicker } from "@/app_components/main_screen/MonthPicker";
+import { CustomCalendarGrid }from "@/app_components/main_screen/CustomCalendarGrid";
 import DropDown from "@/app_assets/main_screen/dropDown.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function CustomCalendarScreen() {
+export function CustomCalendar() {
   const today = new Date();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedYear] = useState(today.getFullYear());

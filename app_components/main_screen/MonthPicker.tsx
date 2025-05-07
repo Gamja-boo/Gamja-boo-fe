@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, TouchableOpacity, View, Text, StyleSheet } from "react-native";
-import { months } from "./calendarUtils";
+import { months } from "@/app_utils/calendarUtils";
 
 interface MonthPickerProps {
   visible: boolean;
@@ -9,7 +9,7 @@ interface MonthPickerProps {
   onClose: () => void;
 }
 
-export default function MonthPicker({ visible, selectedMonth, onSelect, onClose }: MonthPickerProps) {
+export function MonthPicker({ visible, selectedMonth, onSelect, onClose }: MonthPickerProps) {
   return (
     <Modal transparent visible={visible} animationType="fade">
       <View style={styles.modalBg}>

@@ -8,7 +8,7 @@ interface Props {
   balance: number;
 }
 
-export default function ExpenseBar({ today, compare, balance}: Props) {
+export function ExpenseBar({ today, compare, balance}: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.item}>

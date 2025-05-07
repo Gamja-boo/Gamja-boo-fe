@@ -1,12 +1,11 @@
-import { View, Text, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
-import { BottomAppbar } from "@/components/BottomAppbar";
-import CustomCalendarScreen from "./calendar_screen";
-import ExpenseBar from "@/components/ExpenseBar";
+import { CustomCalendar } from "@/app_components/main_screen/CustomCalendar"
+import { ExpenseBar } from "@/app_components/main_screen/ExpenseBar";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function HomeScreen() {
+export default function MainScreen() {
   const router = useRouter();
 
   return (
@@ -15,7 +14,7 @@ export default function HomeScreen() {
 
       {/* 달력 컴포넌트 (월 드롭바, 달력) */}
       <View  style={styles.calendar}>
-        <CustomCalendarScreen />
+        <CustomCalendar />
       </View>
 
       {/* 지출을 표시하는 바 */}
@@ -23,7 +22,7 @@ export default function HomeScreen() {
         <ExpenseBar today={50000} compare={3000} balance={100000}/>
       </View>
 
-      <TouchableOpacity onPress={() => router.push("/screens")}>
+      <TouchableOpacity onPress={() => router.push("/main")}>
       </TouchableOpacity>
 
       {/* 화면 가운데 십자선 가이드 라인: x축 */}
@@ -50,11 +49,6 @@ export default function HomeScreen() {
           zIndex: 3,
         }}
       />
-      
-      {/* 네비게이션 바 */}
-      <View style={styles.bottomAppbarContainer}>
-        <BottomAppbar />
-      </View>
     </View>
   );
 }
@@ -79,10 +73,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: screenHeight * 0.22,  
     width: screenWidth,
-  },
-  bottomAppbarContainer: {
-    position: "absolute",
-    bottom: screenHeight * 0.07,
-    backgroundColor: "transparent",
   },
 });

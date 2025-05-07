@@ -1,21 +1,20 @@
 import React, { useState } from "react";
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker"
 import Modal from "react-native-modal";
 import UploadIcon from "@/app_assets/write_screen/UploadImage.svg"
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from "react-native";
-
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function UploadImage() {
+export function UploadImage() {
   const [image, setImage] = useState<string | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
-  {/* 갤러리에서 가져오기 */}
-  const pickFromGallery = async() => {
+  {/* 갤러리에서 가져오기 */ }
+  const pickFromGallery = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
       allowsEditing: true,
@@ -27,7 +26,7 @@ export default function UploadImage() {
     }
   };
 
-  {/* 카메라로 사진 찍기 */}
+  {/* 카메라로 사진 찍기 */ }
   const takePhoto = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,

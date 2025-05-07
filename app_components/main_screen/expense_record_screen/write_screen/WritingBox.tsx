@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function WritingBox() {
+export function WritingBox() {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [text, setText] = useState("");
 

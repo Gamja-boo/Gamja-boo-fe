@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function PurchaseBtn() {
+export function PurchaseBtn() {
   return (
     <View style={styles.purchaseBtn}>
       <Text style={styles.text}>구매하기</Text>

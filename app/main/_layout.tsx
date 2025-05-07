@@ -1,25 +1,28 @@
 import { useEffect } from "react";
+import { View, StyleSheet, BackHandler, Alert, Dimensions } from "react-native";
 import { Stack, useRouter, useSegments } from "expo-router";
-import { View, StyleSheet, BackHandler, Alert } from "react-native";
+import { BottomAppbar } from "@/app_components/main_screen/BottomAppbar"
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function Layout() {
   const router = useRouter();
   const segments = useSegments();
+  const currentRoute = `/${segments.join("/")}`;
+  const LayoutRoute = [
+    "/main",
+    "/main/character",
+    "/main/chart",
+  ]
+  const isLayoutRoute = LayoutRoute.includes(currentRoute);
+
+  console.log("현재 경로", segments);
+  console.log("현재 경로", currentRoute);
 
   // (안드로이드 전용)
   useEffect(() => {
     const backAction = () => {
-      const currentRoute = `/${segments.join("/")}`;
-      console.log("이전 경로:", currentRoute);
-
-      if (currentRoute === "/") {
-        // 로그인 화면일 때, 앱 종료
-        Alert.alert("앱 종료", "앱을 종료하시겠습니까?", [
-          { text: "취소", style: "cancel" },
-          { text: "확인", onPress: () => BackHandler.exitApp() },
-        ]);
-        return true;
-      } else if (currentRoute === "/screens") {
+      if (currentRoute === "/main") {
         // 홈 화면일 때, 앱 종료
         Alert.alert("앱 종료", "앱을 종료하시겠습니까?", [
           { text: "취소", style: "cancel" },
@@ -28,7 +31,7 @@ export default function Layout() {
         return true;
       } else {
         // 다른 화면일 때, 홈으로 이동
-        router.push("/screens");
+        router.push("/main");
         return true;
       }
     };
@@ -46,6 +49,9 @@ export default function Layout() {
   return (
     <View style={styles.container}>
       <Stack screenOptions={{ headerShown: false }} />
+      {isLayoutRoute && (<View style={styles.bottomAppbarContainer}>
+        <BottomAppbar />
+      </View>)}
     </View>
   );
 }
@@ -53,5 +59,13 @@ export default function Layout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
+  bottomAppbarContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    bottom: screenHeight * 0.05,
+    backgroundColor: "transparent",
+  },
 });

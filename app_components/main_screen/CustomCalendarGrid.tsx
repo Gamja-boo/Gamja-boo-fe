@@ -10,7 +10,7 @@ interface CustomCalendarGridProps {
   selectedMonth: number;
 }
 
-export default function CustomCalendarGrid({ rows, selectedMonth }: CustomCalendarGridProps) {
+export function CustomCalendarGrid({ rows, selectedMonth }: CustomCalendarGridProps) {
   const router = useRouter();
   const today = new Date();
   const todayDate = today.getDate();
@@ -29,7 +29,7 @@ export default function CustomCalendarGrid({ rows, selectedMonth }: CustomCalend
                 key={colIdx}
                 onPress={() => 
                   router.push({
-                    pathname: "/screens/calendar_screen/ExpenseRecord",
+                    pathname: "/main/expense_record",
                     params: { day: d.toString(), month: selectedMonth.toString() }
                   })
                 }

@@ -4,7 +4,7 @@ import Skin from "@/app_assets/customizing_screen/skin.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function Gamdoring() {
+export function Gamdoring() {
   return (
     <View style={styles.container}>
       <Skin></Skin>

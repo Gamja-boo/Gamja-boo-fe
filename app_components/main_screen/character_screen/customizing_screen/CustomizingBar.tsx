@@ -6,7 +6,7 @@ import Accessory from "@/app_assets/customizing_screen/accessory.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function CustomizingBar() {
+export function CustomizingBar() {
   return (
     <View style={styles.customizingBar}>
       <TouchableOpacity>

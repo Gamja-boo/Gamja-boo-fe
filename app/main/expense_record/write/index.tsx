@@ -3,8 +3,8 @@ import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native"
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "@/app_assets/write_screen/backButton.svg"
 import CheckButton from "@/app_assets/write_screen/checkButton.svg"
-import UploadImage from "@/components/UploadImage";
-import WritingBox from "@/components/WritingBox";
+import { UploadImage } from "@/app_components/main_screen/expense_record_screen/write_screen/UploadImage";
+import { WritingBox } from "@/app_components/main_screen/expense_record_screen/write_screen/WritingBox";
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
