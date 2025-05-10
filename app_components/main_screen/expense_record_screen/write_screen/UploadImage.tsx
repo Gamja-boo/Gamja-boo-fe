@@ -74,12 +74,11 @@ export function UploadImage() {
 
 const styles = StyleSheet.create({
   imageBox: {
-    width: screenWidth,
-    height: screenHeight * 0.55,
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ffffff",
-    marginTop: screenHeight * 0.05,
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
