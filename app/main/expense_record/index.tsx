@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from "react-native";
 import { useRouter } from "expo-router";
-import { useLocalSearchParams } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import Button from "@/app_assets/write_screen/backButton.svg"
+import { DateDisplay } from "@/app_components/main_screen/expense_record_screen/DateDisplay";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function ExpenseRecordScreen() {
   const router = useRouter();
-  const { day, month } = useLocalSearchParams();
   const navigation = useNavigation();
+
 
   return (
     <View style={styles.container}>
@@ -23,23 +23,21 @@ export default function ExpenseRecordScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* record로 넘어감 */}
+
       {/* 감도리 이미지 및 텍스트 */}
-      <View style={{ alignItems: "center" }}>
+      <View style={styles.viewContainer}>
         <Image
           source={require('@/assets/images/Gamja_basic.png')}
           style={styles.imageBox}
         />
-        <Text style={styles.dateText}>{month}월 {day}일</Text>
-        <Text style={styles.recordText}>오늘의 지출을{"\n"}사진으로 기록해보세요!</Text>
+        <DateDisplay />
+        <Text style={styles.recordText}>오늘의 지출을 기록해요!</Text>
       </View>
 
+      {/* 기록 저장 공간 */}
       <View style={styles.squareBox}>
-        <TouchableOpacity onPress={() => router.push("/main/expense_record/write")}>
-          <Image 
-          source={require('@/assets/images/writeIcon.png')}
-            style={styles.iconBox}>
-          </Image>
-        </TouchableOpacity>
+        <Text>아직 기록된 지출이 없어요!</Text>
       </View>
 
       {/* 화면 가운데 십자선 가이드 라인: x축 */}
@@ -86,6 +84,11 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 20,
   },
+  viewContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: screenHeight * 0.1,
+  },
   imageBox: {
     width: screenWidth * 0.3, 
     height: screenWidth * 0.3,
@@ -100,12 +103,6 @@ const styles = StyleSheet.create({
     // shadow at Android
     elevation: 5,
   },
-  dateText: {
-    textAlign: "center",
-    fontSize: screenWidth * 0.07,
-    fontWeight: "bold",
-    color: "#329257"
-  },
   recordText: {
     textAlign: "center",
     marginTop: screenHeight * 0.025,
@@ -114,12 +111,12 @@ const styles = StyleSheet.create({
     color: "#1c482d"
   },
   squareBox: {
-    width: screenWidth * 0.85,
-    height: screenHeight * 0.2,          
+    width: screenWidth * 0.8,
+    height: screenHeight * 0.4,          
     backgroundColor: "#ffffff",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: screenHeight * 0.1,
+    marginTop: screenHeight * 0.08,
     borderRadius: (screenWidth * 0.3) / 4,
     // shadow at ios
     shadowColor: "#000",
@@ -129,9 +126,4 @@ const styles = StyleSheet.create({
     // shadow at Android
     elevation: 5,
   },
-  iconBox: {
-    width: screenWidth * 0.1, 
-    height: screenWidth * 0.1,
-    color: "#1c482d"
-  }
 })

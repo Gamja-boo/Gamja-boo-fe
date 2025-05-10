@@ -27,12 +27,20 @@ export function CustomCalendarGrid({ rows, selectedMonth }: CustomCalendarGridPr
               // 날짜 누르면 지출 작성 화면으로 넘어감
               <TouchableOpacity 
                 key={colIdx}
-                onPress={() => 
+                onPress={() => {
+                  const selectedDate = new Date(today.getFullYear(), selectedMonth - 1, d);
+                  const weekdayNames = ['일', '월', '화', '수', '목', '금', '토'];
+                  const weekday = weekdayNames[selectedDate.getDay()];
+
                   router.push({
                     pathname: "/main/expense_record",
-                    params: { day: d.toString(), month: selectedMonth.toString() }
-                  })
-                }
+                    params: { 
+                      day: d.toString(), 
+                      month: selectedMonth.toString(),
+                      weekday: weekday 
+                    }
+                  });
+                }}
                 style={[
                   styles.dayCell,
                   d === todayDate && selectedMonth === todayMonth && styles.todayCell]}>
