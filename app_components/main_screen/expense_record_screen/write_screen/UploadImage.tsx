@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "rea
 import * as ImagePicker from "expo-image-picker"
 import Modal from "react-native-modal";
 import UploadIcon from "@/app_assets/expense_report_screen/write_screen/pictureBtn.svg";
+import Camera from "@/app_assets/expense_report_screen/write_screen/camera.svg";
+import Gallery from "@/app_assets/expense_report_screen/write_screen/gallery.svg";
+import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -52,20 +55,22 @@ export function UploadImage() {
         isVisible={isModalVisible}
         onBackdropPress={closeModal}
         style={styles.modal}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>사진 등록</Text>
 
+        <TouchableOpacity onPress={closeModal} style={styles.modalClose}>
+          <Cancel />
+        </TouchableOpacity>
+
+        <View style={styles.modalContent}>
           <TouchableOpacity onPress={takePhoto} style={styles.modalOption}>
-            <Text>📷 카메라로 촬영하기</Text>
+            <Camera />
+            <Text style={styles.text}>카메라로 촬영하기 </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={pickFromGallery} style={styles.modalOption}>
-            <Text>🖼️ 앨범에서 선택하기</Text>
+            <Gallery />
+            <Text style={styles.text}>앨범에서 선택하기</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={closeModal} style={styles.modalClose}>
-            <Text style={{ fontWeight: "bold" }}>닫기</Text>
-          </TouchableOpacity>
         </View>
       </Modal>
     </View>
@@ -92,29 +97,42 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
   },
+  text: {
+    color: "#329257",
+    fontSize: screenWidth * 0.04,
+  },
   modal: {
     justifyContent: "flex-end",
+    alignItems: "center",
     margin: 0,
   },
   modalContent: {
-    backgroundColor: "white",
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15,
+    backgroundColor: "#fff",
+    paddingHorizontal: screenWidth * 0.1,
+    paddingVertical: screenHeight * 0.035,
+    borderTopLeftRadius: screenWidth * 0.1,
+    borderTopRightRadius: screenWidth * 0.1,
   },
   modalOption: {
-    paddingVertical: 10,
+    flexDirection: "row",
+    width: screenWidth * 0.6,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: screenWidth * 0.04,
+    margin: screenWidth * 0.015,
+    borderRadius: screenWidth * 0.1,
+    gap: screenWidth * 0.02,
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    // shadow at Android
+    elevation: 5,
   },
   modalClose: {
-    marginTop: 15,
     alignItems: "center",
-    padding: 10,
-    backgroundColor: "#eee",
-    borderRadius: 10,
+    paddingBottom: screenWidth * 0.05,
   },
 })
