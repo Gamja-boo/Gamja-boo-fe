@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Keyboard,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, ScrollView, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import BackButton from "@/app_assets/write_screen/backButton.svg";
-import CheckButton from "@/app_assets/write_screen/checkButton.svg";
+import BackButton from "@/app_assets/expense_report_screen/write_screen/backButton.svg";
+import CheckButton from "@/app_assets/expense_report_screen/write_screen/checkButton.svg";
 import { UploadImage } from "@/app_components/main_screen/expense_record_screen/write_screen/UploadImage";
 import { WritingBox } from "@/app_components/main_screen/expense_record_screen/write_screen/WritingBox";
 import { AboutSpent } from "@/app_components/main_screen/expense_record_screen/write_screen/AboutSpent";

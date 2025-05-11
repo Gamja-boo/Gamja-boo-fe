@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Text, View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import DropDownBtn from "@/app_assets/write_screen/dropdownBtn.svg"
+import DropDownBtn from "@/app_assets/expense_report_screen/write_screen/dropdownBtn.svg";
 import { spentBg } from "@/app_utils/SpentBgUtils";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");

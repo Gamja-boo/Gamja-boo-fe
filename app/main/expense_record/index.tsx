@@ -2,15 +2,15 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from "react-native";
 import { useRouter } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import Button from "@/app_assets/write_screen/backButton.svg"
-import { DateDisplay } from "@/app_components/main_screen/expense_record_screen/DateDisplay";
+import Button from "@/app_assets/expense_report_screen/write_screen/backButton.svg"
+import Memo from "@/app_assets/expense_report_screen/Memo.svg";
+import { DateDisplay } from "@/app_components/main_screen/expense_record_screen//DateDisplay";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function ExpenseRecordScreen() {
   const router = useRouter();
   const navigation = useNavigation();
-
 
   return (
     <View style={styles.container}>
@@ -24,6 +24,12 @@ export default function ExpenseRecordScreen() {
       </View>
 
       {/* record로 넘어감 */}
+      <TouchableOpacity 
+        style={styles.recordBtn}
+        onPress={() => router.push("/main/expense_record/write")}>
+        <Memo />
+      </TouchableOpacity>
+
 
       {/* 감도리 이미지 및 텍스트 */}
       <View style={styles.viewContainer}>
@@ -79,10 +85,27 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: screenHeight * 0.04,
     left: screenWidth * 0.08,
-    zIndex: 10,
   },
   backButton: {
     marginBottom: 20,
+  },
+  recordBtn: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    top: screenHeight * 0.05,
+    right: screenWidth * 0.05,
+    width: screenWidth * 0.14,
+    height: screenHeight * 0.07,
+    borderRadius: screenWidth,
+    backgroundColor: "#75E88C",
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    // shadow at Android
+    elevation: 5,
   },
   viewContainer: {
     justifyContent: "center",

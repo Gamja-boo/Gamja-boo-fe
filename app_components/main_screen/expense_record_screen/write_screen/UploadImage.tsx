@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker"
 import Modal from "react-native-modal";
-import UploadIcon from "@/app_assets/write_screen/UploadImage.svg"
+import UploadIcon from "@/app_assets/expense_report_screen/write_screen/pictureBtn.svg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
