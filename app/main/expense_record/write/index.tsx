@@ -12,6 +12,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 export default function WriteScreen() {
   const navigation = useNavigation();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
     const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
@@ -23,42 +24,74 @@ export default function WriteScreen() {
   }, []);
 
   return (
+    // 타이핑 칠 때 보기 편하게 뷰를 올려줌
+    // ios, android 두 가지 버전 둘 다 지원
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "position" : "height"}
       style={styles.container}
       keyboardVerticalOffset={0}
     >
+      { /* 뷰가 올라갔을 때, 스트롤도 가능하게 해줌 */ }
       <ScrollView
         contentContainerStyle={{ alignItems: "center" }}
         keyboardShouldPersistTaps="handled"
       >
+
+        {/* 뒤로 가기 버튼 */}
         <View style={styles.backContainer}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <BackButton />
           </TouchableOpacity>
         </View>
 
+        {/* 저장하기 버튼 */}
         <View style={styles.checkContainer}>
           <TouchableOpacity style={styles.checkButton} onPress={() => navigation.goBack()}>
             <CheckButton />
           </TouchableOpacity>
         </View>
 
+        {/* 사진 업로드 */}
         {!keyboardVisible && (
           <View style={styles.imgContainer}>
-            <UploadImage />
+            <UploadImage image={image} setImage={setImage} />
           </View>
         )}
 
+        {/* 소비 항목 및 금액 */}
         <View style={styles.spentContainer}>
           <AboutSpent />
         </View>
 
+        { /* 글을 적는 공간 */}
         <View style={styles.writeBoxContainer}>
           <WritingBox />
         </View>
 
-        {/* 가운데 십자선 생략 */}
+        {/* 화면 가운데 십자선 가이드 라인: x축 */}
+        <View
+          style={{
+            position: "absolute",
+            top: screenHeight / 2,
+            left: 0,
+            width: screenWidth,
+            height: 1,
+            backgroundColor: "red",
+            zIndex: 3,
+          }}
+        />
+        {/* 화면 가운데 십자선 가이드 라인: y축 */}
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: screenWidth / 2,
+            width: 1,
+            height: screenHeight,
+            backgroundColor: "red",
+            zIndex: 3,
+          }}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );

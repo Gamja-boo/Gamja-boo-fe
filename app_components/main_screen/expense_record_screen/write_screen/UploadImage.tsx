@@ -7,27 +7,19 @@ import Camera from "@/app_assets/expense_report_screen/write_screen/camera.svg";
 import Gallery from "@/app_assets/expense_report_screen/write_screen/gallery.svg";
 import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
 
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export function UploadImage() {
-  const [image, setImage] = useState<string | null>(null);
+interface UploadImageProps {
+  image: string | null;
+  setImage: (uri: string) => void;
+}
+
+export function UploadImage({ image, setImage }: UploadImageProps) {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
-
-  {/* 갤러리에서 가져오기 */ }
-  const pickFromGallery = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: "images",
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
 
   {/* 카메라로 사진 찍기 */ }
   const takePhoto = async () => {
@@ -38,6 +30,21 @@ export function UploadImage() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      closeModal();
+    }
+  };
+
+  {/* 갤러리에서 사진 가져오기 */ }
+  const pickFromGallery = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: "images",
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      closeModal();
     }
   };
 
@@ -63,7 +70,7 @@ export function UploadImage() {
         <View style={styles.modalContent}>
           <TouchableOpacity onPress={takePhoto} style={styles.modalOption}>
             <Camera />
-            <Text style={styles.text}>카메라로 촬영하기 </Text>
+            <Text style={styles.text}>카메라로 촬영하기</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={pickFromGallery} style={styles.modalOption}>
