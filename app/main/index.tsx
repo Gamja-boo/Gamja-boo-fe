@@ -2,6 +2,7 @@ import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react
 import { useRouter } from "expo-router";
 import MyPageBtn from "@/app_assets/main_screen/myPageBtn.svg";
 import { CustomCalendar } from "@/app_components/main_screen/CustomCalendar"
+import { DailyBudget } from "@/app_components/main_screen/DailyBudget";
 import { ExpenseBar } from "@/app_components/main_screen/ExpenseBar";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -23,6 +24,11 @@ export default function MainScreen() {
       {/* 달력 컴포넌트 (월 드롭바, 달력) */}
       <View  style={styles.calendar}>
         <CustomCalendar />
+      </View>
+
+      { /* 하루 예산을 책정하는 바 */}
+      <View style={styles.dailyBudgetContainer}>
+        <DailyBudget />
       </View>
 
       {/* 지출을 표시하는 바 */}
@@ -74,8 +80,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     top: screenHeight * 0.05,
     right: screenWidth * 0.05,
-    width: screenWidth * 0.14,
-    height: screenHeight * 0.07,
+    width: screenWidth * 0.12,
+    height: screenHeight * 0.06,
     borderRadius: screenWidth,
     backgroundColor: "#fff",
     zIndex: 3,
@@ -96,9 +102,15 @@ const styles = StyleSheet.create({
     width: screenWidth,
     height: screenHeight, 
   },
+  dailyBudgetContainer: {
+    position: "absolute",
+    bottom: screenHeight * 0.31,  
+    width: screenWidth,
+    height: screenHeight * 0.06,
+  },
   expenseBarContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.22,  
+    bottom: screenHeight * 0.2,  
     width: screenWidth,
   },
 });

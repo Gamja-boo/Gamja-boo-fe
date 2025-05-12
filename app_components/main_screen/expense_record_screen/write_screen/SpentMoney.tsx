@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Text, View, StyleSheet, Dimensions, TextInput } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, Dimensions, TextInput } from "react-native";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth } = Dimensions.get("window");
 
 export function SpentMoney() {
   const [amount, setAmount] = useState("");
