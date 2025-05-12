@@ -13,13 +13,13 @@ export const BottomAppbar = () => {
   return (
     <View style={styles.bottomAppBar}>
       <TouchableOpacity onPress={() => router.push("/main/character")}>
-        <Character height={screenWidth * 0.083} width={screenWidth * 0.083}/>
+        <Character height={screenWidth * 0.07} width={screenWidth * 0.07}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push("/main")}>
-        <Home height={screenWidth * 0.08} width={screenWidth * 0.08}/>
+        <Home height={screenWidth * 0.07} width={screenWidth * 0.07}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push("/main/chart")}>
-        <Chart height={screenWidth * 0.08} width={screenWidth * 0.08}/>
+        <Chart height={screenWidth * 0.07} width={screenWidth * 0.07}/>
       </TouchableOpacity>
     </View>
   );
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    height: screenHeight * 0.09,
+    height: screenHeight * 0.08,
     width: screenWidth * 0.75,
     backgroundColor: "white",
     borderTopLeftRadius: screenHeight * 0.05,

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   dayCell: { 
     width: cellSize, 
-    height: cellSize * 1.3, 
+    height: cellSize * 1.25, 
     borderRadius: cellSize / 2, 
     justifyContent: "flex-end", 
     alignItems: "flex-start",
