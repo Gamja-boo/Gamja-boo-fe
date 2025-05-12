@@ -1,5 +1,6 @@
 import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
+import MyPageBtn from "@/app_assets/main_screen/myPageBtn.svg";
 import { CustomCalendar } from "@/app_components/main_screen/CustomCalendar"
 import { ExpenseBar } from "@/app_components/main_screen/ExpenseBar";
 
@@ -10,6 +11,13 @@ export default function MainScreen() {
 
   return (
     <View style={styles.container}>
+      
+      <TouchableOpacity 
+        style={styles.mypageBtn}
+        onPress={() => router.push("/main/my_page")}>
+        <MyPageBtn />
+      </TouchableOpacity>
+
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
       {/* 달력 컴포넌트 (월 드롭바, 달력) */}
@@ -59,6 +67,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#FCFFF6",
     justifyContent: "center",
     alignItems: "center",
+  },
+  mypageBtn: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    top: screenHeight * 0.05,
+    right: screenWidth * 0.05,
+    width: screenWidth * 0.14,
+    height: screenHeight * 0.07,
+    borderRadius: screenWidth,
+    backgroundColor: "#fff",
+    zIndex: 3,
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    // shadow at Android
+    elevation: 5,
   },
   text: {
     fontSize: screenWidth * 0.075,

@@ -15,13 +15,13 @@ interface UploadImageProps {
   setImage: (uri: string) => void;
 }
 
-export function UploadImage({ image, setImage }: UploadImageProps) {
-  const [isModalVisible, setModalVisible] = useState(false);
+export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = () => setIsModalVisible(false);
 
-  {/* 카메라로 사진 찍기 */ }
+  // 카메라로 사진 찍기
   const takePhoto = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -34,7 +34,7 @@ export function UploadImage({ image, setImage }: UploadImageProps) {
     }
   };
 
-  {/* 갤러리에서 사진 가져오기 */ }
+  // 갤러리에서 사진 가져오기
   const pickFromGallery = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
