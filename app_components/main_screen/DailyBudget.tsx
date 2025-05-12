@@ -16,6 +16,7 @@ export function DailyBudget() {
       <TextInput 
         style={styles.text2}
         value={amount}
+        onChangeText={handleChangeAmount}
         keyboardType="numeric"
         placeholder="000,000 - 000,000"
         placeholderTextColor="#65BE71"

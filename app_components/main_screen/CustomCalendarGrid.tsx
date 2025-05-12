@@ -2,22 +2,25 @@ import React from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-const cellSize = Math.floor((Dimensions.get('window').width - 60) / 7);
+
+const calendarWidth = screenWidth * 0.9;
+const cellSize = Math.floor((calendarWidth - screenWidth * 0.01 * 7) / 7);
 
 interface CustomCalendarGridProps {
   rows: (number | null)[][];
   selectedMonth: number;
 }
 
-export function CustomCalendarGrid({ rows, selectedMonth }: CustomCalendarGridProps) {
+export function CustomCalendarGrid({ rows, selectedMonth }: Readonly<CustomCalendarGridProps>) {
   const router = useRouter();
   const today = new Date();
   const todayDate = today.getDate();
   const todayMonth = today.getMonth() + 1;
 
   return (
-    <View style={{ marginTop: 20 }}>
+    <View style={styles.container}>
       {rows.map((row, rowIdx) => (
         <View key={rowIdx} style={styles.row}>
           {row.map((d, colIdx) =>
@@ -59,24 +62,35 @@ export function CustomCalendarGrid({ rows, selectedMonth }: CustomCalendarGridPr
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: screenWidth * 0.8,
+    marginTop: screenHeight * 0.02,
+  },
   row: { 
     flexDirection: "row", 
-    justifyContent: "flex-start", 
-    marginBottom: screenHeight * 0.015,
+    justifyContent: "center", 
+    marginBottom: screenHeight * 0.01,
   },
   dayCell: { 
     width: cellSize, 
-    height: cellSize, 
-    marginHorizontal: screenWidth * 0.005, 
-    marginVertical: screenHeight * 0.005,
+    height: cellSize * 1.3, 
     borderRadius: cellSize / 2, 
-    justifyContent: "center", 
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#ddd",
+    justifyContent: "flex-end", 
+    alignItems: "flex-start",
+    backgroundColor: "#FCFFF6",
+    paddingLeft: screenWidth * 0.02,
+    paddingBottom: screenHeight * 0.015,
+    margin: screenWidth * 0.001,
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    // shadow at Android
+    elevation: 5,
   },
   dayText: { 
-    fontSize: screenWidth * 0.04, 
+    fontSize: screenWidth * 0.025, 
     color: "#222", 
     fontWeight: "500" 
   },
