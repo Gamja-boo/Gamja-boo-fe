@@ -3,11 +3,12 @@ import { useIsFocused } from '@react-navigation/native';
 import { View, Text, StatusBar, Dimensions, StyleSheet, ScrollView, Animated } from "react-native";
 import { useRouter } from "expo-router";
 import { PieChart } from "react-native-chart-kit";
+import Svg, { Path } from 'react-native-svg';
 import { monthlyExpensesData } from "@/test_data/main_screen/chart_screen/data";
 import { PieChartCategory } from "@/app_components/main_screen/chart_screen/PieChartCategory";
 import { Header } from "@/app_components/main_screen/chart_screen/Header";
 import { BarGraph } from "@/app_components/main_screen/chart_screen/BarGraph";
-import Svg, { Path } from 'react-native-svg';
+import { DatailCard } from "@/app_components/main_screen/chart_screen/DetailCard"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -34,8 +35,8 @@ function describeArc(
 
   return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
 } // largeArcFlag 옆의 값이
-// 0인 경우, 현재 위치(시작점: (start.x, start.y))에서 끝점(end.x, end.y)까지 반시계 방향으로 이동하는 경로로 그림
-// 1인 경우, 시계 방향으로 이동하는 경로로 그림
+  // 0인 경우, 현재 위치(시작점: (start.x, start.y))에서 끝점(end.x, end.y)까지 반시계 방향으로 이동하는 경로로 그림
+  // 1인 경우, 시계 방향으로 이동하는 경로로 그림
 
 export default function ChartScreen() {
   const router = useRouter();
@@ -47,12 +48,13 @@ export default function ChartScreen() {
   const [showChart, setShowChart] = useState(false);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const pathRef = useRef<Path>(null);
+
   const chartAnimation = () => {
     Animated.timing(animatedValue, {
       toValue: 1,
       duration: 1500,
       useNativeDriver: false,
-    }).start(() => { animatedValue.setValue(0) });
+    }).start(() => {animatedValue.setValue(0)});
 
     const id = animatedValue.addListener(({ value }) => {
       const angle = value * 360;
@@ -72,8 +74,11 @@ export default function ChartScreen() {
   };
 
   useEffect(() => {
+    chartAnimation();
+  }, []);
+
+  useEffect(() => {
     if (isFocused) {
-      chartAnimation();
       setTimeout(() => {
         scrollRef.current?.scrollToEnd({ animated: false });
       }, 0);
@@ -110,6 +115,7 @@ export default function ChartScreen() {
   };
 
   const paddingLeft = (screenWidth * 0.25).toString();
+  const interval = screenHeight * 0.42;
 
   return (
     <View style={styles.container}>
@@ -120,34 +126,13 @@ export default function ChartScreen() {
         setShowChart={setShowChart}
         chartAnimation={chartAnimation}
       />
-      <ScrollView contentContainerStyle={{
+      <ScrollView 
+        decelerationRate={0.9}
+        snapToInterval={interval}
+        contentContainerStyle={{
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-        {/* 화면 가운데 십자선 가이드 라인: x축 */}
-        <View
-          style={{
-            position: "absolute",
-            top: screenHeight / 2,
-            left: 0,
-            width: screenWidth,
-            height: 1,
-            backgroundColor: "red",
-            zIndex: 3,
-          }}
-        />
-        {/* 화면 가운데 십자선 가이드 라인: y축 */}
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: screenWidth / 2,
-            width: 1,
-            height: screenHeight,
-            backgroundColor: "red",
-            zIndex: 3,
-          }}
-        />
         <View style={{ width: screenWidth, height: screenHeight * 0.36 }}>
           {showChart && (
           <PieChart
@@ -175,6 +160,12 @@ export default function ChartScreen() {
         </Svg>
         <PieChartCategory coloredData={coloredData} />
         <BarGraph scrollRef={scrollRef} />
+        <DatailCard titleText1='이번 달의 ' titleText2='상세내역이에요' color='#D9F0A3' textColor='#329257'/>
+        <DatailCard titleText1='' titleText2='' color='#78C679' textColor=''/>
+        <DatailCard titleText1='' titleText2='' color='#D9F0A3' textColor=''/>
+        <DatailCard titleText1='' titleText2='' color='#75E88C' textColor=''/>
+        <DatailCard titleText1='' titleText2='' color='#D9F0A3' textColor=''/>
+        <DatailCard titleText1='' titleText2='' color='#78C679' textColor=''/>
         <View style={styles.space} />
       </ScrollView>
     </View>

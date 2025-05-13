@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.1,
     justifyContent: "flex-end",
     alignItems: "center",
-    borderWidth: 1,
   },
   homeButton: {
     position: "absolute",
