@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   bar: {
     width: screenWidth * 0.03,
     height: screenHeight * 0.1,
-    borderRadius: screenWidth * 0.03,
+    borderTopRightRadius: screenWidth * 0.03, 
+    borderTopLeftRadius: screenWidth * 0.03, 
   }
 });
