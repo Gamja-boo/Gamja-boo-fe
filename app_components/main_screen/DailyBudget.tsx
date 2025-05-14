@@ -18,7 +18,7 @@ export function DailyBudget() {
         value={amount}
         onChangeText={handleChangeAmount}
         keyboardType="numeric"
-        placeholder="000,000 - 000,000"
+        placeholder="000,000    -    000,000"
         placeholderTextColor="#65BE71"
       />
     </TouchableOpacity>
@@ -27,12 +27,12 @@ export function DailyBudget() {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    width: screenWidth * 0.75,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#fff",
-    borderRadius: screenWidth * 0.1,
+    borderRadius: screenWidth * 0.15,
     marginHorizontal: screenWidth * 0.12,
     gap: screenWidth * 0.04,
     // shadow at ios
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text1: {
-    fontSize: screenWidth * 0.035,
+    fontSize: screenWidth * 0.03,
     color: "#80D892",
   },
   text2: {
@@ -55,5 +55,6 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.002,
     height: "50%",
     backgroundColor: "#80D892",
+    marginHorizontal: screenWidth * 0.033,
   },
 })

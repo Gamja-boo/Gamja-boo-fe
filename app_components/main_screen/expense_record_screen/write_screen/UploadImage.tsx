@@ -50,7 +50,9 @@ export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
 
   return (
     <View>
-      <TouchableOpacity onPress={openModal} style={styles.imageBox}>
+      <TouchableOpacity 
+        onPress={openModal} 
+        style={styles.imageBox}>
         {image ? (
           <Image source={{ uri: image }} style={styles.uploadedImage} />
         ) : (

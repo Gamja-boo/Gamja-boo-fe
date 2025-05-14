@@ -51,9 +51,7 @@ export default function CustomizingScreen() {
 
       {/* 구매하기 버튼 */}
       <View style={styles.purchaseBtnContainer}>
-        <TouchableOpacity>
-          <PurchaseBtn />
-        </TouchableOpacity>
+        <PurchaseBtn />
       </View>
     </View>
   );

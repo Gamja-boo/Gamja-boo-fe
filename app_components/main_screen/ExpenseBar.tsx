@@ -39,11 +39,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    width: screenWidth * 0.75,
     backgroundColor: "#75E88C",
-    borderRadius: screenWidth * 0.1,
-    paddingVertical: screenHeight * 0.02,
+    borderRadius: screenWidth * 0.15,
+    paddingVertical: screenHeight * 0.017,
     paddingHorizontal: screenWidth * 0.05,
-    marginHorizontal: screenWidth * 0.12,
+    marginHorizontal: screenWidth * 0.125,
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
@@ -58,11 +59,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: screenWidth * 0.03,
-    color: "#596338",
+    color: "#329257",
     marginBottom: screenHeight * 0.004,
   },
   amount: {
-    fontSize: screenWidth * 0.04,
+    fontSize: screenWidth * 0.037,
     color: "#fff",
     fontWeight: "bold"
   },
@@ -70,6 +71,6 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.002,
     height: "100%",
     backgroundColor: "#fff",
-    marginHorizontal: screenWidth * 0.03,
+    marginHorizontal: screenWidth * 0.033,
   },
 });

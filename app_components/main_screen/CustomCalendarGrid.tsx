@@ -71,16 +71,34 @@ const styles = StyleSheet.create({
     justifyContent: "center", 
     marginBottom: screenHeight * 0.01,
   },
+  emptyCell: { 
+    width: cellSize, 
+    height: cellSize * 1.2, 
+    borderRadius: cellSize / 2,
+    justifyContent: "flex-end", 
+    alignItems: "flex-start",
+    backgroundColor: "#FCFFF6",
+    paddingLeft: screenWidth * 0.02,
+    paddingBottom: screenHeight * 0.015,
+    margin: screenWidth * 0.0015,
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    // shadow at Android
+    elevation: 5,
+  },
   dayCell: { 
     width: cellSize, 
-    height: cellSize * 1.25, 
+    height: cellSize * 1.2, 
     borderRadius: cellSize / 2, 
     justifyContent: "flex-end", 
     alignItems: "flex-start",
     backgroundColor: "#FCFFF6",
     paddingLeft: screenWidth * 0.02,
     paddingBottom: screenHeight * 0.015,
-    margin: screenWidth * 0.001,
+    margin: screenWidth * 0.0015,
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
@@ -99,15 +117,7 @@ const styles = StyleSheet.create({
     borderColor: "#4CAF50",
   },
   todayText: {
-    color: "#ffffff",
+    color: "#fff",
     fontWeight: "bold",
-  },  
-  emptyCell: { 
-    width: cellSize, 
-    height: cellSize, 
-    marginHorizontal: screenWidth * 0.005, 
-    marginVertical: screenHeight * 0.005, 
-    borderRadius: cellSize / 2, 
-    backgroundColor: "transparent" 
-  }
+  }, 
 });

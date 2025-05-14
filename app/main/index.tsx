@@ -28,7 +28,7 @@ export default function MainScreen() {
       <TouchableOpacity 
         style={styles.mypageBtn}
         onPress={() => router.push("/main/my_page")}>
-        <MyPageBtn width={ screenWidth * 0.13 } height={ screenHeight * 0.13 }/>
+        <MyPageBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
       </TouchableOpacity>
 
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
@@ -40,7 +40,7 @@ export default function MainScreen() {
           style={styles.calendarBtn}
           onPress={() => setModalVisible(true)}
         >
-          <CalendarBtn width={ screenWidth * 0.13 } height={ screenHeight * 0.13 }/>
+          <CalendarBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
         </TouchableOpacity>
 
         <View style={styles.showContainer}>
@@ -56,7 +56,6 @@ export default function MainScreen() {
           }}
           onClose={() => setModalVisible(false)}
         />
-
         <View style={styles.gridContainer}>
           <CustomCalendarGrid rows={rows} selectedMonth={selectedMonth} />
         </View>
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    top: screenHeight * 0.03,
+    top: screenHeight * 0.02,
     right: screenWidth * 0.19,
     width: screenWidth * 0.12,
     height: screenHeight * 0.06,
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    top: screenHeight * 0.03,
+    top: screenHeight * 0.02,
     right: screenWidth * 0.04,
     width: screenWidth * 0.12,
     height: screenHeight * 0.06,
@@ -151,7 +150,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   calendar: {
-    flex: 1,
     width: screenWidth,
     height: screenHeight,
     alignItems: "center",
@@ -159,24 +157,25 @@ const styles = StyleSheet.create({
   showContainer: {
     alignItems: "center",
     width: screenWidth,
-    height: screenHeight * 0.055,
-    top: screenHeight * 0.1,
+    height: screenHeight * 0.06,
+    top: screenHeight * 0.09,
   },
   gridContainer: {
     alignItems: "center",
-    top: screenHeight * 0.1,
+    justifyContent: "center",
+    top: screenHeight * 0.09,
+    height: screenHeight * 0.5,
     paddingHorizontal: screenWidth * 0.1,
-    backgroundColor: "#000",
   },
   dailyBudgetContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.3,  
+    bottom: screenHeight * 0.26,  
     width: screenWidth,
     height: screenHeight * 0.06,
   },
   expenseBarContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.19,  
+    bottom: screenHeight * 0.17,  
     width: screenWidth,
   },
 });
