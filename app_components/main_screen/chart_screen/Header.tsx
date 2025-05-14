@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 import ArrowBack from "@/app_assets/chart_screen/arrow_back.svg"
 import Calendar from "@/app_assets/chart_screen/calendar.svg"
 
+interface typeOfProps {
+  isExpenditure: boolean;
+  setIsExpenditure: Dispatch<SetStateAction<boolean>>;
+  setShowChart: Dispatch<SetStateAction<boolean>>;
+  chartAnimation: () => () => void;
+}
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export const Header = () => {
+export const Header = ({ isExpenditure, setIsExpenditure, setShowChart, chartAnimation }: typeOfProps) => {
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.homeButton}>
+      <TouchableOpacity 
+        onPress={() => router.push("/main")}
+        style={styles.homeButton}
+      >
         <ArrowBack fill="#007AFF" height={screenWidth * 0.06} width={screenWidth * 0.06}/>
         <Text style={styles.homeButtonText}>Home</Text>
       </TouchableOpacity>
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity style={{ ...styles.selectionButton, marginRight: screenWidth * 0.01 }}>
-          <Text style={styles.text}>지출</Text>
+        <TouchableOpacity 
+          onPress={() => {
+            setIsExpenditure(true);
+            setShowChart(false);
+            setTimeout(()=> {
+              chartAnimation();
+            }, 0);
+          }}
+          style={isExpenditure ? { ...styles.on, marginRight: screenWidth * 0.01 } : { ...styles.off, marginRight: screenWidth * 0.01 }}
+          >
+          <Text style={isExpenditure ? styles.onText : styles.offText}>지출</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ ...styles.selectionButton, marginLeft: screenWidth * 0.01 }}>
-          <Text style={styles.text}>소득</Text>
+        <TouchableOpacity 
+          onPress={() => {
+            setIsExpenditure(false)
+            setShowChart(false);
+            setTimeout(()=> {
+              chartAnimation();
+            }, 0);
+          }}
+          style={isExpenditure ? { ...styles.off, marginLeft: screenWidth * 0.01 } : { ...styles.on, marginLeft: screenWidth * 0.01 }}>
+          <Text style={isExpenditure ? styles.offText : styles.onText}>소득</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.calendarButton}>
@@ -34,7 +63,6 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.1,
     justifyContent: "flex-end",
     alignItems: "center",
-    borderWidth: 1,
   },
   homeButton: {
     position: "absolute",
@@ -51,12 +79,12 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#007AFF"
   },
-  selectionButton: {
-    justifyContent: "center", 
-    alignItems: "center", 
-    width: screenWidth * 0.18, 
-    height: screenHeight * 0.036, 
-    borderRadius: screenHeight * 0.018, 
+  on: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: screenWidth * 0.18,
+    height: screenHeight * 0.036,
+    borderRadius: screenHeight * 0.018,
     backgroundColor: "#6AD780",
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -64,10 +92,23 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84, // ios 그림자 효과
     elevation: 6, // 안드로이드 그림자 효과
   },
-  text: {
+  off: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: screenWidth * 0.18,
+    height: screenHeight * 0.036,
+    borderRadius: screenHeight * 0.018,
+    backgroundColor: "#FCFFF6",
+  },
+  onText: {
     fontSize: 14,
     fontWeight: "500",
     color: "#FFFFFF",
+  },
+  offText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#329257",
   },
   calendarButton: {
     position: "absolute",

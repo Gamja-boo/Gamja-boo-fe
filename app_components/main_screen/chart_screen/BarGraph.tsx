@@ -1,5 +1,6 @@
-import React, { RefObject } from 'react';
-import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
+import React, { RefObject, useRef } from 'react';
+import { View, Text, Dimensions, StyleSheet, Vibration, ScrollView } from "react-native";
+import ArrowDropDown from "@/app_assets/chart_screen/arrow_drop_down.svg"
 import data from "@/test_data/main_screen/chart_screen/may_2025_expenses.json"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -9,24 +10,49 @@ interface typeOfProps {
 }
 
 export const BarGraph = ({ scrollRef }: typeOfProps): JSX.Element => {
+  const prevIndexRef = useRef(-1);
+  const interval = screenWidth * 0.1325;
 
   return (
     <View style={styles.barGraph}>
       <View style={{ flexDirection: "row", marginTop: screenHeight * 0.03 }}>
-        <Text style={styles.text1}>셋 째주에 </Text>
+        <Text style={styles.text1}>셋째 주에 </Text>
         <Text style={styles.text2}>가장 지출이 많았어요</Text>
       </View>
+      <ArrowDropDown height={screenWidth * 0.07} width={screenWidth * 0.07} fill="#FFFFFF" style={styles.arrowDropDown}/>
       <ScrollView
         horizontal={true}
+        decelerationRate={0.9}
+        snapToInterval={interval}
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row-reverse',
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row-reverse",
         }}
         ref={scrollRef}
+        onScroll={(e) => {
+          const x = e.nativeEvent.contentOffset.x;
+          const index = Math.round(x / interval);
+
+          if (index !== prevIndexRef.current) {
+            prevIndexRef.current = index;
+            Vibration.vibrate(10); // 10ms 짧은 진동
+          }
+        }}
         style={{ width: screenWidth * 0.6 }}>
-        {data.map(((item, value) => (
-          <View key={value} style={{ marginLeft: screenWidth * 0.0625, alignItems: "center" }}>
+        {data.map(((item, index) => (
+          <View
+            key={index}
+            style={{ 
+              height: screenHeight * 0.15,
+              marginBottom: 0,
+              marginLeft: index === data.length - 1 ? interval * 2 : screenWidth * 0.0625,
+              marginRight: index === 0 ? interval * 2 : 0,
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
             <View style={{ ...styles.bar, backgroundColor: "#FFFFFF" }} />
             <View style={{ marginTop: screenHeight * 0.01, width: screenWidth * 0.07, alignItems: "center" }}>
               <Text style={{ color: "#FFFFFF" }}>2월</Text>
@@ -53,6 +79,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84, // ios 그림자 효과
     elevation: 6, // 안드로이드 그림자 효과
   },
+  arrowDropDown: {
+    position: "absolute",
+    top: screenHeight * 0.07,
+  },
   text1: {
     fontSize: 16,
     fontWeight: "600",
@@ -66,6 +96,7 @@ const styles = StyleSheet.create({
   bar: {
     width: screenWidth * 0.03,
     height: screenHeight * 0.1,
-    borderRadius: screenWidth * 0.03,
+    borderTopRightRadius: screenWidth * 0.03,
+    borderTopLeftRadius: screenWidth * 0.03,
   }
 });

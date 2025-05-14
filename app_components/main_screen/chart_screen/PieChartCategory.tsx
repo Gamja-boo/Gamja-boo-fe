@@ -57,14 +57,12 @@ export const PieChartCategory = ( { coloredData }: typeOfProps): JSX.Element => 
 
 export const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
     flexDirection: "column",
     width: screenWidth,
     height: screenHeight * 0.06,
   },
   text: {
     marginLeft: screenWidth * 0.02,
-    borderWidth: 1
   },
   sticker: {
     width: screenWidth * 0.02,
