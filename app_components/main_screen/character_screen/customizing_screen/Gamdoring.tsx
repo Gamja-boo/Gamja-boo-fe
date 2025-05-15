@@ -7,7 +7,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 export function Gamdoring() {
   return (
     <View style={styles.container}>
-      <Skin></Skin>
+      <Skin />
       <Text style={styles.text}>0</Text>
     </View>
   );
@@ -26,4 +26,3 @@ const styles = StyleSheet.create({
     fontSize: screenWidth * 0.047,
   },
 });
-
