@@ -1,5 +1,9 @@
-import { View, Text, StatusBar, TouchableOpacity, StyleSheet } from "react-native";
+import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
+import { LoginPage } from "@/app_components/LoginPage";
+
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function App() {
   const router = useRouter();
@@ -8,7 +12,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <TouchableOpacity onPress={() => router.push("/main")}>
-        <Text style={styles.text}>Hello, Gamja-boo!</Text>
+        <LoginPage />
       </TouchableOpacity>
     </View>
   );
@@ -17,12 +21,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FCFFF6",
+    backgroundColor: "#32D77D",
     justifyContent: "center",
     alignItems: "center",
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: "bold",
   },
 });
