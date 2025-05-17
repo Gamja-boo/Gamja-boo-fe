@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import MyPageBtn from "@/app_assets/main_screen/myPageBtn.svg";
 import CalendarBtn from "@/app_assets/main_screen/calendarBtn.svg";
@@ -23,81 +23,63 @@ export default function MainScreen() {
 
   return (
     <View style={styles.container}>
-      
-      {/* 마이페이지 버튼 */}
-      <TouchableOpacity 
-        style={styles.mypageBtn}
-        onPress={() => router.push("/main/my_page")}>
-        <MyPageBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
-      </TouchableOpacity>
-
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-
-      { /* 전체적인 달력 관련 요소들 */}
-      <View style={styles.calendar}>
-
+      {/* 고정 뷰 */}
+      <View style={styles.fixedContainer}>
+        {/* 마이페이지 버튼 */}
         <TouchableOpacity 
-          style={styles.calendarBtn}
-          onPress={() => setModalVisible(true)}
-        >
-          <CalendarBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
+          style={styles.mypageBtn}
+          onPress={() => router.push("/main/my_page")}>
+          <MyPageBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
         </TouchableOpacity>
 
-        <View style={styles.showContainer}>
-          <ShowMonth selectedMonth={selectedMonth}/>
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+
+        { /* 전체적인 달력 관련 요소들 */}
+        <View style={styles.calendar}>
+
+          <TouchableOpacity 
+            style={styles.calendarBtn}
+            onPress={() => setModalVisible(true)}
+          >
+            <CalendarBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
+          </TouchableOpacity>
+
+          <View style={styles.showContainer}>
+            <ShowMonth selectedMonth={selectedMonth}/>
+          </View>
+
+          <CalendarWheel
+            visible={modalVisible}
+            selectedMonth={selectedMonth}
+            onSelect={(month) => {
+              setSelectedMonth(month);
+              setModalVisible(false);
+            }}
+            onClose={() => setModalVisible(false)}
+          />
+          <View style={styles.gridContainer}>
+            <CustomCalendarGrid rows={rows} selectedMonth={selectedMonth} />
+          </View>
+        </View>
+      </View>
+
+      {/* 뷰를 올려줌 */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "position" : "height"}
+        style={styles.avoidContainer}
+        keyboardVerticalOffset={0}
+      >
+        { /* 하루 예산을 책정하는 바 */}
+        <View style={styles.dailyBudgetContainer}>
+          <DailyBudget />
         </View>
 
-        <CalendarWheel
-          visible={modalVisible}
-          selectedMonth={selectedMonth}
-          onSelect={(month) => {
-            setSelectedMonth(month);
-            setModalVisible(false);
-          }}
-          onClose={() => setModalVisible(false)}
-        />
-        <View style={styles.gridContainer}>
-          <CustomCalendarGrid rows={rows} selectedMonth={selectedMonth} />
+        {/* 지출을 표시하는 바 */}
+        <View style={styles.expenseBarContainer}>
+          <ExpenseBar today={50000} compare={3000} balance={100000}/>
         </View>
-      </View>
+      </KeyboardAvoidingView>
 
-      { /* 하루 예산을 책정하는 바 */}
-      <View style={styles.dailyBudgetContainer}>
-        <DailyBudget />
-      </View>
-
-      {/* 지출을 표시하는 바 */}
-      <View style={styles.expenseBarContainer}>
-        <ExpenseBar today={50000} compare={3000} balance={100000}/>
-      </View>
-
-      <TouchableOpacity onPress={() => router.push("/main")}>
-      </TouchableOpacity>
-
-      {/* 화면 가운데 십자선 가이드 라인: x축 */}
-      <View
-        style={{
-          position: "absolute",
-          top: screenHeight / 2,
-          left: 0,
-          width: screenWidth,
-          height: 1,
-          backgroundColor: "red",
-          zIndex: 3,
-        }}
-      />
-      {/* 화면 가운데 십자선 가이드 라인: y축 */}
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          left: screenWidth / 2,
-          width: 1,
-          height: screenHeight,
-          backgroundColor: "red",
-          zIndex: 3,
-        }}
-      />
     </View>
   );
 }
@@ -107,6 +89,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FCFFF6",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  fixedContainer: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+  },
+  avoidContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
     alignItems: "center",
   },
   mypageBtn: {
@@ -156,26 +149,23 @@ const styles = StyleSheet.create({
   },
   showContainer: {
     alignItems: "center",
-    width: screenWidth,
     height: screenHeight * 0.06,
     top: screenHeight * 0.09,
   },
   gridContainer: {
     alignItems: "center",
     justifyContent: "center",
-    top: screenHeight * 0.09,
+    top: screenHeight * 0.1,
     height: screenHeight * 0.5,
     paddingHorizontal: screenWidth * 0.1,
   },
   dailyBudgetContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.26,  
-    width: screenWidth,
+    bottom: screenHeight * 0.28,  
     height: screenHeight * 0.06,
   },
   expenseBarContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.17,  
-    width: screenWidth,
+    bottom: screenHeight * 0.19,  
   },
 });

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: screenWidth * 0.75,
+    width: screenWidth * 0.8,
     backgroundColor: "#75E88C",
     borderRadius: screenWidth * 0.15,
     paddingVertical: screenHeight * 0.017,

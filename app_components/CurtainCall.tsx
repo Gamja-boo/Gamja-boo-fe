@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, StyleSheet, Dimensions } from "react-native";
+import { StatusBar, StyleSheet, Dimensions } from "react-native";
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 

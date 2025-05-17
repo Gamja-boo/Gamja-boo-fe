@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { View, StyleSheet, BackHandler, Alert, Dimensions } from "react-native";
+import { useEffect, useState } from "react";
+import { View, StyleSheet, BackHandler, Alert, Dimensions, Keyboard } from "react-native";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { BottomAppbar } from "@/app_components/main_screen/BottomAppbar"
 
@@ -18,6 +18,18 @@ export default function Layout() {
 
   console.log("현재 경로", segments);
   console.log("현재 경로", currentRoute);
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
+    const hideSub = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
+
 
   // (안드로이드 전용)
   useEffect(() => {
@@ -49,9 +61,11 @@ export default function Layout() {
   return (
     <View style={styles.container}>
       <Stack screenOptions={{ headerShown: false }} />
-      {isLayoutRoute && (<View style={styles.bottomAppbarContainer}>
-        <BottomAppbar />
-      </View>)}
+      {isLayoutRoute && !keyboardVisible && (
+        <View style={styles.bottomAppbarContainer}>
+          <BottomAppbar />
+        </View>
+      )}
     </View>
   );
 }
@@ -65,7 +79,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: "center",
-    bottom: screenHeight * 0.05,
+    bottom: screenHeight * 0.04,
     backgroundColor: "transparent",
   },
 });

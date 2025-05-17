@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-const calendarWidth = screenWidth * 0.9;
+const calendarWidth = screenWidth * 0.85;
 const cellSize = Math.floor((calendarWidth - screenWidth * 0.01 * 7) / 7);
 
 interface CustomCalendarGridProps {
@@ -20,7 +20,7 @@ export function CustomCalendarGrid({ rows, selectedMonth }: Readonly<CustomCalen
   const todayMonth = today.getMonth() + 1;
 
   return (
-    <View style={styles.container}>
+    <View>
       {rows.map((row, rowIdx) => (
         <View key={rowIdx} style={styles.row}>
           {row.map((d, colIdx) =>
@@ -62,19 +62,14 @@ export function CustomCalendarGrid({ rows, selectedMonth }: Readonly<CustomCalen
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: screenWidth * 0.8,
-    marginTop: screenHeight * 0.02,
-  },
   row: { 
     flexDirection: "row", 
-    justifyContent: "center", 
-    marginBottom: screenHeight * 0.01,
+    justifyContent: "center",
   },
   emptyCell: { 
     width: cellSize, 
-    height: cellSize * 1.2, 
-    borderRadius: cellSize / 2,
+    height: cellSize * 1.28, 
+    borderRadius: cellSize * 0.4,
     justifyContent: "flex-end", 
     alignItems: "flex-start",
     backgroundColor: "#FCFFF6",
@@ -91,8 +86,8 @@ const styles = StyleSheet.create({
   },
   dayCell: { 
     width: cellSize, 
-    height: cellSize * 1.2, 
-    borderRadius: cellSize / 2, 
+    height: cellSize * 1.28, 
+    borderRadius: cellSize * 0.4, 
     justifyContent: "flex-end", 
     alignItems: "flex-start",
     backgroundColor: "#FCFFF6",
@@ -109,15 +104,14 @@ const styles = StyleSheet.create({
   },
   dayText: { 
     fontSize: screenWidth * 0.025, 
-    color: "#222", 
+    color: "#567A3C", 
     fontWeight: "500" 
   },
   todayCell: {
-    backgroundColor: "#4CAF50",
-    borderColor: "#4CAF50",
+    backgroundColor: "#FFFA9C",
   },
   todayText: {
-    color: "#fff",
+    color: "#567A3C",
     fontWeight: "bold",
   }, 
 });
