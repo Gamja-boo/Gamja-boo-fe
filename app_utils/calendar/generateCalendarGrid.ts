@@ -1,8 +1,9 @@
-import { getDaysInMonth, getFirstDayOfWeek } from "@/app_utils/calendarUtils";
+import { getDaysInMonth } from "@/app_utils/calendar/getDaysInMonth";
+import { getFirstDayOfMonth } from "@/app_utils/calendar/getFirstDayOfMonth"
 
 export function generateCalendarGrid(year: number, month: number) {
   const daysInMonth = getDaysInMonth(year, month);
-  const firstDayOfWeek = getFirstDayOfWeek(year, month);
+  const firstDayOfWeek = getFirstDayOfMonth(year, month);
 
   const blanks = Array.from({ length: firstDayOfWeek }, () => null);
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);

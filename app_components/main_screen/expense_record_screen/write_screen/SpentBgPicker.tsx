@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Text, View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { TouchableOpacity, Text, View, StyleSheet, Dimensions } from "react-native";
 import DropDownBtn from "@/app_assets/expense_report_screen/write_screen/dropdownBtn.svg";
-import { spentBg } from "@/app_utils/SpentBgUtils";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+
+const spentBg = [
+  "교통", "식비", "여가", "생활", "기타", "고정 지출"
+];
 
 export function SpentBgPicker() {
   const [isOpen, setIsOpen] = useState(false);

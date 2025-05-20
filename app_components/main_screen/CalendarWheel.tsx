@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, TouchableOpacity, View, Text, StyleSheet } from "react-native";
-import { months } from "@/app_utils/calendarUtils";
 
 interface CalendarWheelProps {
   visible: boolean;
@@ -9,7 +8,13 @@ interface CalendarWheelProps {
   onClose: () => void;
 }
 
+const months = [
+  "1월", "2월", "3월", "4월", "5월", "6월",
+  "7월", "8월", "9월", "10월", "11월", "12월"
+];
+
 export function CalendarWheel({ visible, selectedMonth, onSelect, onClose }: Readonly<CalendarWheelProps>) {
+
   return (
     <Modal transparent visible={visible} animationType="fade">
       <View style={styles.modalBg}>
@@ -33,17 +38,17 @@ export function CalendarWheel({ visible, selectedMonth, onSelect, onClose }: Rea
 }
 
 const styles = StyleSheet.create({
-  modalBg: { 
-    flex: 1, 
+  modalBg: {
+    flex: 1,
     backgroundColor: "rgba(0,0,0,0.16)",
-    justifyContent: "center", 
-    alignItems: "center" 
+    justifyContent: "center",
+    alignItems: "center"
   },
-  modalBox: { 
-    backgroundColor: "#fff", 
-    borderRadius: 14, 
-    padding: 24, 
-    alignItems: "center", 
-    elevation: 5 
+  modalBox: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 24,
+    alignItems: "center",
+    elevation: 5
   }
 });

@@ -3,7 +3,7 @@ import { View, Text, Dimensions, StyleSheet } from "react-native";
 
 interface data {
   name: string;
-  population: number;
+  expenditure: number;
   color: string;
 }
 
@@ -25,31 +25,31 @@ export const PieChartCategory = ( { coloredData }: typeOfProps): JSX.Element => 
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.25 }}>
+      {coloredData[0] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.25 }}>
         <View style={{ ...styles.sticker, backgroundColor: COLORS[0] }} />
         <Text style={styles.text}>{coloredData[0].name}</Text>
-      </View>
-      <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.46 }}>
+      </View>}
+      {coloredData[1] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.46 }}>
         <View style={{ ...styles.sticker, backgroundColor: COLORS[1] }} />
         <Text style={styles.text}>{coloredData[1].name}</Text>
-      </View>
-      <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.65 }}>
+      </View>}
+      {coloredData[2] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.65 }}>
         <View style={{ ...styles.sticker, backgroundColor: COLORS[2] }} />
         <Text style={styles.text}>{coloredData[2].name}</Text>
-      </View>
+      </View>}
       <View style={{ flexDirection: "row", position: "absolute", top: screenHeight * 0.03 }}>
-        <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.25 }}>
+        {coloredData[3] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.25 }}>
           <View style={{ ...styles.sticker, backgroundColor: COLORS[3] }} />
           <Text style={styles.text}>{coloredData[3].name}</Text>
-        </View>
-        <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.46 }}>
+        </View>}
+        {coloredData[4] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.46 }}>
           <View style={{ ...styles.sticker, backgroundColor: COLORS[4] }} />
           <Text style={styles.text}>{coloredData[4].name}</Text>
-        </View>
-        <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.65 }}>
+        </View>}
+        {coloredData[5] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.65 }}>
           <View style={{ ...styles.sticker, backgroundColor: COLORS[5] }} />
           <Text style={styles.text}>{coloredData[5].name}</Text>
-        </View>
+        </View>}
       </View>
     </View>
   )

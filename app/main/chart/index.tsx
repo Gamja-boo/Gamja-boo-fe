@@ -1,14 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { View, Text, StatusBar, Dimensions, StyleSheet, ScrollView, Animated } from "react-native";
+import { View, Text, StatusBar, Dimensions, StyleSheet, ScrollView, Animated, InteractionManager } from "react-native";
 import { useRouter } from "expo-router";
 import { PieChart } from "react-native-chart-kit";
 import Svg, { Path } from 'react-native-svg';
-import { monthlyExpensesData } from "@/test_data/main_screen/chart_screen/data";
+import { getMonthlyExpenses } from '@/app_utils/finance/getMonthlyExpenses';
 import { PieChartCategory } from "@/app_components/main_screen/chart_screen/PieChartCategory";
 import { Header } from "@/app_components/main_screen/chart_screen/Header";
 import { BarGraph } from "@/app_components/main_screen/chart_screen/BarGraph";
-import { DatailCard } from "@/app_components/main_screen/chart_screen/DetailCard"
+import { DatailCard } from "@/app_components/main_screen/chart_screen/DetailCard";
+import { Monthlyexpenses } from '@/types/Monthlyexpenses';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -35,8 +36,10 @@ function describeArc(
 
   return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
 } // largeArcFlag 옆의 값이
-  // 0인 경우, 현재 위치(시작점: (start.x, start.y))에서 끝점(end.x, end.y)까지 반시계 방향으로 이동하는 경로로 그림
-  // 1인 경우, 시계 방향으로 이동하는 경로로 그림
+// 0인 경우, 현재 위치(시작점: (start.x, start.y))에서 끝점(end.x, end.y)까지 반시계 방향으로 이동하는 경로로 그림
+// 1인 경우, 시계 방향으로 이동하는 경로로 그림
+
+const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 export default function ChartScreen() {
   const router = useRouter();
@@ -44,17 +47,22 @@ export default function ChartScreen() {
   // ScrollView의 내부 메서드를 사용하기 위해 외부에 ScrollView 인스턴스 생성
   // 이후 실제 ScrollView가 속성을 조작해 놓은 인스턴스를 참조하게끔 함 -> ref={scrollRef}
   const isFocused = useIsFocused();
+  const month = new Date().getMonth()
+  const year = new Date().getFullYear();
+  const [monthOfCurrentInfo, setMonthOfCurrentInfo] = useState(months[month]);
+  const [yearOfCurrentInfo, setYearOfCurrentInfo] = useState(year.toString());
   const [isExpenditure, setIsExpenditure] = useState(true);
   const [showChart, setShowChart] = useState(false);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const pathRef = useRef<Path>(null);
+  const [graphVisible, setgraphVisible] = useState(false);
 
   const chartAnimation = () => {
     Animated.timing(animatedValue, {
       toValue: 1,
       duration: 1500,
       useNativeDriver: false,
-    }).start(() => {animatedValue.setValue(0)});
+    }).start(() => { animatedValue.setValue(0) });
 
     const id = animatedValue.addListener(({ value }) => {
       const angle = value * 360;
@@ -75,13 +83,16 @@ export default function ChartScreen() {
 
   useEffect(() => {
     chartAnimation();
-  }, []);
+  }, [monthOfCurrentInfo, yearOfCurrentInfo]);
 
   useEffect(() => {
     if (isFocused) {
-      setTimeout(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
         scrollRef.current?.scrollToEnd({ animated: false });
-      }, 0);
+        setgraphVisible(true);
+      });
+
+      return () => task.cancel();
     }
   }, [isFocused]);
 
@@ -94,8 +105,18 @@ export default function ChartScreen() {
     "#41AB5D",
   ];
 
-  const data = monthlyExpensesData;
-  const sortedData = [...data].sort((a, b) => b.population - a.population);
+  const [data, setData] = useState<Monthlyexpenses>([]);
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getMonthlyExpenses(yearOfCurrentInfo, monthOfCurrentInfo);
+      setData(data);
+    }
+    getData();
+  }, [monthOfCurrentInfo, yearOfCurrentInfo]);
+
+  console.log("currnetInfo => ", monthOfCurrentInfo);
+
+  const sortedData = [...data].sort((a, b) => b.expenditure - a.expenditure);
   const coloredData = sortedData.map((item, index) => {
     return {
       ...item,
@@ -116,40 +137,41 @@ export default function ChartScreen() {
 
   const paddingLeft = (screenWidth * 0.25).toString();
   const interval = screenHeight * 0.42;
+  const monthInfo = parseInt(monthOfCurrentInfo)
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <Header 
-        isExpenditure={isExpenditure} 
-        setIsExpenditure={setIsExpenditure} 
+      <Header
+        isExpenditure={isExpenditure}
+        setIsExpenditure={setIsExpenditure}
         setShowChart={setShowChart}
         chartAnimation={chartAnimation}
       />
-      <ScrollView 
+      <ScrollView
         decelerationRate={0.9}
         snapToInterval={interval}
         contentContainerStyle={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <View style={{ width: screenWidth, height: screenHeight * 0.36 }}>
           {showChart && (
-          <PieChart
-          data={coloredData}
-          width={screenWidth}
-          height={screenHeight * 0.36}
-          chartConfig={chartConfig}
-          accessor={"population"}
-          backgroundColor={"transparent"}
-          paddingLeft={paddingLeft}
-          center={[0, 0]}
-          hasLegend={false}
-        />
-        )}
+            <PieChart
+              data={coloredData}
+              width={screenWidth}
+              height={screenHeight * 0.36}
+              chartConfig={chartConfig}
+              accessor={"expenditure"}
+              backgroundColor={"transparent"}
+              paddingLeft={paddingLeft}
+              center={[0, 0]}
+              hasLegend={false}
+            />
+          )}
         </View>
         <View style={styles.chartCenterCircle}>
-          <Text style={styles.text1}>2월의</Text>
+          <Text style={styles.text1}>{monthInfo}월의</Text>
           <Text style={styles.text2}>{isExpenditure ? "지출" : "소득"}</Text>
         </View>
         <Svg width={screenHeight * 0.36} height={screenHeight * 0.36} style={{ position: "absolute", top: 0, backgroundColor: "transparent" }}>
@@ -159,13 +181,20 @@ export default function ChartScreen() {
           />
         </Svg>
         <PieChartCategory coloredData={coloredData} />
-        <BarGraph scrollRef={scrollRef} />
-        <DatailCard titleText1='이번 달의 ' titleText2='상세내역이에요' color='#D9F0A3' textColor='#329257'/>
-        <DatailCard titleText1='' titleText2='' color='#78C679' textColor=''/>
-        <DatailCard titleText1='' titleText2='' color='#D9F0A3' textColor=''/>
-        <DatailCard titleText1='' titleText2='' color='#75E88C' textColor=''/>
-        <DatailCard titleText1='' titleText2='' color='#D9F0A3' textColor=''/>
-        <DatailCard titleText1='' titleText2='' color='#78C679' textColor=''/>
+        <BarGraph
+          scrollRef={scrollRef}
+          graphVisible={graphVisible}
+          monthOfCurrentInfo={monthOfCurrentInfo}
+          setMonthOfCurrentInfo={setMonthOfCurrentInfo}
+          yearOfCurrentInfo={yearOfCurrentInfo}
+          setYearOfCurrentInfo={setYearOfCurrentInfo}
+        />
+        <DatailCard titleText1='이번 달의 ' titleText2='상세내역이에요' color='#D9F0A3' textColor='#329257' />
+        <DatailCard titleText1='' titleText2='' color='#78C679' textColor='' />
+        <DatailCard titleText1='' titleText2='' color='#D9F0A3' textColor='' />
+        <DatailCard titleText1='' titleText2='' color='#75E88C' textColor='' />
+        <DatailCard titleText1='' titleText2='' color='#D9F0A3' textColor='' />
+        <DatailCard titleText1='' titleText2='' color='#78C679' textColor='' />
         <View style={styles.space} />
       </ScrollView>
     </View>

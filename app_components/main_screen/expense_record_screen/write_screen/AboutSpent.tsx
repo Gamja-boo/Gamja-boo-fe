@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { SpentBgPicker } from "@/app_components/main_screen/expense_record_screen/write_screen/SpentBgPicker";
 import { SpentMoney } from "@/app_components/main_screen/expense_record_screen/write_screen/SpentMoney"
 

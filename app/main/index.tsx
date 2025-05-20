@@ -6,7 +6,7 @@ import CalendarBtn from "@/app_assets/main_screen/calendarBtn.svg";
 import { ShowMonth } from "@/app_components/main_screen/ShowMonth";
 import { CalendarWheel } from "@/app_components/main_screen/CalendarWheel";
 import { CustomCalendarGrid } from "@/app_components/main_screen/CustomCalendarGrid";
-import { generateCalendarGrid } from "@/app_utils/CalendarLogic";
+import { generateCalendarGrid } from "@/app_utils/calendar/generateCalendarGrid";
 import { DailyBudget } from "@/app_components/main_screen/DailyBudget";
 import { ExpenseBar } from "@/app_components/main_screen/ExpenseBar";
 
@@ -16,6 +16,7 @@ export default function MainScreen() {
   const router = useRouter();
 
   const today = new Date();
+  console.log(today.getMonth());
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedYear] = useState(today.getFullYear());
   const [selectedMonth, setSelectedMonth ] = useState(today.getMonth() + 1);

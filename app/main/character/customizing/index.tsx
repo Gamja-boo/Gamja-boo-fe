@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { CustomizingBar } from "@/app_components/main_screen/character_screen/customizing_screen/CustomizingBar";
 import { PurchaseBtn } from "@/app_components/main_screen/character_screen/customizing_screen/PurchaseBtn";
 import { Gamdoring } from "@/app_components/main_screen/character_screen/customizing_screen/Gamdoring";
