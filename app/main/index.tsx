@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions, KeyboardAvoidingView, Platform } from "react-native";
+import { useState, useEffect } from "react";
+import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
 import { useRouter } from "expo-router";
 import MyPageBtn from "@/app_assets/main_screen/myPageBtn.svg";
 import CalendarBtn from "@/app_assets/main_screen/calendarBtn.svg";
@@ -21,6 +21,17 @@ export default function MainScreen() {
   const [selectedYear] = useState(today.getFullYear());
   const [selectedMonth, setSelectedMonth ] = useState(today.getMonth() + 1);
   const rows = generateCalendarGrid(selectedYear, selectedMonth);
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const show = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
+    const hide = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -62,7 +73,17 @@ export default function MainScreen() {
             <CustomCalendarGrid rows={rows} selectedMonth={selectedMonth} />
           </View>
         </View>
+
+        {/* 백드롭 설정 */}
+        {keyboardVisible && (
+          <TouchableOpacity 
+            style={styles.backdrop} 
+            activeOpacity={1}
+            onPress={Keyboard.dismiss}
+          />
+        )}
       </View>
+
 
       {/* 뷰를 올려줌 */}
       <KeyboardAvoidingView
@@ -102,6 +123,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: "100%",
     alignItems: "center",
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.4)", // 어두운 반투명
+    zIndex: 2,
   },
   mypageBtn: {
     position: "absolute",
