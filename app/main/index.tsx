@@ -9,6 +9,7 @@ import { CustomCalendarGrid } from "@/app_components/main_screen/CustomCalendarG
 import { generateCalendarGrid } from "@/app_utils/calendar/generateCalendarGrid";
 import { DailyBudget } from "@/app_components/main_screen/DailyBudget";
 import { ExpenseBar } from "@/app_components/main_screen/ExpenseBar";
+import BackBtn from "@/app_assets/setting_nickname_screen/button.svg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -37,6 +38,14 @@ export default function MainScreen() {
     <View style={styles.container}>
       {/* 고정 뷰 */}
       <View style={styles.fixedContainer}>
+
+        {/* 임시 로그인 화면 돌아가기 버튼 */}
+        <TouchableOpacity 
+          style={styles.backBtn}
+          onPress={() => router.push("/login_setting")}>
+          <BackBtn width={ screenWidth * 0.14 } height={ screenHeight * 0.14 }/>
+        </TouchableOpacity>
+
         {/* 마이페이지 버튼 */}
         <TouchableOpacity 
           style={styles.mypageBtn}
@@ -139,6 +148,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     top: screenHeight * 0.02,
     right: screenWidth * 0.19,
+    width: screenWidth * 0.12,
+    height: screenHeight * 0.06,
+    borderRadius: screenWidth,
+    zIndex: 3,
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    // shadow at Android
+    elevation: 5,
+  },
+  backBtn: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    top: screenHeight * 0.02,
+    left: screenWidth * 0.1,
     width: screenWidth * 0.12,
     height: screenHeight * 0.06,
     borderRadius: screenWidth,

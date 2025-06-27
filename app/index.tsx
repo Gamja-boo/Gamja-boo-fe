@@ -1,4 +1,4 @@
-import { View, StatusBar, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { LoginPage } from "@/app_components/LoginPage";
 
@@ -8,8 +8,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <TouchableOpacity onPress={() => router.push("/main")}>
+      <TouchableOpacity onPress={() => router.push("/login_setting")}>
         <LoginPage />
       </TouchableOpacity>
     </View>
