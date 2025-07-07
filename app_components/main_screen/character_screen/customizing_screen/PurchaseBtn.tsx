@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
   purchaseBtn: {
     justifyContent: "center",
     alignItems: "center",
-    height: screenHeight * 0.08,
-    width: screenWidth * 0.55,
-    backgroundColor: "#fff",
+    height: screenHeight * 0.07,
+    width: screenWidth * 0.57,
+    backgroundColor: "#75E88C",
     borderTopLeftRadius: screenHeight * 0.05,
     borderTopRightRadius: screenHeight * 0.05,
     borderBottomRightRadius: screenHeight * 0.05,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: screenWidth * 0.05,
-    color: "#329257",
+    color: "#fff",
     fontWeight: "bold",
   },
   modal: {

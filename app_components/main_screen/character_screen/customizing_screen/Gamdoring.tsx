@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import Skin from "@/app_assets/customizing_screen/skin.svg"
+import Skin from "@/app_assets/character_screen/customizing_screen/skin1.svg"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
