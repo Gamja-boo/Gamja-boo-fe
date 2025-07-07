@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { skinItems } from "@/app_utils/items/skinItems";
 import { clothItems } from "@/app_utils/items/clothItems";
+import { accessoryItems } from "@/app_utils/items/accessoryItems";
 import { CustomizingBar } from "@/app_components/main_screen/character_screen/customizing_screen/CustomizingBar";
 import { PurchaseBtn } from "@/app_components/main_screen/character_screen/customizing_screen/PurchaseBtn";
 import { Gamdoring } from "@/app_components/main_screen/character_screen/customizing_screen/Gamdoring";
@@ -18,7 +20,9 @@ export default function CustomizingScreen() {
   const router = useRouter();
 
   const [selected, setSelected] = useState<"skin" | "cloth" | "accessory">("cloth");
+  const [selectedSkin, setSelectedSkin] = useState<string | null>(null);
   const [selectedCloth, setSelectedCloth] = useState<string | null>(null);
+  const [selectedAccessory, setSelectedAccessory] = useState<string | null>(null);
 
   return (
     <View style={styles.container}>
@@ -38,8 +42,50 @@ export default function CustomizingScreen() {
       {/* 캐릭터를 나타낼 박스 */}
       <View style={styles.characterCon}>
         <Character />
+        {skinItems.map(item =>
+          selectedSkin === item.id && (
+            <React.Fragment key={item.id}>
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: (item.position.bottom ?? 0) + 15,
+                  left: (item.position.left ?? 0) - 10,
+                  width: (item.size?.width ?? screenWidth * 0.2) * 1.7,
+                  height: (item.size?.height ?? screenHeight * 0.2) / 2,
+                  backgroundColor: "#FFE9B8",
+                  borderRadius: screenWidth * 0.5,
+                }}
+              />
+              <item.Component
+                width={item.size?.width ?? screenWidth * 0.2}
+                height={item.size?.height ?? screenHeight * 0.2}
+                style={
+                  {
+                    position: "absolute",
+                    ...item.position,
+                  }
+                } 
+              />
+            </React.Fragment>
+          )
+        )}
         {clothItems.map(item =>
           selectedCloth === item.id && (
+            <item.Component
+            key={item.id}
+            width={item.size?.width ?? screenWidth * 0.2}
+            height={item.size?.height ?? screenHeight * 0.2}
+              style={
+                {
+                  position: "absolute",
+                  ...item.position,
+                }
+              } 
+            />
+          )
+        )}
+        {accessoryItems.map(item =>
+          selectedAccessory === item.id && (
             <item.Component
             key={item.id}
             width={item.size?.width ?? screenWidth * 0.2}
@@ -62,7 +108,10 @@ export default function CustomizingScreen() {
 
       {selected === "skin" && (
         <View style={styles.chooseCon}>
-          <ChooseSkin/>
+          <ChooseSkin
+            items={skinItems}
+            onSelect={setSelectedSkin}
+            />
         </View>
       )}
 
@@ -77,7 +126,10 @@ export default function CustomizingScreen() {
 
       {selected === "accessory" && (
         <View style={styles.chooseCon}>
-          <ChooseAccessory />
+          <ChooseAccessory
+            items={accessoryItems}
+            onSelect={setSelectedAccessory}
+            />
         </View>
       )}
 
