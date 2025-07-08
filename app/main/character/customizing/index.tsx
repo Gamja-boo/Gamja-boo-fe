@@ -135,7 +135,11 @@ export default function CustomizingScreen() {
 
       {/* 구매하기 버튼 */}
       <View style={styles.purchaseBtnContainer}>
-        <PurchaseBtn />
+        <PurchaseBtn
+          selectedSkin={selectedSkin}
+          selectedCloth={selectedCloth}
+          selectedAccessory={selectedAccessory}
+          />
       </View>
     </View>
   );

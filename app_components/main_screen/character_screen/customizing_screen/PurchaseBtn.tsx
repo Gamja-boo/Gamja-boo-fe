@@ -2,15 +2,35 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export function PurchaseBtn() {
+export function PurchaseBtn({
+  selectedSkin,
+  selectedCloth,
+  selectedAccessory,
+}: {
+  selectedSkin: string | null;
+  selectedCloth: string | null;
+  selectedAccessory: string | null;
+}) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const router = useRouter();
 
   const openModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
+
+  const handlePurchase = () => {
+    router.push({
+      pathname: "/main/character/customizing/purchase_item",
+      params: {
+        skin: selectedSkin ?? "",
+        cloth: selectedCloth ?? "",
+        accessory: selectedAccessory ?? "",
+      },
+    });
+  };
 
   return (
     <View>
@@ -32,7 +52,7 @@ export function PurchaseBtn() {
         <View style={styles.modalContent}>
           <View style={styles.modalOption}>
             <Text style={styles.modalText}>필요 감도링</Text>
-            <Text style={styles.modalText}>00</Text>
+            <Text style={styles.modalText}>03</Text>
           </View>
 
           <View style={styles.modalOption}>
@@ -50,7 +70,7 @@ export function PurchaseBtn() {
           </View>
 
           <TouchableOpacity
-            onPress={() => router.push("/main/character/customizing/purchase_complete/index")}
+            onPress={handlePurchase}
             style={styles.payment}>
             <Text style={styles.paymentText}>결제하기</Text>
           </TouchableOpacity>

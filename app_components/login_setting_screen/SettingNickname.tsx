@@ -4,9 +4,9 @@ import Ja from "@/app_assets/ja.svg";
 import Boo from "@/app_assets/boo.svg";
 import Grass from "@/app_assets/grass.svg";
 import Sprout from "@/app_assets/sprout.svg";
-import PinkClover from "@/app_assets/setting_nickname_screen/pinkClover.svg";
-import OrangeClover from "@/app_assets/setting_nickname_screen/orangeClover.svg";
-import GreenClover from "@/app_assets/setting_nickname_screen/greenClover.svg";
+import Flower1 from "@/app_assets/setting_nickname_screen/flower1.svg";
+import Flower2 from "@/app_assets/setting_nickname_screen/flower2.svg";
+import Flower3 from "@/app_assets/setting_nickname_screen/flower3.svg";
 import SmileGamja from "@/app_assets/setting_nickname_screen/smileGamja.svg";
 import BigGrass from "@/app_assets/setting_nickname_screen/bigGrass.svg";
 import { useState } from "react";
@@ -22,14 +22,14 @@ export function SettingNickname() {
     <View style={styles.container}>
       <Text style={styles.text}>나만의 감도리 이름을 지어요</Text>
       
-      <OrangeClover />
+      <Flower1 style={{ zIndex: 1, marginBottom: -screenHeight * 0.01 }} />
       <View style={styles.cloverCon}>
-        <PinkClover />
-        <GreenClover />
+        <Flower2 />
+        <Flower3 />
       </View>
       
-      <SmileGamja />
-      <BigGrass />
+      <SmileGamja style={{ zIndex: 1, marginBottom: -screenHeight * 0.055 }}/>
+      <BigGrass/>
 
       <View style={styles.nameContainer}>
         <TextInput
@@ -43,17 +43,17 @@ export function SettingNickname() {
       </View>
 
       <View style={styles.gamjaboo}>
-        <View style={{ left: screenWidth * 0.12 }}>
+        <View style={{ left: screenWidth * 0.1 }}>
           <Sprout height={screenHeight * 0.02} width={screenWidth * 0.05} />
         </View>
 
         <View style={styles.name}>
-          <Gam height={screenHeight * 0.05} width={screenWidth * 0.1} />
-          <Ja height={screenHeight * 0.05} width={screenWidth * 0.1} />
-          <Boo height={screenHeight * 0.05} width={screenWidth * 0.1} />
+          <Gam height={screenHeight * 0.045} width={screenWidth * 0.08} />
+          <Ja height={screenHeight * 0.045} width={screenWidth * 0.08} />
+          <Boo height={screenHeight * 0.045} width={screenWidth * 0.08} />
         </View>
         
-        <Grass width={screenWidth * 0.33} />
+        <Grass width={screenWidth * 0.28} style={{ marginTop: -screenHeight * 0.005 }}/>
 
       </View>
     </View>
@@ -99,7 +99,10 @@ const styles = StyleSheet.create({
     bottom: screenHeight * 0.07,
   },
   cloverCon: {
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "row",
-    gap: screenWidth * 0.2
+    bottom: screenHeight * 0.02,
+    gap: screenWidth * 0.15,
   },
 });
