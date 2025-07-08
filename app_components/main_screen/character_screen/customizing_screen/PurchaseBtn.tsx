@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
+import { router } from "expo-router";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -48,7 +49,9 @@ export function PurchaseBtn() {
             <Text style={styles.modalText}>00</Text>
           </View>
 
-          <TouchableOpacity style={styles.payment}>
+          <TouchableOpacity
+            onPress={() => router.push("/main/character/customizing/purchase_complete/index")}
+            style={styles.payment}>
             <Text style={styles.paymentText}>결제하기</Text>
           </TouchableOpacity>
         </View>

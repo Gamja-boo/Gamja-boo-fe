@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
   rowContainer2: {
     flexDirection: "row",
     justifyContent: "center",
-    paddingBottom: screenWidth * 0.07,
-    gap: screenWidth * 0.2,
+    paddingBottom: screenHeight * 0.04,
+    paddingTop: screenHeight * 0.01,
+    gap: screenWidth * 0.21,
   },
   priceContainer: {
     flexDirection: "row",

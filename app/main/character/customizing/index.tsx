@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   characterCon: {
     position: "absolute",
-    top: screenHeight * 0.2,
+    top: screenHeight * 0.17,
     width: screenWidth * 0.4,
     height: screenHeight * 0.2,
     justifyContent: "center",
@@ -184,6 +184,6 @@ const styles = StyleSheet.create({
   },
   purchaseBtnContainer: {
     position: "absolute",
-    bottom: screenHeight * 0.1,
+    bottom: screenHeight * 0.07,
   },
 }) 
