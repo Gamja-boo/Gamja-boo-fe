@@ -1,16 +1,11 @@
-import apiClient from "@/api/apiClient";
-import { getWeekOfMonth } from "@/app_utils/calendar/getWeekOfMonth";
-import { SpendingDetails } from "@/types/SpendingDetails";
-import { Transaction } from "@/types/Transaction";
-import { WeeklyExpenses } from "@/types/WeeklyExpenses";
+import apiClient from '@/api/apiClient';
+import { getWeekOfMonth } from '@/app_utils/calendar/getWeekOfMonth';
+import { SpendingDetails } from '@/types/SpendingDetails';
+import { Transaction } from '@/types/transaction';
+import { WeeklyExpenses } from '@/types/WeeklyExpenses';
 
-export const getWeeklyExpenses = async (
-  year: string,
-  month: string
-): Promise<WeeklyExpenses> => {
-  const response = await apiClient.get(
-    `/api/stats/monthly/${year}-${month}-01?kakaoId=1`
-  );
+export const getWeeklyExpenses = async (year: string, month: string): Promise<WeeklyExpenses> => {
+  const response = await apiClient.get(`/api/stats/monthly/${year}-${month}-01?kakaoId=1`);
   const monthlyData = response.data.data.transactions;
   const week1Total = new Map();
   const week2Total = new Map();

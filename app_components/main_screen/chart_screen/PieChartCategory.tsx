@@ -1,36 +1,33 @@
-import React from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { Transaction } from '@/types/transaction';
+import React from 'react';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
-interface data {
-  categoryName: string;
-  amount: number;
+interface ColoredData {
   color: string;
+  textColor: string;
+  percentage: number;
+  categoryName: string;
+  amountSum: number;
+  transactions: Transaction[];
 }
 
-interface typeOfProps {
-  coloredData: data[];
+interface PieChartCategory {
+  coloredData: ColoredData[];
 }
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
-  const COLORS = [
-    "#FFFFE5",
-    "#F7FCB9",
-    "#D9F0A3",
-    "#ADDD8E",
-    "#78C679",
-    "#41AB5D",
-  ];
+export const PieChartCategory = ({ coloredData }: PieChartCategory): JSX.Element => {
+  const COLORS = ['#FFFFE5', '#F7FCB9', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D'];
 
   return (
     <View style={styles.container}>
       {coloredData[0] !== undefined && (
         <View
           style={{
-            flexDirection: "row",
-            position: "absolute",
-            alignItems: "center",
+            flexDirection: 'row',
+            position: 'absolute',
+            alignItems: 'center',
             left: screenWidth * 0.25,
           }}
         >
@@ -41,9 +38,9 @@ export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
       {coloredData[1] !== undefined && (
         <View
           style={{
-            flexDirection: "row",
-            position: "absolute",
-            alignItems: "center",
+            flexDirection: 'row',
+            position: 'absolute',
+            alignItems: 'center',
             left: screenWidth * 0.46,
           }}
         >
@@ -54,9 +51,9 @@ export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
       {coloredData[2] !== undefined && (
         <View
           style={{
-            flexDirection: "row",
-            position: "absolute",
-            alignItems: "center",
+            flexDirection: 'row',
+            position: 'absolute',
+            alignItems: 'center',
             left: screenWidth * 0.65,
           }}
         >
@@ -66,17 +63,17 @@ export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
       )}
       <View
         style={{
-          flexDirection: "row",
-          position: "absolute",
+          flexDirection: 'row',
+          position: 'absolute',
           top: screenHeight * 0.03,
         }}
       >
         {coloredData[3] !== undefined && (
           <View
             style={{
-              flexDirection: "row",
-              position: "absolute",
-              alignItems: "center",
+              flexDirection: 'row',
+              position: 'absolute',
+              alignItems: 'center',
               left: screenWidth * 0.25,
             }}
           >
@@ -87,9 +84,9 @@ export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
         {coloredData[4] !== undefined && (
           <View
             style={{
-              flexDirection: "row",
-              position: "absolute",
-              alignItems: "center",
+              flexDirection: 'row',
+              position: 'absolute',
+              alignItems: 'center',
               left: screenWidth * 0.46,
             }}
           >
@@ -100,9 +97,9 @@ export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
         {coloredData[5] !== undefined && (
           <View
             style={{
-              flexDirection: "row",
-              position: "absolute",
-              alignItems: "center",
+              flexDirection: 'row',
+              position: 'absolute',
+              alignItems: 'center',
               left: screenWidth * 0.65,
             }}
           >
@@ -117,7 +114,7 @@ export const PieChartCategory = ({ coloredData }: typeOfProps): JSX.Element => {
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    flexDirection: 'column',
     width: screenWidth,
     height: screenHeight * 0.06,
   },

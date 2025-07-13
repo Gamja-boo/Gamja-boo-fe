@@ -1,25 +1,31 @@
-import { View, StyleSheet, StatusBar, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { SettingNickname } from "@/app_components/login_setting_screen/SettingNickname";
-import Button from "@/app_assets/setting_nickname_screen/button.svg"
+import Button from "@/app_assets/setting_nickname_screen/button.svg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function App() {
+export default function LoginScreen() {
   const router = useRouter();
-  
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-        <SettingNickname/>
-        <TouchableOpacity 
-          onPress={() => router.push("/main")}
-          style={styles.btnContainer}
-        >
-          <Button />
-        </TouchableOpacity>
-      </View>
-    );
+
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <SettingNickname />
+      <TouchableOpacity
+        onPress={() => router.push("/main")}
+        style={styles.btnContainer}
+      >
+        <Button />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -44,4 +50,4 @@ const styles = StyleSheet.create({
     // shadow at Android
     elevation: 5,
   },
-})
+});

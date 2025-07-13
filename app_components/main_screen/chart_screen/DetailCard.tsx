@@ -1,11 +1,5 @@
-import React from "react";
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React from 'react';
+import { Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface typeOfProps {
   categoryName: string;
@@ -17,7 +11,7 @@ interface typeOfProps {
   setCategoryType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export const DatailCard = ({
   setModalVisible,
@@ -45,15 +39,15 @@ export const DatailCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     width: screenWidth * 0.76,
     height: screenHeight * 0.08,
     marginBottom: screenHeight * 0.03,
-    backgroundColor: "",
+    backgroundColor: '',
     borderRadius: screenWidth * 0.04,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84, // ios 그림자 효과
@@ -61,12 +55,12 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#FFFFFF",
+    fontWeight: '600',
+    color: '#FFFFFF',
   },
   text2: {
     fontSize: 16,
-    fontWeight: "400",
-    color: "#FFFFFF",
+    fontWeight: '400',
+    color: '#FFFFFF',
   },
 });
