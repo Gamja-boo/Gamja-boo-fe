@@ -1,7 +1,11 @@
 export interface Transaction {
-  id: string;
-  name: string;
-  earnings: number;
-  expenditure: number;
-  createdAt: string;
+  transactionId: number;
+  kakaoId: number;
+  categoryName: string;
+  amount: number;
+  transactionType: string;
+  background: string;
+  date: string;
+  isFixed: boolean;
+  memo: string;
 }

@@ -1,36 +1,59 @@
-import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 interface typeOfProps {
-  titleText1: string;
-  titleText2: string;
+  categoryName: string;
+  amount: number;
+  percent: number;
   color: string;
   textColor: string;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setCategoryType: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export const DatailCard = ({ titleText1, titleText2, color, textColor }: typeOfProps): JSX.Element => {
+export const DatailCard = ({
+  setModalVisible,
+  setCategoryType,
+  categoryName,
+  amount,
+  percent,
+  color,
+  textColor,
+}: typeOfProps): JSX.Element => {
   return (
-    <View style={{ ...styles.card, backgroundColor: color }}>
-      <View style={{ flexDirection: "row", position: "absolute", top: screenHeight * 0.03 }}>
-        <Text style={{ ...styles.text1, color: textColor }}>{titleText1}</Text>
-        <Text style={{ ...styles.text2, color: textColor }}>{titleText2}</Text>
-      </View>
-    </View>
-  )
-}
+    <TouchableOpacity
+      onPress={() => {
+        setModalVisible(true);
+        setCategoryType(categoryName);
+      }}
+      style={{ ...styles.card, backgroundColor: color }}
+    >
+      <Text style={{ ...styles.text1, color: textColor }}>{categoryName}</Text>
+      <Text style={{ ...styles.text1, color: textColor }}>{amount}원</Text>
+      <Text style={{ ...styles.text2, color: textColor }}>{percent}%</Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
     width: screenWidth * 0.76,
-    height: screenHeight * 0.28,
-    marginTop: screenHeight * 0.04,
+    height: screenHeight * 0.08,
+    marginBottom: screenHeight * 0.03,
     backgroundColor: "",
-    borderRadius: screenWidth * 0.07,
-    shadowColor: '#000',
+    borderRadius: screenWidth * 0.04,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84, // ios 그림자 효과
@@ -39,11 +62,11 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   text2: {
     fontSize: 16,
     fontWeight: "400",
     color: "#FFFFFF",
   },
-})
+});
