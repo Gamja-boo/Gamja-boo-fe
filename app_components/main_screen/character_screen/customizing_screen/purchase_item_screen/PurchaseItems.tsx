@@ -12,12 +12,20 @@ import BigGrass from "@/app_assets/setting_nickname_screen/bigGrass.svg";
 import { skinItems } from "@/app_utils/items/skinItems";
 import { clothItems } from "@/app_utils/items/clothItems";
 import { accessoryItems } from "@/app_utils/items/accessoryItems";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export function PurchaseItems() {
+export function PurchaseItems({
+  selectedSkin,
+  selectedCloth,
+  selectedAccessory,
+}: {
+  selectedSkin: string | null;
+  selectedCloth: string | null;
+  selectedAccessory: string | null;
+}) {
   const { skin, cloth, accessory } = useLocalSearchParams();
   
   const skinItem = skinItems.find(item => item.id === skin)
@@ -26,6 +34,20 @@ export function PurchaseItems() {
 
   const xOffset = screenWidth * 0.3;
   const yOffset = screenHeight * 0.42;
+
+  const handleCustomizing = () => {
+    const params: Record<string, string> = {};
+
+    if (selectedSkin) params.skin = selectedSkin;
+    if (selectedCloth) params.cloth = selectedCloth;
+    if (selectedAccessory) params.accessory = selectedAccessory;
+
+    router.push({
+      pathname: "/main/character",
+      params,
+    });
+  };
+
 
   return (
     <View style={styles.container}>
@@ -110,7 +132,9 @@ export function PurchaseItems() {
         <TouchableOpacity style={styles.receipt}>
           <Text style={{ color: "#fff", fontSize: screenWidth * 0.04, fontWeight: "bold" }}>주문 내역</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.show}>
+        <TouchableOpacity 
+          onPress={handleCustomizing}
+          style={styles.show}>
           <Text style={{ color: "#fff", fontSize: screenWidth * 0.04, fontWeight: "bold" }}>감도리 보기</Text>
         </TouchableOpacity>
       </View>

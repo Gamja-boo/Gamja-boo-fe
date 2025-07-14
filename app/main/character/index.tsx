@@ -1,5 +1,5 @@
-import { View, StatusBar, TouchableOpacity, Image, StyleSheet, Dimensions } from "react-native";
-import { useRouter } from "expo-router";
+import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import Character from "@/app_assets/character_screen/character.svg";
 import Ground from "@/app_assets/character_screen/ground.svg";
 import Flower1 from "@/app_assets/character_screen/flower1.svg";
@@ -8,11 +8,22 @@ import Flower3 from "@/app_assets/character_screen/flower3.svg";
 import Grass from "@/app_assets/character_screen/grass.svg";
 import Shop from "@/app_assets/character_screen/shop.svg";
 import Share from "@/app_assets/character_screen/share.svg";
+import { skinItems } from "@/app_utils/items/skinItems";
+import { clothItems } from "@/app_utils/items/clothItems";
+import { accessoryItems } from "@/app_utils/items/accessoryItems";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function CharacterScreen() {
   const router = useRouter();
+
+  const { skin, cloth, accessory } = useLocalSearchParams();
+
+  const skinItem = typeof skin === "string" ? skinItems.find(item => item.id === skin) : null;
+  const clothItem = typeof cloth === "string" ? clothItems.find(item => item.id === cloth) : null;
+  const accessoryItem = typeof accessory === "string" ? accessoryItems.find(item => item.id === accessory) : null;
+
+  const yOffset = -screenHeight * 0.001;
 
   return (
     <View style={styles.container}>
@@ -34,7 +45,61 @@ export default function CharacterScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.characterCon}>
         <Character />
+
+        {skinItem && (
+          <View
+            style={{
+              position: "absolute",
+              bottom: skinItem.position?.bottom !== undefined
+                ? skinItem.position.bottom + yOffset + 17
+                : undefined,
+              zIndex: 99,
+
+              borderRadius: screenWidth * 0.5,
+              width: (skinItem.size?.width ?? screenWidth * 0.2) * 1.7,
+              height: (skinItem.size?.height ?? screenHeight * 0.2) / 2,
+              backgroundColor: "#FFE9B8",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <skinItem.Component
+              width={skinItem.size?.width ?? screenWidth * 0.2}
+              height={skinItem.size?.height ?? screenHeight * 0.2}
+            />
+          </View>
+        )}
+
+
+        {clothItem && (
+          <clothItem.Component
+            width={clothItem.size?.width ?? screenWidth * 0.2}
+            height={clothItem.size?.height ?? screenHeight * 0.2}
+            style={
+              {
+                position: "absolute",
+                ...clothItem.position,
+                zIndex: 99,
+              }
+            } 
+          />
+        )}
+
+        {accessoryItem && (
+          <accessoryItem.Component
+            width={accessoryItem.size?.width ?? screenWidth * 0.2}
+            height={accessoryItem.size?.height ?? screenHeight * 0.2}
+            style={
+              {
+                position: "absolute",
+                ...accessoryItem.position,
+                zIndex: 99,
+              }
+            } 
+          />
+        )}
       </View>
+
       <View style={styles.boxCon}>
         <Grass width={screenWidth * 0.78} style={{ marginBottom: -screenHeight * 0.02, zIndex: 1 }}/>
         <View style={styles.flowerCon}>
