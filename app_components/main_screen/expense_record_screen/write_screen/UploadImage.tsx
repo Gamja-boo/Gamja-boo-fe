@@ -111,16 +111,17 @@ const styles = StyleSheet.create({
     fontSize: screenWidth * 0.04,
   },
   modal: {
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
-    margin: 0,
   },
   modalContent: {
+    height: screenHeight * 0.25,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
     paddingHorizontal: screenWidth * 0.1,
     paddingVertical: screenHeight * 0.035,
-    borderTopLeftRadius: screenWidth * 0.1,
-    borderTopRightRadius: screenWidth * 0.1,
+    borderRadius: screenWidth * 0.07,
   },
   modalOption: {
     flexDirection: "row",
@@ -131,14 +132,14 @@ const styles = StyleSheet.create({
     padding: screenWidth * 0.04,
     margin: screenWidth * 0.015,
     borderRadius: screenWidth * 0.1,
-    gap: screenWidth * 0.02,
+    gap: screenWidth * 0.03,
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     // shadow at Android
-    elevation: 5,
+    elevation: 2,
   },
   modalClose: {
     alignItems: "center",
