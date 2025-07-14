@@ -1,15 +1,33 @@
-import React, { RefObject, useRef, useState, useEffect } from 'react';
-import { View, Text, Dimensions, StyleSheet, Vibration, ScrollView } from "react-native";
-import ArrowDropDown from "@/app_assets/chart_screen/arrow_drop_down.svg";
-import { WeeklyExpenses } from '@/types/WeeklyExpenses';
-import { getWeeklyExpenses } from '@/app_utils/finance/getWeeklyExpenses';
-import { getMonthlyExpenseTotal } from '@/app_utils/finance/getMonthlyExpenseTotal';
+import React, { useRef, useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Vibration,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
+import ArrowDropDown from '@/app_assets/chart_screen/arrow_drop_down.svg';
+import { splitMonthlyDataByWeek } from '@/app_utils/finance/splitMonthlyDataByWeek';
+import { useMonthlyTransaction } from '@/hooks/useMonthlyTransaction';
+import { Transaction } from '@/types/transaction';
+import { useIsFocused } from '@react-navigation/native';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
+type Bundle = {
+  week1: Transaction[];
+  week2: Transaction[];
+  week3: Transaction[];
+  week4: Transaction[];
+  week5: Transaction[];
+  week6: Transaction[];
+};
 interface typeOfProps {
-  scrollRef: RefObject<ScrollView>;
+  isExpenditure: boolean;
   graphVisible: boolean;
+  setgraphVisible: React.Dispatch<React.SetStateAction<boolean>>;
   monthOfCurrentInfo: string;
   setMonthOfCurrentInfo: React.Dispatch<React.SetStateAction<string>>;
   yearOfCurrentInfo: string;
@@ -17,29 +35,29 @@ interface typeOfProps {
 }
 
 type dataType = {
-  month: string,
-  week: number,
-  expenseTotal: number,
-}
+  month: string;
+  week: number;
+  totalAmount: number;
+};
 
-const maxBarheight = screenHeight * 0.2;
-const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+const maxBarheight = screenHeight * 0.1;
+const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
 export const BarGraph = ({
-  scrollRef,
+  isExpenditure,
   graphVisible,
+  setgraphVisible,
   monthOfCurrentInfo,
   setMonthOfCurrentInfo,
   yearOfCurrentInfo,
-  setYearOfCurrentInfo
+  setYearOfCurrentInfo,
 }: typeOfProps): JSX.Element => {
-  const hasScrolledRef = useRef(false);
   const prevIndexRef = useRef(-1);
   const interval = screenWidth * 0.1325;
   const date = new Date();
-  const todayYear = date.getFullYear();
   const todayMonth = date.getMonth();
   const [queue, setQueue] = useState<string[]>([]);
+  const scrollRef = useRef<ScrollView>(null);
   useEffect(() => {
     let offset = todayMonth + 12;
     const arr: string[] = [];
@@ -49,38 +67,40 @@ export const BarGraph = ({
       offset = offset - 1;
     }
     setQueue(arr);
-  }, []);
-  console.log("queue => ", queue);
-
+  }, [todayMonth]);
+  const { yearlyData } = useMonthlyTransaction();
   const [data, setData] = useState<dataType[]>([]);
-  const [monthlyExpenseTotal, setMonthlyExpenseTotal] = useState<number[]>([]); // 월별 소비 총액
-  const [monthlyDataNum, setMonthlyDataNum] = useState<number[]>([]); // 월별 주 단위 데이터 개수 
+  const [monthlyTotalAmount, setMonthlyTotalAmount] = useState<number[]>([]); // 월별 소비 총액
+  const [monthlyDataNum, setMonthlyDataNum] = useState<number[]>([]); // 월별 주 단위 데이터 개수
   useEffect(() => {
     const getInitData = async () => {
       const dataArr: dataType[] = [];
       const dataNumArr: number[] = [0];
-      const expenseTotalArr: number[] = [];
-      let year = todayYear.toString();
+      const totalAmountArr: number[] = [];
       let sum = 0;
       for (const month of queue.slice(0, 6)) {
-        const data = await getWeeklyExpenses(year, month);
-        const ExpenseTotal = await getMonthlyExpenseTotal(year, month);
-        expenseTotalArr.push(ExpenseTotal);
-        console.log(`${year}-${month} => `, data);
+        const data = splitMonthlyDataByWeek(
+          yearlyData[parseInt(month, 10) - 1],
+          isExpenditure ? 'E' : 'I',
+        );
+        const monthlyTotalAmount = isExpenditure
+          ? yearlyData[parseInt(month, 10) - 1]?.totalSpent
+          : yearlyData[parseInt(month, 10) - 1]?.totalIncome;
+        totalAmountArr.push(monthlyTotalAmount!);
         let count = 0;
         for (let i = 6; i > 0; i--) {
           let weeklySum = 0;
-          const weekNum = `week${i}` as keyof WeeklyExpenses;
-          if (data[weekNum].length !== 0) {
-            data[weekNum].forEach((item) => {
-              weeklySum = weeklySum + item.expenditure;
-            })
+          const weekNum = `week${i}` as keyof Bundle;
+          if (data![weekNum].length !== 0) {
+            data![weekNum].forEach((item) => {
+              weeklySum = weeklySum + item.amount;
+            });
             count++;
             dataArr.push({
               month: month,
               week: i,
-              expenseTotal: weeklySum,
-            })
+              totalAmount: weeklySum,
+            });
           }
         }
         sum = sum + count;
@@ -89,113 +109,149 @@ export const BarGraph = ({
         } else {
           dataNumArr.unshift(sum - 1);
         }
-
-        if (month === "01") {
-          year = (todayYear - 1).toString();
-        }
       }
       setData(dataArr);
       setMonthlyDataNum(dataNumArr);
-      setMonthlyExpenseTotal(expenseTotalArr);
-    }
+      setMonthlyTotalAmount(totalAmountArr);
+    };
     getInitData();
-  }, [queue]);
-  console.log(data);
-  console.log(queue);
-  console.log(monthlyDataNum);
-  console.log(monthlyExpenseTotal);
+  }, [queue, isExpenditure, setgraphVisible, yearlyData]);
+
+  useEffect(() => {
+    if (monthlyTotalAmount.length === 0) return;
+    setgraphVisible(false);
+    scrollRef.current?.scrollToEnd({ animated: false });
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: false });
+      setgraphVisible(true);
+    }, 1000);
+  }, [setgraphVisible, isExpenditure, monthlyTotalAmount]);
 
   return (
-    <View style={styles.barGraph}>
-      <View style={{ flexDirection: "row", marginTop: screenHeight * 0.03 }}>
-        <Text style={styles.text1}>셋째 주에 </Text>
-        <Text style={styles.text2}>가장 지출이 많았어요</Text>
+    <View style={[styles.barGraph, !isExpenditure && { backgroundColor: '#FCFFF6' }]}>
+      <View style={{ flexDirection: 'row', marginTop: screenHeight * 0.03 }}>
+        <Text style={[styles.text1, !isExpenditure && { color: '#329257' }]}>셋째 주에 </Text>
+        <Text style={[styles.text2, !isExpenditure && { color: '#329257' }]}>
+          가장 {isExpenditure ? '지출' : '소득'}이 많았어요
+        </Text>
       </View>
-      <ArrowDropDown height={screenWidth * 0.07} width={screenWidth * 0.07} fill="#FFFFFF" style={styles.arrowDropDown} />
-      {graphVisible && <ScrollView
-        horizontal={true}
-        decelerationRate={0.9}
-        snapToInterval={interval}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row-reverse",
-        }}
-        ref={scrollRef}
-        onScroll={(e) => {
-          const x = e.nativeEvent.contentOffset.x;
-          const index = Math.round(x / interval);
+      <ArrowDropDown
+        height={screenWidth * 0.07}
+        width={screenWidth * 0.07}
+        fill={isExpenditure ? '#FFFFFF' : '#3EC070'}
+        style={styles.arrowDropDown}
+      />
+      {!graphVisible ? (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator size="large" color={isExpenditure ? '#FFFFFF' : '#3EC070'} />
+        </View>
+      ) : (
+        <ScrollView
+          horizontal={true}
+          decelerationRate={0.9}
+          snapToInterval={interval}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            width: 'auto',
+            height: 'auto',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row-reverse',
+          }}
+          ref={scrollRef}
+          onScroll={(e) => {
+            const x = e.nativeEvent.contentOffset.x;
+            const index = Math.round(x / interval);
 
-          if (monthlyDataNum[0] >= index && index > monthlyDataNum[1]) {
-            setMonthOfCurrentInfo(queue[0]);
-          } else if (monthlyDataNum[1] >= index && index > monthlyDataNum[2]) {
-            setMonthOfCurrentInfo(queue[1]);
-          } else if (monthlyDataNum[2] >= index && index > monthlyDataNum[3]) {
-            setMonthOfCurrentInfo(queue[2]);
-          } else if (monthlyDataNum[3] >= index && index > monthlyDataNum[4]) {
-            setMonthOfCurrentInfo(queue[3]);
-          } else if (monthlyDataNum[4] >= index && index > monthlyDataNum[5]) {
-            setMonthOfCurrentInfo(queue[4]);
-          } else if (monthlyDataNum[5] >= index && index > monthlyDataNum[6]) {
-            setMonthOfCurrentInfo(queue[5]);
-          }
+            if (monthlyDataNum[0] >= index && index > monthlyDataNum[1]) {
+              setMonthOfCurrentInfo(queue[0]);
+            } else if (monthlyDataNum[1] >= index && index > monthlyDataNum[2]) {
+              setMonthOfCurrentInfo(queue[1]);
+            } else if (monthlyDataNum[2] >= index && index > monthlyDataNum[3]) {
+              setMonthOfCurrentInfo(queue[2]);
+            } else if (monthlyDataNum[3] >= index && index > monthlyDataNum[4]) {
+              setMonthOfCurrentInfo(queue[3]);
+            } else if (monthlyDataNum[4] >= index && index > monthlyDataNum[5]) {
+              setMonthOfCurrentInfo(queue[4]);
+            } else if (monthlyDataNum[5] >= index && index > monthlyDataNum[6]) {
+              setMonthOfCurrentInfo(queue[5]);
+            }
 
-          if (index !== prevIndexRef.current) {
-            prevIndexRef.current = index;
-            Vibration.vibrate(10); // 10ms 짧은 진동
-          }
-        }}
-        onContentSizeChange={() => {
-          if (!hasScrolledRef.current) {
+            if (index !== prevIndexRef.current) {
+              prevIndexRef.current = index;
+              Vibration.vibrate(10); // 10ms 짧은 진동
+            }
+          }}
+          onContentSizeChange={() => {
             scrollRef.current?.scrollToEnd({ animated: false });
-            hasScrolledRef.current = true;
-          }
-        }}
-        style={{ width: screenWidth * 0.6, opacity: graphVisible ? 1 : 0 }}>
-        {data.map(((item, index) => {
-          const ratio = item.expenseTotal / monthlyExpenseTotal[queue.indexOf(item.month)];
-          let text = "";
-
-          if (item.week !== 1) {
-            text = `W.${item.week}`
-          } else {
-            const m = parseInt(item.month);
-            text = `${m}월`;
-          }
-
-          return (
-            <View
-              key={index}
-              style={{
-                height: screenHeight * 0.15,
-                marginBottom: 0,
-                marginLeft: index === data.length - 1 ? interval * 2 : screenWidth * 0.0625,
-                marginRight: index === 0 ? interval * 2 : 0,
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ ...styles.bar, backgroundColor: "#FFFFFF", height: maxBarheight * ratio, }} />
-              <View style={{ marginTop: screenHeight * 0.01, width: screenWidth * 0.07, alignItems: "center" }}>
-                <Text style={{ color: "#FFFFFF" }}>{text}</Text>
-              </View>
+          }}
+          style={{
+            width: screenWidth * 0.6,
+            opacity: graphVisible ? 1 : 0,
+          }}
+        >
+          {!graphVisible ? (
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <ActivityIndicator size="large" color="#0000ff" />
             </View>
-          )
-        }))}
-      </ScrollView>}
+          ) : (
+            data.map((item, index) => {
+              const ratio = item.totalAmount / monthlyTotalAmount[queue.indexOf(item.month)];
+              let text = '';
+
+              if (item.week !== 1) {
+                text = `W.${item.week}`;
+              } else {
+                const m = parseInt(item.month);
+                text = `${m}월`;
+              }
+
+              return (
+                <View
+                  key={index}
+                  style={{
+                    height: screenHeight * 0.15,
+                    marginBottom: 0,
+                    marginLeft: index === data.length - 1 ? interval * 2 : screenWidth * 0.0625,
+                    marginRight: index === 0 ? interval * 2 : 0,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                  }}
+                >
+                  <View
+                    style={{
+                      ...styles.bar,
+                      backgroundColor: isExpenditure ? '#FFFFFF' : '#3EC070',
+                      height: maxBarheight * ratio,
+                    }}
+                  />
+                  <View
+                    style={{
+                      marginTop: screenHeight * 0.01,
+                      width: screenWidth * 0.07,
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text style={{ color: isExpenditure ? '#FFFFFF' : '#3EC070' }}>{text}</Text>
+                  </View>
+                </View>
+              );
+            })
+          )}
+        </ScrollView>
+      )}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   barGraph: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: screenWidth * 0.76,
     height: screenHeight * 0.28,
-    marginTop: screenHeight * 0.04,
-    backgroundColor: "#75E88C",
+    marginTop: screenHeight * 0.02,
+    backgroundColor: '#75E88C',
     borderRadius: screenWidth * 0.07,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -204,22 +260,22 @@ const styles = StyleSheet.create({
     elevation: 6, // 안드로이드 그림자 효과
   },
   arrowDropDown: {
-    position: "absolute",
+    position: 'absolute',
     top: screenHeight * 0.07,
   },
   text1: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#FFFFFF"
+    fontWeight: '600',
+    color: '#FFFFFF',
   },
   text2: {
     fontSize: 16,
-    fontWeight: "400",
-    color: "#FFFFFF",
+    fontWeight: '400',
+    color: '#FFFFFF',
   },
   bar: {
     width: screenWidth * 0.03,
     borderTopRightRadius: screenWidth * 0.03,
     borderTopLeftRadius: screenWidth * 0.03,
-  }
+  },
 });

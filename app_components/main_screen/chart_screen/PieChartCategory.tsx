@@ -1,63 +1,120 @@
+import { Transaction } from '@/types/transaction';
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
-interface data {
-  name: string;
-  expenditure: number;
+interface ColoredData {
   color: string;
+  textColor: string;
+  percentage: number;
+  categoryName: string;
+  amountSum: number;
+  transactions: Transaction[];
 }
 
-interface typeOfProps {
-  coloredData: data[]
+interface PieChartCategory {
+  coloredData: ColoredData[];
 }
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-export const PieChartCategory = ( { coloredData }: typeOfProps): JSX.Element => {
-  const COLORS = [
-    "#FFFFE5",
-    "#F7FCB9",
-    "#D9F0A3",
-    "#ADDD8E",
-    "#78C679",
-    "#41AB5D",
-  ];
+export const PieChartCategory = ({ coloredData }: PieChartCategory): JSX.Element => {
+  const COLORS = ['#FFFFE5', '#F7FCB9', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D'];
 
   return (
     <View style={styles.container}>
-      {coloredData[0] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.25 }}>
-        <View style={{ ...styles.sticker, backgroundColor: COLORS[0] }} />
-        <Text style={styles.text}>{coloredData[0].name}</Text>
-      </View>}
-      {coloredData[1] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.46 }}>
-        <View style={{ ...styles.sticker, backgroundColor: COLORS[1] }} />
-        <Text style={styles.text}>{coloredData[1].name}</Text>
-      </View>}
-      {coloredData[2] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.65 }}>
-        <View style={{ ...styles.sticker, backgroundColor: COLORS[2] }} />
-        <Text style={styles.text}>{coloredData[2].name}</Text>
-      </View>}
-      <View style={{ flexDirection: "row", position: "absolute", top: screenHeight * 0.03 }}>
-        {coloredData[3] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.25 }}>
-          <View style={{ ...styles.sticker, backgroundColor: COLORS[3] }} />
-          <Text style={styles.text}>{coloredData[3].name}</Text>
-        </View>}
-        {coloredData[4] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.46 }}>
-          <View style={{ ...styles.sticker, backgroundColor: COLORS[4] }} />
-          <Text style={styles.text}>{coloredData[4].name}</Text>
-        </View>}
-        {coloredData[5] !== undefined && <View style={{ flexDirection: "row", position: "absolute", alignItems: "center", left: screenWidth * 0.65 }}>
-          <View style={{ ...styles.sticker, backgroundColor: COLORS[5] }} />
-          <Text style={styles.text}>{coloredData[5].name}</Text>
-        </View>}
+      {coloredData[0] !== undefined && (
+        <View
+          style={{
+            flexDirection: 'row',
+            position: 'absolute',
+            alignItems: 'center',
+            left: screenWidth * 0.25,
+          }}
+        >
+          <View style={{ ...styles.sticker, backgroundColor: COLORS[0] }} />
+          <Text style={styles.text}>{coloredData[0].categoryName}</Text>
+        </View>
+      )}
+      {coloredData[1] !== undefined && (
+        <View
+          style={{
+            flexDirection: 'row',
+            position: 'absolute',
+            alignItems: 'center',
+            left: screenWidth * 0.46,
+          }}
+        >
+          <View style={{ ...styles.sticker, backgroundColor: COLORS[1] }} />
+          <Text style={styles.text}>{coloredData[1].categoryName}</Text>
+        </View>
+      )}
+      {coloredData[2] !== undefined && (
+        <View
+          style={{
+            flexDirection: 'row',
+            position: 'absolute',
+            alignItems: 'center',
+            left: screenWidth * 0.65,
+          }}
+        >
+          <View style={{ ...styles.sticker, backgroundColor: COLORS[2] }} />
+          <Text style={styles.text}>{coloredData[2].categoryName}</Text>
+        </View>
+      )}
+      <View
+        style={{
+          flexDirection: 'row',
+          position: 'absolute',
+          top: screenHeight * 0.03,
+        }}
+      >
+        {coloredData[3] !== undefined && (
+          <View
+            style={{
+              flexDirection: 'row',
+              position: 'absolute',
+              alignItems: 'center',
+              left: screenWidth * 0.25,
+            }}
+          >
+            <View style={{ ...styles.sticker, backgroundColor: COLORS[3] }} />
+            <Text style={styles.text}>{coloredData[3].categoryName}</Text>
+          </View>
+        )}
+        {coloredData[4] !== undefined && (
+          <View
+            style={{
+              flexDirection: 'row',
+              position: 'absolute',
+              alignItems: 'center',
+              left: screenWidth * 0.46,
+            }}
+          >
+            <View style={{ ...styles.sticker, backgroundColor: COLORS[4] }} />
+            <Text style={styles.text}>{coloredData[4].categoryName}</Text>
+          </View>
+        )}
+        {coloredData[5] !== undefined && (
+          <View
+            style={{
+              flexDirection: 'row',
+              position: 'absolute',
+              alignItems: 'center',
+              left: screenWidth * 0.65,
+            }}
+          >
+            <View style={{ ...styles.sticker, backgroundColor: COLORS[5] }} />
+            <Text style={styles.text}>{coloredData[5].categoryName}</Text>
+          </View>
+        )}
       </View>
     </View>
-  )
-}
+  );
+};
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    flexDirection: 'column',
     width: screenWidth,
     height: screenHeight * 0.06,
   },

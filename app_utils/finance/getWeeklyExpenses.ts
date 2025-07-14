@@ -1,12 +1,12 @@
-import apiClient from "@/api/apiClient";
-import { getWeekOfMonth } from "@/app_utils/calendar/getWeekOfMonth";
-import { SpendingDetails } from "@/types/SpendingDetails";
-import { Transaction } from "@/types/Transaction";
-import { WeeklyExpenses } from "@/types/WeeklyExpenses";
+import apiClient from '@/api/apiClient';
+import { getWeekOfMonth } from '@/app_utils/calendar/getWeekOfMonth';
+import { SpendingDetails } from '@/types/SpendingDetails';
+import { Transaction } from '@/types/transaction';
+import { WeeklyExpenses } from '@/types/WeeklyExpenses';
 
 export const getWeeklyExpenses = async (year: string, month: string): Promise<WeeklyExpenses> => {
-  const response = await apiClient.get(`/expenses?createdAt_like=${year}-${month}`);
-  const monthlyData = response.data;
+  const response = await apiClient.get(`/api/stats/monthly/${year}-${month}-01?kakaoId=1`);
+  const monthlyData = response.data.data.transactions;
   const week1Total = new Map();
   const week2Total = new Map();
   const week3Total = new Map();
@@ -14,24 +14,24 @@ export const getWeeklyExpenses = async (year: string, month: string): Promise<We
   const week5Total = new Map();
   const week6Total = new Map();
   const tallyUp = (expenseMap: Map<string, number>, item: Transaction) => {
-    if (expenseMap.has(item.name)) {
-      const currnetExpenditure = expenseMap.get(item.name);
-      expenseMap.set(item.name, currnetExpenditure! + item.expenditure);
+    if (expenseMap.has(item.categoryName)) {
+      const currnetExpenditure = expenseMap.get(item.categoryName);
+      expenseMap.set(item.categoryName, currnetExpenditure! + item.amount);
     } else {
-      expenseMap.set(item.name, item.expenditure);
+      expenseMap.set(item.categoryName, item.amount);
     }
   };
   const mapToArray = (expenseMap: Map<string, number>) => {
     const expenseSummary: SpendingDetails[] = [];
     expenseMap.forEach((value, key) => {
-      expenseSummary.push({ name: key, expenditure: value });
-    })
+      expenseSummary.push({ categoryName: key, amount: value });
+    });
 
-    return expenseSummary
+    return expenseSummary;
   };
 
   monthlyData.forEach((item: Transaction) => {
-    const weekOfMonth = getWeekOfMonth(item.createdAt);
+    const weekOfMonth = getWeekOfMonth(item.date);
     if (weekOfMonth === 1) {
       tallyUp(week1Total, item);
     } else if (weekOfMonth === 2) {
@@ -56,5 +56,5 @@ export const getWeeklyExpenses = async (year: string, month: string): Promise<We
     week6: mapToArray(week6Total),
   };
 
-  return weeklyExpenses
-}
+  return weeklyExpenses;
+};
