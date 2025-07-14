@@ -50,8 +50,8 @@ export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
 
   return (
     <View>
-      <TouchableOpacity 
-        onPress={openModal} 
+      <TouchableOpacity
+        onPress={openModal}
         style={styles.imageBox}>
         {image ? (
           <Image source={{ uri: image }} style={styles.uploadedImage} />
@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FCFFF6",
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     // shadow at Android
-    elevation: 5,
+    elevation: 3,
   },
   uploadedImage: {
     width: "100%",

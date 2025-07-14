@@ -16,15 +16,15 @@ export default function ExpenseRecordScreen() {
     <View style={styles.container}>
       {/* 뒤로 가기 버튼 */}
       <View style={styles.btnContainer}>
-        <TouchableOpacity 
-          style={styles.backButton} 
+        <TouchableOpacity
+          style={styles.backButton}
           onPress={() => navigation.goBack()}>
           <Button />
         </TouchableOpacity>
       </View>
 
       {/* record로 넘어감 */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.recordBtn}
         onPress={() => router.push("/main/expense_record/write")}>
         <Memo />
@@ -45,31 +45,6 @@ export default function ExpenseRecordScreen() {
       <View style={styles.squareBox}>
         <Text>아직 기록된 지출이 없어요!</Text>
       </View>
-
-      {/* 화면 가운데 십자선 가이드 라인: x축 */}
-      <View
-          style={{
-            position: "absolute",
-            top: screenHeight / 2,
-            left: 0,
-            width: screenWidth,
-            height: 1,
-            backgroundColor: "red",
-            zIndex: 3,
-          }}
-        />
-        {/* 화면 가운데 십자선 가이드 라인: y축 */}
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: screenWidth / 2,
-            width: 1,
-            height: screenHeight,
-            backgroundColor: "red",
-            zIndex: 3,
-          }}
-        />
     </View>
   );
 }
@@ -93,7 +68,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    top: screenHeight * 0.05,
+    top: screenHeight * 0.025,
     right: screenWidth * 0.05,
     width: screenWidth * 0.14,
     height: screenHeight * 0.07,
@@ -113,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.1,
   },
   imageBox: {
-    width: screenWidth * 0.3, 
+    width: screenWidth * 0.3,
     height: screenWidth * 0.3,
     borderRadius: (screenWidth * 0.3) / 2,
     overflow: "hidden",
@@ -135,7 +110,7 @@ const styles = StyleSheet.create({
   },
   squareBox: {
     width: screenWidth * 0.8,
-    height: screenHeight * 0.4,          
+    height: screenHeight * 0.4,
     backgroundColor: "#ffffff",
     justifyContent: "center",
     alignItems: "center",

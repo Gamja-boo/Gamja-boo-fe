@@ -31,7 +31,7 @@ export default function WriteScreen() {
       style={styles.container}
       keyboardVerticalOffset={0}
     >
-      { /* 뷰가 올라갔을 때, 스트롤도 가능하게 해줌 */ }
+      { /* 뷰가 올라갔을 때, 스트롤도 가능하게 해줌 */}
       <ScrollView
         contentContainerStyle={{ alignItems: "center" }}
         keyboardShouldPersistTaps="handled"
@@ -67,31 +67,6 @@ export default function WriteScreen() {
         <View style={styles.writeBoxContainer}>
           <WritingBox />
         </View>
-
-        {/* 화면 가운데 십자선 가이드 라인: x축 */}
-        <View
-          style={{
-            position: "absolute",
-            top: screenHeight / 2,
-            left: 0,
-            width: screenWidth,
-            height: 1,
-            backgroundColor: "red",
-            zIndex: 3,
-          }}
-        />
-        {/* 화면 가운데 십자선 가이드 라인: y축 */}
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: screenWidth / 2,
-            width: 1,
-            height: screenHeight,
-            backgroundColor: "red",
-            zIndex: 3,
-          }}
-        />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -121,19 +96,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   imgContainer: {
-    marginTop: screenHeight * 0.11,
+    marginTop: screenHeight * 0.1,
     width: screenWidth,
-    height: screenHeight * 0.5,
+    height: screenHeight * 0.45,
     backgroundColor: "transparent",
   },
   spentContainer: {
-    marginTop: screenHeight * 0.04,
     width: screenWidth * 0.8,
-    height: screenHeight * 0.1,
-    backgroundColor: "transparent",
+    height: screenHeight * 0.28,
   },
   writeBoxContainer: {
-    marginTop: 20,
     width: screenWidth * 0.8,
     height: screenHeight * 0.15,
     backgroundColor: "transparent",

@@ -13,8 +13,8 @@ export function WritingBox() {
         value={text}
         onChangeText={setText}
         multiline
-        placeholder={"구매를 하고 어떤 기분이 들었나요?\n자유롭게 적어주세요!"}
-        placeholderTextColor="#959595"
+        placeholder={"이 소비, 만족스러웠나요?\n느끼신 점이 있다면 가볍게 적어주세요."}
+        placeholderTextColor="#CACABD"
       />
     </TouchableOpacity>
   );
@@ -24,10 +24,9 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#fff",
     borderRadius: screenWidth * 0.06,
-    borderColor: "#959595",
-    borderWidth: 1,
+    borderColor: "#CACABD",
+    borderWidth: 0.7,
     padding: screenWidth * 0.05,
   },
 })

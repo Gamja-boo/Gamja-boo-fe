@@ -8,7 +8,7 @@ const spentBg = [
   "교통", "식비", "여가", "생활", "기타", "고정 지출"
 ];
 
-export function SpentBgPicker() {
+export function SpentCategory() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBg, setSelectedBg] = useState<string>("교통");
 
@@ -25,8 +25,8 @@ export function SpentBgPicker() {
     <View style={styles.container}>
 
       {/* 드롭다운 */}
-      <TouchableOpacity 
-        style={[styles.dropdownHeader, isOpen && styles.openHeader]} 
+      <TouchableOpacity
+        style={[styles.dropdownHeader, isOpen && styles.openHeader]}
         onPress={toggleDropdown}>
         <Text style={styles.selectedText}>{selectedBg}</Text>
         <DropDownBtn />
@@ -36,9 +36,9 @@ export function SpentBgPicker() {
       {isOpen && (
         <View style={styles.dropdownMenu}>
           {spentBg.map((bg) => (
-            <TouchableOpacity 
-              key={bg} 
-              onPress={() => handleSelect(bg)} 
+            <TouchableOpacity
+              key={bg}
+              onPress={() => handleSelect(bg)}
               style={styles.menuItem}>
               <Text style={styles.menuText}>{bg}</Text>
             </TouchableOpacity>
@@ -51,8 +51,8 @@ export function SpentBgPicker() {
 
 const styles = StyleSheet.create({
   container: {
-    width: "40%",
-    height: "75%",
+    width: screenWidth * 0.35,
+    height: screenHeight * 0.055,
     overflow: "visible",
   },
   dropdownHeader: {
@@ -61,8 +61,9 @@ const styles = StyleSheet.create({
     padding: screenWidth * 0.025,
     backgroundColor: "#75E88C",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "center",
+    gap: screenWidth * 0.03,
     borderRadius: screenWidth * 0.05,
     zIndex: 1,
     // shadow at ios
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 10,
     // shadow at Android
-    elevation: 5,
+    elevation: 2,
   },
   openHeader: {
     borderBottomLeftRadius: 0,
@@ -83,6 +84,8 @@ const styles = StyleSheet.create({
   },
   dropdownMenu: {
     position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
     left: 0,
     right: 0,
     backgroundColor: "#75E88C",

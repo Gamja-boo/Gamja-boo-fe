@@ -1,26 +1,20 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Text, StyleSheet, Dimensions, TextInput } from "react-native";
+import { TouchableOpacity, StyleSheet, Dimensions, TextInput } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export function SpentMoney() {
-  const [amount, setAmount] = useState("");
-
-  const handleChangeAmount = (text: string) => {
-    setAmount(text);
-  };
+export function SpentBg() {
+  const [text, setText] = useState("");
 
   return (
     <TouchableOpacity style={styles.container}>
       <TextInput
         style={styles.text}
-        value={amount}
-        onChangeText={handleChangeAmount}
-        keyboardType="numeric"
-        placeholder="000,000"
+        value={text}
+        onChangeText={setText}
+        placeholder="감쟈부"
         placeholderTextColor="#329257"
       />
-      <Text style={styles.unit}>원</Text>
     </TouchableOpacity>
   );
 }
@@ -34,6 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#FCFFF6",
     borderRadius: screenWidth * 0.05,
+    color: "#329257",
     // shadow at ios
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
@@ -46,10 +41,6 @@ const styles = StyleSheet.create({
     fontSize: screenWidth * 0.04,
     color: "#329257",
   },
-  unit: {
-    fontSize: screenWidth * 0.04,
-    color: "#329257",
-  }
 });
 
 
