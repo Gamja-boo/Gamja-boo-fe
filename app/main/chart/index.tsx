@@ -180,15 +180,6 @@ export default function ChartScreen() {
     chartAnimation();
   }, [chartAnimation, monthOfCurrentInfo, yearOfCurrentInfo]);
 
-  useEffect(() => {
-    if (isFocused || isExpenditure) {
-      InteractionManager.runAfterInteractions(() => {
-        scrollRef.current?.scrollToEnd({ animated: false });
-        setgraphVisible(true);
-      });
-    }
-  }, [isFocused, isExpenditure]);
-
   const chartConfig = {
     backgroundGradientFrom: '#1E2923',
     backgroundGradientFromOpacity: 0,
@@ -257,7 +248,6 @@ export default function ChartScreen() {
         <PieChartCategory coloredData={coloredData} />
         <BarGraph
           isExpenditure={isExpenditure}
-          scrollRef={scrollRef}
           graphVisible={graphVisible}
           setgraphVisible={setgraphVisible}
           monthOfCurrentInfo={monthOfCurrentInfo}

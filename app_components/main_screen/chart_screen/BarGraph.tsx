@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   Vibration,
   ActivityIndicator,
   ScrollView,
-  InteractionManager,
 } from 'react-native';
 import ArrowDropDown from '@/app_assets/chart_screen/arrow_drop_down.svg';
 import { splitMonthlyDataByWeek } from '@/app_utils/finance/splitMonthlyDataByWeek';
@@ -27,7 +26,6 @@ type Bundle = {
 };
 interface typeOfProps {
   isExpenditure: boolean;
-  scrollRef: RefObject<ScrollView>;
   graphVisible: boolean;
   setgraphVisible: React.Dispatch<React.SetStateAction<boolean>>;
   monthOfCurrentInfo: string;
@@ -42,12 +40,11 @@ type dataType = {
   totalAmount: number;
 };
 
-const maxBarheight = screenHeight * 0.12;
+const maxBarheight = screenHeight * 0.1;
 const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
 export const BarGraph = ({
   isExpenditure,
-  scrollRef,
   graphVisible,
   setgraphVisible,
   monthOfCurrentInfo,
@@ -55,13 +52,12 @@ export const BarGraph = ({
   yearOfCurrentInfo,
   setYearOfCurrentInfo,
 }: typeOfProps): JSX.Element => {
-  const isFocused = useIsFocused();
-  const hasScrolledRef = useRef(false);
   const prevIndexRef = useRef(-1);
   const interval = screenWidth * 0.1325;
   const date = new Date();
   const todayMonth = date.getMonth();
   const [queue, setQueue] = useState<string[]>([]);
+  const scrollRef = useRef<ScrollView>(null);
   useEffect(() => {
     let offset = todayMonth + 12;
     const arr: string[] = [];
@@ -120,14 +116,16 @@ export const BarGraph = ({
     };
     getInitData();
   }, [queue, isExpenditure, setgraphVisible, yearlyData]);
+
   useEffect(() => {
-    if (isFocused || isExpenditure) {
-      InteractionManager.runAfterInteractions(() => {
-        scrollRef.current?.scrollToEnd({ animated: false });
-        setgraphVisible(true);
-      });
-    }
-  }, [isFocused, isExpenditure]);
+    if (monthlyTotalAmount.length === 0) return;
+    setgraphVisible(false);
+    scrollRef.current?.scrollToEnd({ animated: false });
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: false });
+      setgraphVisible(true);
+    }, 1000);
+  }, [setgraphVisible, isExpenditure, monthlyTotalAmount]);
 
   return (
     <View style={[styles.barGraph, !isExpenditure && { backgroundColor: '#FCFFF6' }]}>
@@ -140,12 +138,12 @@ export const BarGraph = ({
       <ArrowDropDown
         height={screenWidth * 0.07}
         width={screenWidth * 0.07}
-        fill="#FFFFFF"
+        fill={isExpenditure ? '#FFFFFF' : '#3EC070'}
         style={styles.arrowDropDown}
       />
       {!graphVisible ? (
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color={isExpenditure ? '#FFFFFF' : '#3EC070'} />
         </View>
       ) : (
         <ScrollView
@@ -154,6 +152,8 @@ export const BarGraph = ({
           snapToInterval={interval}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
+            width: 'auto',
+            height: 'auto',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row-reverse',
@@ -183,55 +183,61 @@ export const BarGraph = ({
             }
           }}
           onContentSizeChange={() => {
-            if (!hasScrolledRef.current) {
-              scrollRef.current?.scrollToEnd({ animated: false });
-              hasScrolledRef.current = true;
-            }
+            scrollRef.current?.scrollToEnd({ animated: false });
           }}
-          style={{ width: screenWidth * 0.6, opacity: graphVisible ? 1 : 0 }}
+          style={{
+            width: screenWidth * 0.6,
+            opacity: graphVisible ? 1 : 0,
+          }}
         >
-          {data.map((item, index) => {
-            const ratio = item.totalAmount / monthlyTotalAmount[queue.indexOf(item.month)];
-            let text = '';
+          {!graphVisible ? (
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          ) : (
+            data.map((item, index) => {
+              const ratio = item.totalAmount / monthlyTotalAmount[queue.indexOf(item.month)];
+              let text = '';
 
-            if (item.week !== 1) {
-              text = `W.${item.week}`;
-            } else {
-              const m = parseInt(item.month);
-              text = `${m}월`;
-            }
+              if (item.week !== 1) {
+                text = `W.${item.week}`;
+              } else {
+                const m = parseInt(item.month);
+                text = `${m}월`;
+              }
 
-            return (
-              <View
-                key={index}
-                style={{
-                  height: screenHeight * 0.15,
-                  marginBottom: 0,
-                  marginLeft: index === data.length - 1 ? interval * 2 : screenWidth * 0.0625,
-                  marginRight: index === 0 ? interval * 2 : 0,
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}
-              >
+              return (
                 <View
+                  key={index}
                   style={{
-                    ...styles.bar,
-                    backgroundColor: isExpenditure ? '#FFFFFF' : '#3EC070',
-                    height: maxBarheight * ratio,
-                  }}
-                />
-                <View
-                  style={{
-                    marginTop: screenHeight * 0.01,
-                    width: screenWidth * 0.07,
+                    height: screenHeight * 0.15,
+                    marginBottom: 0,
+                    marginLeft: index === data.length - 1 ? interval * 2 : screenWidth * 0.0625,
+                    marginRight: index === 0 ? interval * 2 : 0,
+                    justifyContent: 'flex-end',
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ color: isExpenditure ? '#FFFFFF' : '#3EC070' }}>{text}</Text>
+                  <View
+                    style={{
+                      ...styles.bar,
+                      backgroundColor: isExpenditure ? '#FFFFFF' : '#3EC070',
+                      height: maxBarheight * ratio,
+                    }}
+                  />
+                  <View
+                    style={{
+                      marginTop: screenHeight * 0.01,
+                      width: screenWidth * 0.07,
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text style={{ color: isExpenditure ? '#FFFFFF' : '#3EC070' }}>{text}</Text>
+                  </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })
+          )}
         </ScrollView>
       )}
     </View>
