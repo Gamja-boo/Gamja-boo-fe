@@ -5,14 +5,13 @@ import { skinItems } from "@/app_utils/items/skinItems";
 import { clothItems } from "@/app_utils/items/clothItems";
 import { accessoryItems } from "@/app_utils/items/accessoryItems";
 import BackButton from "@/app_assets/my_page_screen/backButton.svg";
-import { Code } from "@/app_components/main_screen/my_page_screen/Code";
-import { ShowNickname } from "@/app_components/main_screen/my_page_screen/ShowNickname";
-import { Withdraw } from "@/app_components/main_screen/my_page_screen/Withdraw";
+import { WarningInfo } from "@/app_components/main_screen/my_page_screen//withdraw_screen/WarningInfo";
+import { WithdrawAgree } from "@/app_components/main_screen/my_page_screen/withdraw_screen/WithdrawAgree";
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export default function MyPageScreen() {
+export default function WithdrawScreen() {
   const router = useRouter();
 
   const { skin, cloth, accessory } = useLocalSearchParams();
@@ -26,13 +25,10 @@ export default function MyPageScreen() {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => router.push("/main")}
+        onPress={() => router.push("/main/my_page")}
         style={styles.backCon}>
         <BackButton />
       </TouchableOpacity>
-
-      {/* 추천인 코드 */}
-      <Code />
 
       {/* 감도리 캐릭터 화면 */}
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
@@ -93,11 +89,11 @@ export default function MyPageScreen() {
         )}
       </View>
 
-      {/* 사용자 닉네임 */}
-      <ShowNickname />
+      {/* 경고 안내 박스 */}
+      <WarningInfo />
 
-      {/* 회원 탈퇴 */}
-      <Withdraw />
+      {/* 동의 */}
+      <WithdrawAgree />
     </View>
   );
 }
@@ -115,7 +111,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: screenWidth * 0.5,
     backgroundColor: "#ACEC96",
-    marginVertical: screenHeight * 0.05,
+    marginTop: screenHeight * 0.19,
+    marginBottom: screenHeight * 0.05,
   },
   backCon: {
     position: "absolute",

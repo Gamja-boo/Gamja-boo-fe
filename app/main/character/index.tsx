@@ -1,6 +1,7 @@
-import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Character from "@/app_assets/character_screen/character.svg";
+import { ShowNickname } from "@/app_components/main_screen/character_screen/ShowNickname";
 import Ground from "@/app_assets/character_screen/ground.svg";
 import Flower1 from "@/app_assets/character_screen/flower1.svg";
 import Flower2 from "@/app_assets/character_screen/flower2.svg";
@@ -28,18 +29,20 @@ export default function CharacterScreen() {
   return (
     <View style={styles.container}>
       {/* 커스터마이징 버튼 */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.shopBtn}
         onPress={() => router.push("/main/character/customizing")}>
-          <Shop />
+        <Shop />
       </TouchableOpacity>
 
       {/* 공유하기 버튼 */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.shareBtn}
         onPress={() => router.push("/main/character/customizing")}>
-          <Share />
+        <Share />
       </TouchableOpacity>
+
+      <ShowNickname />
 
       {/* 감도리 캐릭터 화면 */}
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
@@ -81,7 +84,7 @@ export default function CharacterScreen() {
                 ...clothItem.position,
                 zIndex: 99,
               }
-            } 
+            }
           />
         )}
 
@@ -95,17 +98,17 @@ export default function CharacterScreen() {
                 ...accessoryItem.position,
                 zIndex: 99,
               }
-            } 
+            }
           />
         )}
       </View>
 
       <View style={styles.boxCon}>
-        <Grass width={screenWidth * 0.78} style={{ marginBottom: -screenHeight * 0.02, zIndex: 1 }}/>
+        <Grass width={screenWidth * 0.78} style={{ marginBottom: -screenHeight * 0.02, zIndex: 1 }} />
         <View style={styles.flowerCon}>
-          <Flower3 style={{ zIndex: 2 }}/>
-          <Flower2 style={{ zIndex: 2 }}/>
-          <Flower1 style={{ zIndex: 2 }}/>
+          <Flower3 style={{ zIndex: 2 }} />
+          <Flower2 style={{ zIndex: 2 }} />
+          <Flower1 style={{ zIndex: 2 }} />
         </View>
         <Ground width={screenWidth * 0.75} height={screenHeight * 0.375} />
       </View>

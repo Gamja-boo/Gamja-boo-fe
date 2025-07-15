@@ -64,7 +64,7 @@ export default function CustomizingScreen() {
                     position: "absolute",
                     ...item.position,
                   }
-                } 
+                }
               />
             </React.Fragment>
           )
@@ -72,30 +72,30 @@ export default function CustomizingScreen() {
         {clothItems.map(item =>
           selectedCloth === item.id && (
             <item.Component
-            key={item.id}
-            width={item.size?.width ?? screenWidth * 0.2}
-            height={item.size?.height ?? screenHeight * 0.2}
+              key={item.id}
+              width={item.size?.width ?? screenWidth * 0.2}
+              height={item.size?.height ?? screenHeight * 0.2}
               style={
                 {
                   position: "absolute",
                   ...item.position,
                 }
-              } 
+              }
             />
           )
         )}
         {accessoryItems.map(item =>
           selectedAccessory === item.id && (
             <item.Component
-            key={item.id}
-            width={item.size?.width ?? screenWidth * 0.2}
-            height={item.size?.height ?? screenHeight * 0.2}
+              key={item.id}
+              width={item.size?.width ?? screenWidth * 0.2}
+              height={item.size?.height ?? screenHeight * 0.2}
               style={
                 {
                   position: "absolute",
                   ...item.position,
                 }
-              } 
+              }
             />
           )
         )}
@@ -103,7 +103,7 @@ export default function CustomizingScreen() {
 
       { /* 커스터마이징 바 */}
       <View style={styles.customizingBarCon}>
-        <CustomizingBar selectedType={selected} onSelect={setSelected}/>
+        <CustomizingBar selectedType={selected} onSelect={setSelected} />
       </View>
 
       {selected === "skin" && (
@@ -111,7 +111,7 @@ export default function CustomizingScreen() {
           <ChooseSkin
             items={skinItems}
             onSelect={setSelectedSkin}
-            />
+          />
         </View>
       )}
 
@@ -129,7 +129,7 @@ export default function CustomizingScreen() {
           <ChooseAccessory
             items={accessoryItems}
             onSelect={setSelectedAccessory}
-            />
+          />
         </View>
       )}
 
@@ -139,7 +139,7 @@ export default function CustomizingScreen() {
           selectedSkin={selectedSkin}
           selectedCloth={selectedCloth}
           selectedAccessory={selectedAccessory}
-          />
+        />
       </View>
     </View>
   );

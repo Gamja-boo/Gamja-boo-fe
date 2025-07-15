@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native";
 import Gam from "@/app_assets/gam.svg";
 import Ja from "@/app_assets/ja.svg";
 import Boo from "@/app_assets/boo.svg";
@@ -9,36 +9,60 @@ import Flower2 from "@/app_assets/setting_nickname_screen/flower2.svg";
 import Flower3 from "@/app_assets/setting_nickname_screen/flower3.svg";
 import SmileGamja from "@/app_assets/setting_nickname_screen/smileGamja.svg";
 import BigGrass from "@/app_assets/setting_nickname_screen/bigGrass.svg";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNickname } from "@/context/NicknameContext";
+import { useRouter } from "expo-router";
+import Button from "@/app_assets/setting_nickname_screen/button.svg";
+// import Toast from "react-native-toast-message";
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export function SettingNickname() {
 
-  const [text, setText] = useState('');
+  const { setNickname } = useNickname();
+  const [text, setText] = useState("");
+  const router = useRouter();
+
+  const handleSave = async () => {
+    if (text.trim()) {
+      setNickname(text);
+      // Toast.show({
+      //   type: "success",
+      //   text1: "닉네임이 설정되었습니다.",
+      //   text2: `${text}님 감쟈부에 오신 것을 환영합니다!`,
+      // });
+      router.push("/main");
+    }
+  };
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={handleSave}
+        style={styles.btnContainer}
+      >
+        <Button />
+      </TouchableOpacity>
       <Text style={styles.text}>나만의 감도리 이름을 지어요</Text>
-      
+
       <Flower1 style={{ zIndex: 1, marginBottom: -screenHeight * 0.01 }} />
       <View style={styles.cloverCon}>
         <Flower2 />
         <Flower3 />
       </View>
-      
-      <SmileGamja style={{ zIndex: 1, marginBottom: -screenHeight * 0.055 }}/>
-      <BigGrass/>
+
+      <SmileGamja style={{ zIndex: 1, marginBottom: -screenHeight * 0.055 }} />
+      <BigGrass />
 
       <View style={styles.nameContainer}>
         <TextInput
-            style={styles.input}
-            placeholder="이름을 입력해주세요"
-            placeholderTextColor="#aaa"
-            value={text}
-            onChangeText={setText}
-            multiline={true}
+          style={styles.input}
+          placeholder="이름을 입력해주세요"
+          placeholderTextColor="#aaa"
+          value={text}
+          onChangeText={setText}
+          multiline={true}
         />
       </View>
 
@@ -52,8 +76,8 @@ export function SettingNickname() {
           <Ja height={screenHeight * 0.045} width={screenWidth * 0.08} />
           <Boo height={screenHeight * 0.045} width={screenWidth * 0.08} />
         </View>
-        
-        <Grass width={screenWidth * 0.28} style={{ marginTop: -screenHeight * 0.005 }}/>
+
+        <Grass width={screenWidth * 0.28} style={{ marginTop: -screenHeight * 0.005 }} />
 
       </View>
     </View>
@@ -67,6 +91,21 @@ const styles = StyleSheet.create({
     height: screenHeight,
     justifyContent: "center",
     alignItems: "center",
+  },
+  btnContainer: {
+    position: "absolute",
+    borderRadius: screenWidth,
+    top: screenHeight * 0.03,
+    right: screenWidth * 0.08,
+    width: screenWidth * 0.1,
+    height: screenHeight * 0.06,
+    // shadow at ios
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+    // shadow at Android
+    elevation: 15,
   },
   nameContainer: {
     width: screenWidth * 0.68,
