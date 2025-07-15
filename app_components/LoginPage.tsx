@@ -1,17 +1,16 @@
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import Gam from "@/app_assets/gam.svg";
-import Ja from "@/app_assets/ja.svg";
-import Boo from "@/app_assets/boo.svg";
-import Grass from "@/app_assets/grass.svg";
-import Sprout from "@/app_assets/sprout.svg";
-import KakaoTalk from "@/app_assets/kakaoTalk.svg";
-import RottenGamja from "@/app_assets/rottenGamja.svg";
-import BasicGamja from "@/app_assets/basicGamja.svg";
-import ExcitedGamja from "@/app_assets/excitedGamja.svg";
-import Book from "@/app_assets/book.svg";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import Gam from '@/app_assets/gam.svg';
+import Ja from '@/app_assets/ja.svg';
+import Boo from '@/app_assets/boo.svg';
+import Grass from '@/app_assets/grass.svg';
+import Sprout from '@/app_assets/sprout.svg';
+import KakaoTalk from '@/app_assets/kakaoTalk.svg';
+import RottenGamja from '@/app_assets/rottenGamja.svg';
+import BasicGamja from '@/app_assets/basicGamja.svg';
+import ExcitedGamja from '@/app_assets/excitedGamja.svg';
+import Book from '@/app_assets/book.svg';
 
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function LoginPage() {
   return (
@@ -47,13 +46,25 @@ export function LoginPage() {
       <View style={[styles.contiContainer, { top: screenHeight * 0.38, left: 0 }]}>
         <ExcitedGamja width={screenWidth * 0.2} height={screenHeight * 0.12} />
       </View>
-      <View style={[styles.contiContainer, { top: screenHeight * 0.4, right: -screenWidth * 0.02 }]}>
+      <View
+        style={[styles.contiContainer, { top: screenHeight * 0.4, right: -screenWidth * 0.02 }]}
+      >
         <RottenGamja width={screenWidth * 0.2} height={screenHeight * 0.09} />
       </View>
-      <View style={[styles.contiContainer, { bottom: -screenHeight * 0.035, left: -screenWidth * 0.05 }]}>
+      <View
+        style={[
+          styles.contiContainer,
+          { bottom: -screenHeight * 0.035, left: -screenWidth * 0.05 },
+        ]}
+      >
         <Book width={screenWidth * 0.23} height={screenHeight * 0.11} />
       </View>
-      <View style={[styles.contiContainer, { bottom: -screenHeight * 0.02, right: -screenWidth * 0.06 }]}>
+      <View
+        style={[
+          styles.contiContainer,
+          { bottom: -screenHeight * 0.02, right: -screenWidth * 0.06 },
+        ]}
+      >
         <ExcitedGamja width={screenWidth * 0.2} height={screenHeight * 0.12} />
       </View>
       <View style={[styles.contiContainer, { top: screenHeight * 0.6 }]}>
@@ -62,7 +73,6 @@ export function LoginPage() {
       <View style={[styles.contiContainer, { bottom: screenHeight * 0.7 }]}>
         <Book width={screenWidth * 0.23} height={screenHeight * 0.11} />
       </View>
-
     </View>
   );
 }
@@ -72,27 +82,27 @@ const styles = StyleSheet.create({
     flex: 1,
     width: screenWidth,
     height: screenHeight,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   nameContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   name: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   kakao: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     paddingVertical: screenHeight * 0.02,
     width: screenWidth * 0.6,
     top: screenHeight * 0.24,
     borderRadius: screenWidth / 2,
-    backgroundColor: "#FFF942",
+    backgroundColor: '#FFF942',
     gap: screenWidth * 0.05,
     // shadow at ios
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
@@ -101,25 +111,25 @@ const styles = StyleSheet.create({
   },
   kakaoText: {
     fontSize: screenWidth * 0.035,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   textContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     top: screenHeight * 0.27,
     gap: screenWidth * 0.02,
   },
   text1: {
-    color: "#fff",
+    color: '#fff',
     fontSize: screenWidth * 0.04,
   },
   text2: {
-    color: "#fff",
+    color: '#fff',
     fontSize: screenWidth * 0.04,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   contiContainer: {
-    position: "absolute",
+    position: 'absolute',
   },
-})
+});

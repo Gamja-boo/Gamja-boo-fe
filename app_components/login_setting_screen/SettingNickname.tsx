@@ -1,27 +1,25 @@
-import { View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native";
-import Gam from "@/app_assets/gam.svg";
-import Ja from "@/app_assets/ja.svg";
-import Boo from "@/app_assets/boo.svg";
-import Grass from "@/app_assets/grass.svg";
-import Sprout from "@/app_assets/sprout.svg";
-import Flower1 from "@/app_assets/setting_nickname_screen/flower1.svg";
-import Flower2 from "@/app_assets/setting_nickname_screen/flower2.svg";
-import Flower3 from "@/app_assets/setting_nickname_screen/flower3.svg";
-import SmileGamja from "@/app_assets/setting_nickname_screen/smileGamja.svg";
-import BigGrass from "@/app_assets/setting_nickname_screen/bigGrass.svg";
-import React, { useState } from "react";
-import { useNickname } from "@/context/NicknameContext";
-import { useRouter } from "expo-router";
-import Button from "@/app_assets/setting_nickname_screen/button.svg";
+import { View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import Gam from '@/app_assets/gam.svg';
+import Ja from '@/app_assets/ja.svg';
+import Boo from '@/app_assets/boo.svg';
+import Grass from '@/app_assets/grass.svg';
+import Sprout from '@/app_assets/sprout.svg';
+import Flower1 from '@/app_assets/setting_nickname_screen/flower1.svg';
+import Flower2 from '@/app_assets/setting_nickname_screen/flower2.svg';
+import Flower3 from '@/app_assets/setting_nickname_screen/flower3.svg';
+import SmileGamja from '@/app_assets/setting_nickname_screen/smileGamja.svg';
+import BigGrass from '@/app_assets/setting_nickname_screen/bigGrass.svg';
+import React, { useState } from 'react';
+import { useNickname } from '@/context/NicknameContext';
+import { useRouter } from 'expo-router';
+import Button from '@/app_assets/setting_nickname_screen/button.svg';
 // import Toast from "react-native-toast-message";
 
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function SettingNickname() {
-
   const { setNickname } = useNickname();
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const router = useRouter();
 
   const handleSave = async () => {
@@ -32,16 +30,13 @@ export function SettingNickname() {
       //   text1: "닉네임이 설정되었습니다.",
       //   text2: `${text}님 감쟈부에 오신 것을 환영합니다!`,
       // });
-      router.push("/main");
+      router.push('/main');
     }
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={handleSave}
-        style={styles.btnContainer}
-      >
+      <TouchableOpacity onPress={handleSave} style={styles.btnContainer}>
         <Button />
       </TouchableOpacity>
       <Text style={styles.text}>나만의 감도리 이름을 지어요</Text>
@@ -78,7 +73,6 @@ export function SettingNickname() {
         </View>
 
         <Grass width={screenWidth * 0.28} style={{ marginTop: -screenHeight * 0.005 }} />
-
       </View>
     </View>
   );
@@ -89,18 +83,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: screenWidth,
     height: screenHeight,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnContainer: {
-    position: "absolute",
+    position: 'absolute',
     borderRadius: screenWidth,
     top: screenHeight * 0.03,
     right: screenWidth * 0.08,
     width: screenWidth * 0.1,
     height: screenHeight * 0.06,
     // shadow at ios
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.5,
@@ -112,35 +106,35 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.07,
     bottom: screenHeight * 0.015,
     borderRadius: screenWidth * 0.5,
-    backgroundColor: "#fff"
+    backgroundColor: '#fff',
   },
   input: {
-    height: "100%",
+    height: '100%',
     padding: 10,
-    textAlign: "center",
-    textOverflow: "false",
+    textAlign: 'center',
+    textOverflow: 'false',
   },
   gamjaboo: {
     width: screenWidth * 0.4,
     top: screenHeight * 0.2,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
   name: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
   },
   text: {
-    color: "#fff",
+    color: '#fff',
     fontSize: screenWidth * 0.04,
     bottom: screenHeight * 0.07,
   },
   cloverCon: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
     bottom: screenHeight * 0.02,
     gap: screenWidth * 0.15,
   },

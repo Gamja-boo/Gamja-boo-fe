@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
-import SkinFill from "@/app_assets/character_screen/customizing_screen/skinFill.svg";
-import React from "react";
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import SkinFill from '@/app_assets/character_screen/customizing_screen/skinFill.svg';
+import React from 'react';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function ChooseSkin({
   items,
   onSelect,
 }: {
-  items: { 
-    id: string; 
+  items: {
+    id: string;
     Component: React.ComponentType<any>;
     position: any;
   }[];
@@ -25,15 +25,9 @@ export function ChooseSkin({
       {rows.map((rowItems, rowIndex) => (
         <View key={rowIndex}>
           <View style={styles.rowContainer1}>
-            {rowItems.map(item => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() => onSelect(item.id)}
-                style={styles.box} >
-                <item.Component
-                  width={screenWidth * 0.1}
-                  height={screenHeight * 0.1}
-                />
+            {rowItems.map((item) => (
+              <TouchableOpacity key={item.id} onPress={() => onSelect(item.id)} style={styles.box}>
+                <item.Component width={screenWidth * 0.1} height={screenHeight * 0.1} />
               </TouchableOpacity>
             ))}
           </View>
@@ -57,38 +51,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: screenWidth,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   rowContainer1: {
     height: screenHeight * 0.1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: screenWidth * 0.085,
   },
   rowContainer2: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     paddingBottom: screenHeight * 0.04,
     paddingTop: screenHeight * 0.01,
     gap: screenWidth * 0.21,
   },
   priceContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: screenWidth * 0.025,
   },
   text: {
-    color: "#ADD69F",
-    fontWeight: "bold",
+    color: '#ADD69F',
+    fontWeight: 'bold',
     fontSize: screenWidth * 0.04,
   },
   box: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: screenWidth * 0.2,
     height: screenHeight * 0.1,
     borderRadius: screenWidth * 0.05,
-    backgroundColor: "#FFE9B8"
+    backgroundColor: '#FFE9B8',
   },
-})
+});

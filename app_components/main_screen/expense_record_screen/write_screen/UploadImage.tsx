@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
-import * as ImagePicker from "expo-image-picker"
-import Modal from "react-native-modal";
-import UploadIcon from "@/app_assets/expense_report_screen/write_screen/pictureBtn.svg";
-import Camera from "@/app_assets/expense_report_screen/write_screen/camera.svg";
-import Gallery from "@/app_assets/expense_report_screen/write_screen/gallery.svg";
-import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import Modal from 'react-native-modal';
+import UploadIcon from '@/app_assets/expense_report_screen/write_screen/pictureBtn.svg';
+import Camera from '@/app_assets/expense_report_screen/write_screen/camera.svg';
+import Gallery from '@/app_assets/expense_report_screen/write_screen/gallery.svg';
+import Cancel from '@/app_assets/expense_report_screen/write_screen/cancelBtn.svg';
 
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 interface UploadImageProps {
   image: string | null;
@@ -37,7 +36,7 @@ export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
   // 갤러리에서 사진 가져오기
   const pickFromGallery = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: "images",
+      mediaTypes: 'images',
       allowsEditing: true,
       quality: 1,
     });
@@ -50,21 +49,11 @@ export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
 
   return (
     <View>
-      <TouchableOpacity
-        onPress={openModal}
-        style={styles.imageBox}>
-        {image ? (
-          <Image source={{ uri: image }} style={styles.uploadedImage} />
-        ) : (
-          <UploadIcon />
-        )}
+      <TouchableOpacity onPress={openModal} style={styles.imageBox}>
+        {image ? <Image source={{ uri: image }} style={styles.uploadedImage} /> : <UploadIcon />}
       </TouchableOpacity>
 
-      <Modal
-        isVisible={isModalVisible}
-        onBackdropPress={closeModal}
-        style={styles.modal}>
-
+      <Modal isVisible={isModalVisible} onBackdropPress={closeModal} style={styles.modal}>
         <TouchableOpacity onPress={closeModal} style={styles.modalClose}>
           <Cancel />
         </TouchableOpacity>
@@ -79,7 +68,6 @@ export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
             <Gallery />
             <Text style={styles.text}>앨범에서 선택하기</Text>
           </TouchableOpacity>
-
         </View>
       </Modal>
     </View>
@@ -88,13 +76,13 @@ export function UploadImage({ image, setImage }: Readonly<UploadImageProps>) {
 
 const styles = StyleSheet.create({
   imageBox: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FCFFF6",
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FCFFF6',
     // shadow at ios
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
@@ -102,39 +90,39 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   uploadedImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   text: {
-    color: "#329257",
+    color: '#329257',
     fontSize: screenWidth * 0.04,
   },
   modal: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalContent: {
     height: screenHeight * 0.25,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
     paddingHorizontal: screenWidth * 0.1,
     paddingVertical: screenHeight * 0.035,
     borderRadius: screenWidth * 0.07,
   },
   modalOption: {
-    flexDirection: "row",
+    flexDirection: 'row',
     width: screenWidth * 0.6,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
     padding: screenWidth * 0.04,
     margin: screenWidth * 0.015,
     borderRadius: screenWidth * 0.1,
     gap: screenWidth * 0.03,
     // shadow at ios
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
@@ -142,7 +130,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   modalClose: {
-    alignItems: "center",
+    alignItems: 'center',
     paddingBottom: screenWidth * 0.05,
   },
-})
+});

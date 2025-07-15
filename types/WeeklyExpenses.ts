@@ -1,4 +1,4 @@
-import { SpendingDetails } from "./SpendingDetails";
+import { SpendingDetails } from './SpendingDetails';
 
 export type WeeklyExpenses = {
   week1: SpendingDetails[];
@@ -7,4 +7,4 @@ export type WeeklyExpenses = {
   week4: SpendingDetails[];
   week5: SpendingDetails[];
   week6: SpendingDetails[];
-}
+};

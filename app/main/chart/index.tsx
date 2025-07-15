@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { useIsFocused } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -60,10 +59,6 @@ function describeArc(
 // 1인 경우, 시계 방향으로 이동하는 경로로 그림
 
 export default function ChartScreen() {
-  const scrollRef = useRef<ScrollView>(null);
-  // ScrollView의 내부 메서드를 사용하기 위해 외부에 ScrollView 인스턴스 생성
-  // 이후 실제 ScrollView가 속성을 조작해 놓은 인스턴스를 참조하게끔 함 -> ref={scrollRef}
-  const isFocused = useIsFocused();
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
   const [monthOfCurrentInfo, setMonthOfCurrentInfo] = useState(months[month]);

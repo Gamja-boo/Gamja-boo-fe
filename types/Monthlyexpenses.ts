@@ -1,3 +1,3 @@
-import { SpendingDetails } from "./SpendingDetails";
+import { SpendingDetails } from './SpendingDetails';
 
 export type Monthlyexpenses = SpendingDetails[];

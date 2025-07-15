@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
-import SkinFill from "@/app_assets/character_screen/customizing_screen/skinFill.svg";
-import React from "react";
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import SkinFill from '@/app_assets/character_screen/customizing_screen/skinFill.svg';
+import React from 'react';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function ChooseAccessory({
   items,
   onSelect,
 }: {
-  items: { 
-    id: string; 
+  items: {
+    id: string;
     Component: React.ComponentType<any>;
     position: any;
   }[];
@@ -25,12 +25,9 @@ export function ChooseAccessory({
       {rows.map((rowItems, rowIndex) => (
         <View key={rowIndex}>
           <View style={styles.rowContainer1}>
-            {rowItems.map(item => (
+            {rowItems.map((item) => (
               <TouchableOpacity key={item.id} onPress={() => onSelect(item.id)}>
-                <item.Component
-                  width={screenWidth * 0.23}
-                  height={screenHeight * 0.23}
-                />
+                <item.Component width={screenWidth * 0.23} height={screenHeight * 0.23} />
               </TouchableOpacity>
             ))}
           </View>
@@ -54,30 +51,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: screenWidth,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   rowContainer1: {
     height: screenHeight * 0.1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: screenWidth * 0.075,
   },
   rowContainer2: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     paddingBottom: screenHeight * 0.04,
     paddingTop: screenHeight * 0.01,
     gap: screenWidth * 0.21,
   },
   priceContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: screenWidth * 0.03,
   },
   text: {
-    color: "#ADD69F",
-    fontWeight: "bold",
+    color: '#ADD69F',
+    fontWeight: 'bold',
     fontSize: screenWidth * 0.04,
   },
-})
+});

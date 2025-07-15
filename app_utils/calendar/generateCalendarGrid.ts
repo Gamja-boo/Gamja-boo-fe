@@ -1,5 +1,5 @@
-import { getDaysInMonth } from "@/app_utils/calendar/getDaysInMonth";
-import { getFirstDayOfMonth } from "@/app_utils/calendar/getFirstDayOfMonth"
+import { getDaysInMonth } from '@/app_utils/calendar/getDaysInMonth';
+import { getFirstDayOfMonth } from '@/app_utils/calendar/getFirstDayOfMonth';
 
 export function generateCalendarGrid(year: number, month: number) {
   const daysInMonth = getDaysInMonth(year, month);

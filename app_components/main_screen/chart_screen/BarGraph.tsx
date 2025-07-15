@@ -12,7 +12,6 @@ import ArrowDropDown from '@/app_assets/chart_screen/arrow_drop_down.svg';
 import { splitMonthlyDataByWeek } from '@/app_utils/finance/splitMonthlyDataByWeek';
 import { useMonthlyTransaction } from '@/hooks/useMonthlyTransaction';
 import { Transaction } from '@/types/transaction';
-import { useIsFocused } from '@react-navigation/native';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -58,6 +57,8 @@ export const BarGraph = ({
   const todayMonth = date.getMonth();
   const [queue, setQueue] = useState<string[]>([]);
   const scrollRef = useRef<ScrollView>(null);
+  // ScrollView의 내부 메서드를 사용하기 위해 외부에 ScrollView 인스턴스 생성
+  // 이후 실제 ScrollView가 속성을 조작해 놓은 인스턴스를 참조하게끔 함 -> ref={scrollRef}
   useEffect(() => {
     let offset = todayMonth + 12;
     const arr: string[] = [];
