@@ -1,9 +1,8 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const calendarWidth = screenWidth * 0.85;
 const cellSize = Math.floor((calendarWidth - screenWidth * 0.01 * 7) / 7);
@@ -28,7 +27,7 @@ export function CustomCalendarGrid({ rows, selectedMonth }: Readonly<CustomCalen
               <View key={colIdx} style={styles.emptyCell} />
             ) : (
               // 날짜 누르면 지출 작성 화면으로 넘어감
-              <TouchableOpacity 
+              <TouchableOpacity
                 key={colIdx}
                 onPress={() => {
                   const selectedDate = new Date(today.getFullYear(), selectedMonth - 1, d);
@@ -36,24 +35,29 @@ export function CustomCalendarGrid({ rows, selectedMonth }: Readonly<CustomCalen
                   const weekday = weekdayNames[selectedDate.getDay()];
 
                   router.push({
-                    pathname: "/main/expense_record",
-                    params: { 
-                      day: d.toString(), 
+                    pathname: '/main/expense_record',
+                    params: {
+                      day: d.toString(),
                       month: selectedMonth.toString(),
-                      weekday: weekday 
-                    }
+                      weekday: weekday,
+                    },
                   });
                 }}
                 style={[
                   styles.dayCell,
-                  d === todayDate && selectedMonth === todayMonth && styles.todayCell]}>
-                <Text style={[
+                  d === todayDate && selectedMonth === todayMonth && styles.todayCell,
+                ]}
+              >
+                <Text
+                  style={[
                     styles.dayText,
-                    d === todayDate && selectedMonth === todayMonth && styles.todayText]}>
-                    {d}
+                    d === todayDate && selectedMonth === todayMonth && styles.todayText,
+                  ]}
+                >
+                  {d}
                 </Text>
               </TouchableOpacity>
-            )
+            ),
           )}
         </View>
       ))}
@@ -62,56 +66,56 @@ export function CustomCalendarGrid({ rows, selectedMonth }: Readonly<CustomCalen
 }
 
 const styles = StyleSheet.create({
-  row: { 
-    flexDirection: "row", 
-    justifyContent: "center",
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
-  emptyCell: { 
-    width: cellSize, 
-    height: cellSize * 1.28, 
+  emptyCell: {
+    width: cellSize,
+    height: cellSize * 1.28,
     borderRadius: cellSize * 0.4,
-    justifyContent: "flex-end", 
-    alignItems: "flex-start",
-    backgroundColor: "#FCFFF6",
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    backgroundColor: '#FCFFF6',
     paddingLeft: screenWidth * 0.02,
     paddingBottom: screenHeight * 0.015,
     margin: screenWidth * 0.0015,
     // shadow at ios
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     // shadow at Android
     elevation: 5,
   },
-  dayCell: { 
-    width: cellSize, 
-    height: cellSize * 1.28, 
-    borderRadius: cellSize * 0.4, 
-    justifyContent: "flex-end", 
-    alignItems: "flex-start",
-    backgroundColor: "#FCFFF6",
+  dayCell: {
+    width: cellSize,
+    height: cellSize * 1.28,
+    borderRadius: cellSize * 0.4,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    backgroundColor: '#FCFFF6',
     paddingLeft: screenWidth * 0.02,
     paddingBottom: screenHeight * 0.015,
     margin: screenWidth * 0.0015,
     // shadow at ios
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     // shadow at Android
     elevation: 5,
   },
-  dayText: { 
-    fontSize: screenWidth * 0.025, 
-    color: "#567A3C", 
-    fontWeight: "500" 
+  dayText: {
+    fontSize: screenWidth * 0.025,
+    color: '#567A3C',
+    fontWeight: '500',
   },
   todayCell: {
-    backgroundColor: "#FFFA9C",
+    backgroundColor: '#FFFA9C',
   },
   todayText: {
-    color: "#567A3C",
-    fontWeight: "bold",
-  }, 
+    color: '#567A3C',
+    fontWeight: 'bold',
+  },
 });

@@ -19,6 +19,7 @@ const getData = async (year: string, month: string): Promise<Data | null> => {
 export const MonthlyTransactionProvider = ({ children }: { children: ReactNode }) => {
   const [year, setYearToGetData] = useState(new Date().getFullYear().toString());
   const [yearlyData, setYearlyData] = useState<(Data | null)[]>([]);
+  const [isDataUpdated, setIsDataUpdated] = useState(false);
 
   useEffect(() => {
     const execute = async () => {
@@ -32,11 +33,12 @@ export const MonthlyTransactionProvider = ({ children }: { children: ReactNode }
       setYearlyData(result);
     };
     execute();
-  }, [year]);
+    setIsDataUpdated(false);
+  }, [year, isDataUpdated]);
 
   return (
     <MonthlyTransactionContext.Provider
-      value={{ year, setYearToGetData, yearlyData, setYearlyData }}
+      value={{ year, setYearToGetData, yearlyData, setYearlyData, isDataUpdated, setIsDataUpdated }}
     >
       {children}
     </MonthlyTransactionContext.Provider>

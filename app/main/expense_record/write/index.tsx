@@ -1,44 +1,76 @@
-import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, ScrollView, Keyboard } from "react-native";
-import BackButton from "@/app_assets/expense_report_screen/write_screen/backButton.svg";
-import { UploadImage } from "@/app_components/main_screen/expense_record_screen/write_screen/UploadImage";
-import { WritingBox } from "@/app_components/main_screen/expense_record_screen/write_screen/WritingBox";
-import { AboutSpent } from "@/app_components/main_screen/expense_record_screen/write_screen/AboutSpent";
-import { SaveRecord } from "@/app_components/main_screen/expense_record_screen/write_screen/SaveRecord";
-import { router } from "expo-router";
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Keyboard,
+} from 'react-native';
+import BackButton from '@/app_assets/expense_report_screen/write_screen/backButton.svg';
+import { UploadImage } from '@/app_components/main_screen/expense_record_screen/write_screen/UploadImage';
+import { WritingBox } from '@/app_components/main_screen/expense_record_screen/write_screen/WritingBox';
+import { AboutSpent } from '@/app_components/main_screen/expense_record_screen/write_screen/AboutSpent';
+import { SaveRecord } from '@/app_components/main_screen/expense_record_screen/write_screen/SaveRecord';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useTransactionInput } from '@/hooks/useTransactionInput';
+import { useMonthlyTransaction } from '@/hooks/useMonthlyTransaction';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function WriteScreen() {
+  const { year } = useMonthlyTransaction();
+  const { setDate } = useTransactionInput();
+  const { day, month, weekday } = useLocalSearchParams();
+  const parsedMonth = typeof month === 'string' ? parseInt(month, 10) : parseInt(month[0], 10);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
-    const hideSub = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
+    const showSub = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+    const hideSub = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
     return () => {
       showSub.remove();
       hideSub.remove();
     };
   }, []);
 
+  useEffect(() => {
+    setDate(`${year}-${months[parsedMonth - 1]}-${day.toString().padStart(2, '0')}`);
+  }, [day, parsedMonth, setDate, year]);
+
   return (
     // 타이핑 칠 때 보기 편하게 뷰를 올려줌
     // ios, android 두 가지 버전 둘 다 지원
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "position" : "height"}
+      behavior={Platform.OS === 'ios' ? 'position' : 'height'}
       style={styles.container}
       keyboardVerticalOffset={0}
     >
-      { /* 뷰가 올라갔을 때, 스트롤도 가능하게 해줌 */}
+      {/* 뷰가 올라갔을 때, 스트롤도 가능하게 해줌 */}
       <ScrollView
-        contentContainerStyle={{ alignItems: "center" }}
+        contentContainerStyle={{ alignItems: 'center' }}
         keyboardShouldPersistTaps="handled"
       >
-
         {/* 뒤로 가기 버튼 */}
         <View style={styles.backContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={() => router.push("/main/expense_record")}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() =>
+              router.push({
+                pathname: '/main/expense_record',
+                params: {
+                  day: day,
+                  month: month,
+                  weekday: weekday,
+                },
+              })
+            }
+          >
             <BackButton />
           </TouchableOpacity>
         </View>
@@ -62,7 +94,7 @@ export default function WriteScreen() {
           <AboutSpent />
         </View>
 
-        { /* 글을 적는 공간 */}
+        {/* 글을 적는 공간 */}
         <View style={styles.writeBoxContainer}>
           <WritingBox />
         </View>
@@ -74,10 +106,10 @@ export default function WriteScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FCFFF6",
+    backgroundColor: '#FCFFF6',
   },
   backContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: screenHeight * 0.04,
     left: screenWidth * 0.08,
     zIndex: 10,
@@ -86,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   checkContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: screenHeight * 0.04,
     right: screenWidth * 0.08,
     zIndex: 10,
@@ -98,7 +130,7 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.1,
     width: screenWidth,
     height: screenHeight * 0.45,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   spentContainer: {
     width: screenWidth * 0.8,
@@ -107,8 +139,8 @@ const styles = StyleSheet.create({
   writeBoxContainer: {
     width: screenWidth * 0.8,
     height: screenHeight * 0.15,
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -11,7 +11,6 @@ import {
   Easing,
   TouchableOpacity,
   Modal,
-  InteractionManager,
 } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import Svg, { Path } from 'react-native-svg';

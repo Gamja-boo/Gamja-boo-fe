@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, BackHandler, Alert, Dimensions, Keyboard } from 'react-native';
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Stack, useGlobalSearchParams, useRouter, useSegments } from 'expo-router';
 import { BottomAppbar } from '@/app_components/main_screen/BottomAppbar';
 import { MonthlyTransactionProvider } from '@/provider/MonthlyTransactionsProvider';
+import { TransactionInputProvider } from '@/provider/TransactionInputProvider';
 
 const { height: screenHeight } = Dimensions.get('window');
 
 export default function Layout() {
   const router = useRouter();
   const segments = useSegments();
+  const { month } = useGlobalSearchParams();
   const currentRoute = `/${segments.join('/')}`;
   const LayoutRoute = ['/main', '/main/character', '/main/chart'];
   const isLayoutRoute = LayoutRoute.includes(currentRoute);
 
   console.log('현재 경로', segments);
   console.log('현재 경로', currentRoute);
+  console.log('현재 달', month);
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -39,6 +42,17 @@ export default function Layout() {
         return true;
       } else {
         // 다른 화면일 때, 홈으로 이동
+        if (month) {
+          router.push({
+            pathname: '/main',
+            params: {
+              month: month,
+            },
+          });
+
+          return true;
+        }
+
         router.push('/main');
         return true;
       }
@@ -49,17 +63,19 @@ export default function Layout() {
     return () => backHandler.remove();
     // 컴포넌트 언마운트 시 (앱 종료 시) 함수가 정의된 메모리 해제
     // useEffect의 return은 useEffect가 정의된 컴포넌트가 언마운트될 시 실행된다.
-  }, [segments, currentRoute, router]);
+  }, [segments, currentRoute, router, month]);
 
   return (
     <View style={styles.container}>
       <MonthlyTransactionProvider>
-        <Stack screenOptions={{ headerShown: false }} />
-        {isLayoutRoute && !keyboardVisible && (
-          <View style={styles.bottomAppbarContainer}>
-            <BottomAppbar />
-          </View>
-        )}
+        <TransactionInputProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+          {isLayoutRoute && !keyboardVisible && (
+            <View style={styles.bottomAppbarContainer}>
+              <BottomAppbar />
+            </View>
+          )}
+        </TransactionInputProvider>
       </MonthlyTransactionProvider>
     </View>
   );

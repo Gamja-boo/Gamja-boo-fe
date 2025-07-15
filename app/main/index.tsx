@@ -9,7 +9,7 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import MyPageBtn from '@/app_assets/main_screen/myPageBtn.svg';
 import CalendarBtn from '@/app_assets/main_screen/calendarBtn.svg';
 import { ShowMonth } from '@/app_components/main_screen/ShowMonth';
@@ -23,13 +23,18 @@ import BackBtn from '@/app_assets/setting_nickname_screen/button.svg';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function MainScreen() {
-  const router = useRouter();
-
   const today = new Date();
+  const router = useRouter();
+  const { month } = useLocalSearchParams();
+  const parsedMonth = month
+    ? typeof month === 'string'
+      ? parseInt(month, 10)
+      : parseInt(month[0], 10)
+    : today.getMonth() + 1;
   console.log(today.getMonth());
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedYear] = useState(today.getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(today.getMonth() + 1);
+  const [selectedMonth, setSelectedMonth] = useState(parsedMonth);
   const rows = generateCalendarGrid(selectedYear, selectedMonth);
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
