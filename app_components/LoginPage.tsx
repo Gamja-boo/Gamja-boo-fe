@@ -9,10 +9,13 @@ import RottenGamja from '@/app_assets/rottenGamja.svg';
 import BasicGamja from '@/app_assets/basicGamja.svg';
 import ExcitedGamja from '@/app_assets/excitedGamja.svg';
 import Book from '@/app_assets/book.svg';
+import { useRouter } from 'expo-router';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function LoginPage() {
+  const router = useRouter();
+  
   return (
     <View style={styles.container}>
       <View style={styles.nameContainer}>
@@ -27,9 +30,11 @@ export function LoginPage() {
         <Grass />
       </View>
 
-      <TouchableOpacity style={styles.kakao}>
+      <TouchableOpacity
+        onPress={() => router.push("/login_setting")}
+        style={styles.kakao}>
         <KakaoTalk />
-        <Text style={styles.kakaoText}>카카오톡으로 로그인</Text>
+        <Text style={styles.kakaoText}>카카오 로그인</Text>
       </TouchableOpacity>
 
       <View style={styles.textContainer}>
@@ -96,18 +101,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingVertical: screenHeight * 0.02,
-    width: screenWidth * 0.6,
+    width: screenWidth * 0.8,
     top: screenHeight * 0.24,
-    borderRadius: screenWidth / 2,
+    borderRadius: screenWidth * 0.02,
     backgroundColor: '#FFF942',
     gap: screenWidth * 0.05,
-    // shadow at ios
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    // shadow at Android
-    elevation: 5,
   },
   kakaoText: {
     fontSize: screenWidth * 0.035,

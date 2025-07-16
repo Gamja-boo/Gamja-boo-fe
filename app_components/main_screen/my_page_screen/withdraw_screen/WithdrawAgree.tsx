@@ -1,11 +1,17 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function WithdrawAgree() {
+  const handleWithdraw = async () => {
+    await AsyncStorage.removeItem("nickname");
+    router.replace("/");
+  };
+
   return (
-    <TouchableOpacity onPress={() => router.push('/')} style={styles.container}>
+    <TouchableOpacity onPress={handleWithdraw} style={styles.container}>
       <Text style={styles.text1}>동의</Text>
     </TouchableOpacity>
   );

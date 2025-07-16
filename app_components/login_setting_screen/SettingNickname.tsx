@@ -13,7 +13,8 @@ import React, { useState } from 'react';
 import { useNickname } from '@/context/NicknameContext';
 import { useRouter } from 'expo-router';
 import Button from '@/app_assets/setting_nickname_screen/button.svg';
-// import Toast from "react-native-toast-message";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -24,12 +25,8 @@ export function SettingNickname() {
 
   const handleSave = async () => {
     if (text.trim()) {
+      await AsyncStorage.setItem("nickname", text);
       setNickname(text);
-      // Toast.show({
-      //   type: "success",
-      //   text1: "닉네임이 설정되었습니다.",
-      //   text2: `${text}님 감쟈부에 오신 것을 환영합니다!`,
-      // });
       router.push('/main');
     }
   };
@@ -57,7 +54,6 @@ export function SettingNickname() {
           placeholderTextColor="#aaa"
           value={text}
           onChangeText={setText}
-          multiline={true}
         />
       </View>
 
