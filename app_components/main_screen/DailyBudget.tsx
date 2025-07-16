@@ -1,11 +1,54 @@
-import { useState } from 'react';
+import apiClient from '@/api/apiClient';
+import { useMonthlyTransaction } from '@/hooks/useMonthlyTransaction';
+import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+
+interface DailyBudget {
+  minimum: string;
+  setMinimum: React.Dispatch<React.SetStateAction<string>>;
+  maximum: string;
+  setMaximum: React.Dispatch<React.SetStateAction<string>>;
+  hasData: boolean;
+}
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export function DailyBudget() {
-  const [minAmount, setMinAmount] = useState('');
-  const [maxAmount, setMaxAmount] = useState('');
+export function DailyBudget({ minimum, setMinimum, maximum, setMaximum, hasData }: DailyBudget) {
+  const today = new Date();
+  const { year } = useMonthlyTransaction();
+  const parsedMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+  const parsedDay = today.getDate().toString().padStart(2, '0');
+  const maximumRef = useRef<TextInput>(null);
+
+  const handleSubmit = async () => {
+    try {
+      if (hasData) {
+        const response = await apiClient.put('/api/budget', {
+          kakaoId: 1,
+          date: `${year}-${parsedMonth}-${parsedDay}`,
+          minAmount: parseInt(minimum),
+          maxAmount: parseInt(maximum),
+        });
+        console.log(
+          `${year}.${parsedMonth}.${parsedDay} 일일 예산 등록 성공: `,
+          response.data.data,
+        );
+      } else {
+        const response = await apiClient.post('/api/budget', {
+          kakaoId: 1,
+          date: `${year}-${parsedMonth}-${parsedDay}`,
+          minAmount: parseInt(minimum),
+          maxAmount: parseInt(maximum),
+        });
+        console.log(
+          `${year}.${parsedMonth}.${parsedDay} 일일 예산 등록 성공: `,
+          response.data.data,
+        );
+      }
+    } catch (error) {
+      console.log(`${year}.${parsedMonth}.${parsedDay} 일일 예산 등록 실패: `, error);
+    }
+  };
 
   return (
     <TouchableOpacity style={styles.container}>
@@ -14,9 +57,14 @@ export function DailyBudget() {
 
       <TextInput
         style={styles.text2}
-        value={minAmount}
-        onChangeText={setMinAmount}
+        value={minimum}
+        onChangeText={setMinimum}
+        onSubmitEditing={() => {
+          maximumRef.current?.focus();
+        }}
+        blurOnSubmit={false}
         keyboardType="numeric"
+        returnKeyType="next"
         placeholder="00,000"
         placeholderTextColor="#65BE71"
       />
@@ -25,8 +73,10 @@ export function DailyBudget() {
 
       <TextInput
         style={styles.text2}
-        value={maxAmount}
-        onChangeText={setMaxAmount}
+        ref={maximumRef}
+        value={maximum}
+        onChangeText={setMaximum}
+        onSubmitEditing={handleSubmit}
         keyboardType="numeric"
         placeholder="00,000"
         placeholderTextColor="#65BE71"

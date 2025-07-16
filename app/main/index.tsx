@@ -19,23 +19,34 @@ import { generateCalendarGrid } from '@/app_utils/calendar/generateCalendarGrid'
 import { DailyBudget } from '@/app_components/main_screen/DailyBudget';
 import { ExpenseBar } from '@/app_components/main_screen/ExpenseBar';
 import BackBtn from '@/app_assets/setting_nickname_screen/button.svg';
+import { useTransactionInput } from '@/hooks/useTransactionInput';
+import { useMonthlyTransaction } from '@/hooks/useMonthlyTransaction';
+import apiClient from '@/api/apiClient';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function MainScreen() {
   const today = new Date();
+  const parsedTodayMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+  const parsedTodayDay = today.getDate().toString().padStart(2, '0');
   const router = useRouter();
+  const { kakaoId } = useTransactionInput();
+  const { year } = useMonthlyTransaction();
   const { month } = useLocalSearchParams();
   const parsedMonth = month
     ? typeof month === 'string'
       ? parseInt(month, 10)
       : parseInt(month[0], 10)
     : today.getMonth() + 1;
-  console.log(today.getMonth());
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedYear] = useState(today.getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(parsedMonth);
+  const [minimum, setMinimum] = useState('');
+  const [maximum, setMaximum] = useState('');
+  const [hasData, setHasData] = useState(false);
+  const [expenditure, setExpenditure] = useState(0);
   const rows = generateCalendarGrid(selectedYear, selectedMonth);
+  const { yearlyData } = useMonthlyTransaction();
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -47,6 +58,51 @@ export default function MainScreen() {
       hide.remove();
     };
   }, []);
+
+  useEffect(() => {
+    const getBudgetData = async () => {
+      try {
+        const response = await apiClient.get(
+          `/api/budget/${year}-${parsedTodayMonth}-${parsedTodayDay}?kakaoId=${kakaoId}`,
+        );
+        setMinimum(response.data.data.minAmount.toString());
+        setMaximum(response.data.data.maxAmount.toString());
+        setHasData(true);
+        console.log(
+          `${year}.${parsedTodayMonth}.${parsedTodayDay} 일일 예산 내역: `,
+          response.data.data,
+        );
+      } catch (error) {
+        setHasData(false);
+        console.log(
+          `${year}.${parsedTodayMonth}.${parsedTodayDay} 일일 예산 내역 조회 실패: `,
+          error,
+        );
+      }
+    };
+    getBudgetData();
+  }, [kakaoId, year, parsedTodayDay, parsedTodayMonth]);
+
+  useEffect(() => {
+    const getDailyExpenditure = async () => {
+      try {
+        const response = await apiClient.get(
+          `/api/stats/daily/${year}-${parsedTodayMonth}-${parsedTodayDay}?kakaoId=${kakaoId}`,
+        );
+        setExpenditure(response.data.data.totalSpent);
+        console.log(
+          `${year}.${parsedTodayMonth}.${parsedTodayDay} 일일 지출 내역: `,
+          response.data.data.totalSpent,
+        );
+      } catch (error) {
+        console.log(
+          `${year}.${parsedTodayMonth}.${parsedTodayDay} 일일 지출 내역 조회 실패: `,
+          error,
+        );
+      }
+    };
+    getDailyExpenditure();
+  });
 
   return (
     <View style={styles.container}>
@@ -102,12 +158,25 @@ export default function MainScreen() {
       >
         {/* 하루 예산을 책정하는 바 */}
         <View style={styles.dailyBudgetContainer}>
-          <DailyBudget />
+          <DailyBudget
+            minimum={minimum}
+            setMinimum={setMinimum}
+            maximum={maximum}
+            setMaximum={setMaximum}
+            hasData={hasData}
+          />
         </View>
 
         {/* 지출을 표시하는 바 */}
         <View style={styles.expenseBarContainer}>
-          <ExpenseBar today={50000} compare={3000} balance={100000} />
+          <ExpenseBar
+            today={expenditure}
+            compare={parseInt(maximum) - expenditure}
+            balance={
+              yearlyData[parseInt(parsedTodayMonth) - 1]?.totalIncome -
+              yearlyData[parseInt(parsedTodayMonth) - 1]?.totalSpent
+            }
+          />
         </View>
       </KeyboardAvoidingView>
     </View>
