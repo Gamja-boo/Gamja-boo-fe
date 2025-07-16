@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
+import { useCharacter } from "@/context/CharacterContext";
+
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -21,13 +23,20 @@ export function PurchaseBtn({
   const openModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
+  const { setCharacter } = useCharacter();
+
   const handlePurchase = () => {
-    router.push({
+    setCharacter({
+      skin: selectedSkin,
+      cloth: selectedCloth,
+      accessory: selectedAccessory,
+    });
+    router.replace({
       pathname: "/main/character/customizing/purchase_item",
       params: {
-        skin: selectedSkin ?? "",
-        cloth: selectedCloth ?? "",
-        accessory: selectedAccessory ?? "",
+        skin: selectedSkin ?? '',
+        cloth: selectedCloth ?? '',
+        accessory: selectedAccessory ?? '',
       },
     });
   };

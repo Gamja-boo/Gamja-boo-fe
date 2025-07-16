@@ -8,20 +8,20 @@ import BackButton from '@/app_assets/my_page_screen/backButton.svg';
 import { Code } from '@/app_components/main_screen/my_page_screen/Code';
 import { ShowNickname } from '@/app_components/main_screen/my_page_screen/ShowNickname';
 import { Withdraw } from '@/app_components/main_screen/my_page_screen/Withdraw';
+import { useCharacter } from '@/context/CharacterContext';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function MyPageScreen() {
   const router = useRouter();
 
-  const { skin, cloth, accessory } = useLocalSearchParams();
+  const { character } = useCharacter();
 
-  const skinItem = typeof skin === 'string' ? skinItems.find((item) => item.id === skin) : null;
-  const clothItem = typeof cloth === 'string' ? clothItems.find((item) => item.id === cloth) : null;
-  const accessoryItem =
-    typeof accessory === 'string' ? accessoryItems.find((item) => item.id === accessory) : null;
+  const skinItem = character.skin ? skinItems.find((item) => item.id === character.skin) : null;
+  const clothItem = character.cloth ? clothItems.find((item) => item.id === character.cloth) : null;
+  const accessoryItem = character.accessory ? accessoryItems.find((item) => item.id === character.accessory) : null;
 
-  const yOffset = -screenHeight * 0.001;
+  const yOffset = screenHeight * 0.01;
 
   return (
     <View style={styles.container}>
@@ -68,7 +68,10 @@ export default function MyPageScreen() {
             height={clothItem.size?.height ?? screenHeight * 0.2}
             style={{
               position: 'absolute',
-              ...clothItem.position,
+              bottom:
+                clothItem.position?.bottom !== undefined
+                  ? clothItem.position.bottom + yOffset
+                  : undefined,
               zIndex: 99,
             }}
           />
@@ -80,7 +83,10 @@ export default function MyPageScreen() {
             height={accessoryItem.size?.height ?? screenHeight * 0.2}
             style={{
               position: 'absolute',
-              ...accessoryItem.position,
+              bottom:
+                accessoryItem.position?.bottom !== undefined
+                  ? accessoryItem.position.bottom + yOffset
+                  : undefined,
               zIndex: 99,
             }}
           />

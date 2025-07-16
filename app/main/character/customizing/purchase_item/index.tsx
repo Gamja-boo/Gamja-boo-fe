@@ -9,15 +9,16 @@ export default function Complete() {
   const router = useRouter();
 
   const { skin, cloth, accessory } = useLocalSearchParams();
+  console.log('useLocalSearchParams 값:', skin, cloth, accessory);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <PurchaseItems
-        selectedSkin={typeof skin === 'string' ? skin : null}
-        selectedCloth={typeof cloth === 'string' ? cloth : null}
-        selectedAccessory={typeof accessory === 'string' ? accessory : null}
-      />
+      selectedSkin={typeof skin === 'string' ? skin : null}
+      selectedCloth={typeof cloth === 'string' ? cloth : null}
+      selectedAccessory={typeof accessory === 'string' ? accessory : null}
+    />
 
       {/* 뒤로가기 버튼 */}
       <TouchableOpacity

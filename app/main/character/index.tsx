@@ -12,19 +12,18 @@ import Share from '@/app_assets/character_screen/share.svg';
 import { skinItems } from '@/app_utils/items/skinItems';
 import { clothItems } from '@/app_utils/items/clothItems';
 import { accessoryItems } from '@/app_utils/items/accessoryItems';
+import { useCharacter } from '@/context/CharacterContext';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function CharacterScreen() {
   const router = useRouter();
 
-  const { skin, cloth, accessory } = useLocalSearchParams();
+    const { character } = useCharacter();
 
-  const skinItem = typeof skin === 'string' ? skinItems.find((item) => item.id === skin) : null;
-  const clothItem = typeof cloth === 'string' ? clothItems.find((item) => item.id === cloth) : null;
-  const accessoryItem =
-    typeof accessory === 'string' ? accessoryItems.find((item) => item.id === accessory) : null;
-
+    const skinItem = character.skin ? skinItems.find((item) => item.id === character.skin) : null;
+    const clothItem = character.cloth ? clothItems.find((item) => item.id === character.cloth) : null;
+    const accessoryItem = character.accessory ? accessoryItems.find((item) => item.id === character.accessory) : null;
   const yOffset = -screenHeight * 0.001;
 
   return (

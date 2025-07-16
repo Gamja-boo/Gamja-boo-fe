@@ -12,7 +12,9 @@ import BigGrass from '@/app_assets/setting_nickname_screen/bigGrass.svg';
 import { skinItems } from '@/app_utils/items/skinItems';
 import { clothItems } from '@/app_utils/items/clothItems';
 import { accessoryItems } from '@/app_utils/items/accessoryItems';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
+import { useCharacter } from '@/context/CharacterContext';
+import { useEffect } from 'react';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -25,11 +27,20 @@ export function PurchaseItems({
   selectedCloth: string | null;
   selectedAccessory: string | null;
 }) {
-  const { skin, cloth, accessory } = useLocalSearchParams();
+  const { setCharacter } = useCharacter();
 
-  const skinItem = skinItems.find((item) => item.id === skin);
-  const clothItem = clothItems.find((item) => item.id === cloth);
-  const accessoryItem = accessoryItems.find((item) => item.id === accessory);
+  useEffect(() => {
+    console.log("받은 아이템:", selectedSkin, selectedCloth, selectedAccessory);
+    setCharacter({
+      skin: selectedSkin,
+      cloth: selectedCloth,
+      accessory: selectedAccessory,
+    });
+  }, [selectedSkin, selectedCloth, selectedAccessory]);
+
+  const skinItem = selectedSkin ? skinItems.find((item) => item.id === selectedSkin) : null;
+  const clothItem = selectedCloth ? clothItems.find((item) => item.id === selectedCloth) : null;
+  const accessoryItem = selectedAccessory ? accessoryItems.find((item) => item.id === selectedAccessory) : null;
 
   const xOffset = screenWidth * 0.3;
   const yOffset = screenHeight * 0.42;
@@ -41,10 +52,7 @@ export function PurchaseItems({
     if (selectedCloth) params.cloth = selectedCloth;
     if (selectedAccessory) params.accessory = selectedAccessory;
 
-    router.push({
-      pathname: '/main/character',
-      params,
-    });
+    router.replace("/main/character");
   };
 
   return (
