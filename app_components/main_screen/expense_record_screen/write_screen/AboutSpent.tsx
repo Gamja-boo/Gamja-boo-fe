@@ -49,9 +49,9 @@ export function AboutSpent() {
       </View>
       <View style={styles.container}>
         <View style={styles.textCon}>
-          <Text style={styles.text}>지출 카테고리</Text>
-          <Text style={styles.text}>지출 배경</Text>
-          <Text style={styles.text}>지출 금액</Text>
+          <Text style={styles.text}>{isExpenditure ? '지출' : '소득'} 카테고리</Text>
+          <Text style={styles.text}>{isExpenditure ? '지출' : '소득'} 배경</Text>
+          <Text style={styles.text}>{isExpenditure ? '지출' : '소득'} 금액</Text>
         </View>
         <View style={styles.writeCon}>
           <SpentCategory />

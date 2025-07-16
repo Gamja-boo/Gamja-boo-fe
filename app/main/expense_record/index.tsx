@@ -91,7 +91,7 @@ export default function ExpenseRecordScreen() {
       <View style={styles.viewContainer}>
         <Image source={GamjaBasic} style={styles.imageBox} />
         <DateDisplay />
-        <Text style={styles.recordText}>오늘의 지출을 기록해요!</Text>
+        <Text style={styles.recordText}>오늘의 {isExpenditure ? '지출' : '소득'}을 기록해요!</Text>
       </View>
 
       {/* 수입/지출 버튼 */}
@@ -149,7 +149,7 @@ export default function ExpenseRecordScreen() {
       >
         {(isExpenditure && eTypeDataNum === 0) || (!isExpenditure && iTypeDataNum === 0) ? (
           <View style={[styles.squareBox, { justifyContent: 'center' }]}>
-            <Text>아직 기록된 지출이 없어요!</Text>
+            <Text>아직 기록된 {isExpenditure ? '지출' : '소득'}이 없어요!</Text>
           </View>
         ) : (
           <>

@@ -20,7 +20,7 @@ export function WritingBox() {
         value={text}
         onChangeText={handleChangeMemo}
         multiline
-        placeholder={'이 소비, 만족스러웠나요?\n느끼신 점이 있다면 가볍게 적어주세요.'}
+        placeholder={'간단한 메모를 남겨보세요.'}
         placeholderTextColor="#CACABD"
       />
     </TouchableOpacity>
