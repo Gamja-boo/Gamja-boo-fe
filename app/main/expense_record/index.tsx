@@ -26,6 +26,10 @@ export default function ExpenseRecordScreen() {
   const { year } = useMonthlyTransaction();
   const { day, month, weekday } = useLocalSearchParams();
   const parsedMonth = typeof month === 'string' ? parseInt(month, 10) : parseInt(month[0], 10);
+  const [isExpenditure, setIsExpenditure] = useState(true);
+  const [transactionType, setTransactionType] = useState('E');
+  const [eTypeDataNum, setETypeDataNum] = useState(0);
+  const [iTypeDataNum, setItypeDataNum] = useState(0);
   const [dailyData, setDailyData] = useState<Transaction[]>([]);
 
   useEffect(() => {
@@ -39,6 +43,13 @@ export default function ExpenseRecordScreen() {
     getDailyData();
   }, [day, month, parsedMonth, year]);
 
+  useEffect(() => {
+    dailyData.forEach((item) => {
+      if (item.transactionType === 'E') setETypeDataNum((prev) => prev + 1);
+      if (item.transactionType === 'I') setItypeDataNum((prev) => prev + 1);
+    });
+  }, [dailyData]);
+
   return (
     <View style={styles.container}>
       {/* 뒤로 가기 버튼 */}
@@ -50,6 +61,7 @@ export default function ExpenseRecordScreen() {
               pathname: '/main',
               params: {
                 month: month,
+                day: day,
               },
             })
           }
@@ -79,7 +91,46 @@ export default function ExpenseRecordScreen() {
       <View style={styles.viewContainer}>
         <Image source={GamjaBasic} style={styles.imageBox} />
         <DateDisplay />
-        <Text style={styles.recordText}>오늘의 지출을 기록해요!</Text>
+        <Text style={styles.recordText}>오늘의 {isExpenditure ? '지출' : '소득'}을 기록해요!</Text>
+      </View>
+
+      {/* 수입/지출 버튼 */}
+      <View
+        style={{
+          position: 'absolute',
+          top: screenHeight * 0.44,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setIsExpenditure(true);
+            setTransactionType('E');
+          }}
+          style={
+            isExpenditure
+              ? { ...styles.on, marginRight: screenWidth * 0.01 }
+              : { ...styles.off, marginRight: screenWidth * 0.01 }
+          }
+        >
+          <Text style={isExpenditure ? styles.onText : styles.offText}>지출</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setIsExpenditure(false);
+            setTransactionType('I');
+          }}
+          style={
+            isExpenditure
+              ? { ...styles.off, marginLeft: screenWidth * 0.01 }
+              : { ...styles.on, marginLeft: screenWidth * 0.01 }
+          }
+        >
+          <Text style={isExpenditure ? styles.offText : styles.onText}>소득</Text>
+        </TouchableOpacity>
       </View>
 
       {/* 기록 저장 공간 */}
@@ -96,19 +147,30 @@ export default function ExpenseRecordScreen() {
         }}
         style={{ width: '100%' }}
       >
-        {dailyData.length === 0 ? (
-          <View style={styles.squareBox}>
-            <Text>아직 기록된 지출이 없어요!</Text>
+        {(isExpenditure && eTypeDataNum === 0) || (!isExpenditure && iTypeDataNum === 0) ? (
+          <View style={[styles.squareBox, { justifyContent: 'center' }]}>
+            <Text>아직 기록된 {isExpenditure ? '지출' : '소득'}이 없어요!</Text>
           </View>
         ) : (
           <>
-            {dailyData.map((item, index) => (
-              <View key={index} style={styles.squareBox}>
-                <Text>{item.categoryName}</Text>
-                <Text>{item.background}</Text>
-                <Text>{item.memo}</Text>
-              </View>
-            ))}
+            {dailyData.map((item, index) => {
+              if (item.transactionType !== transactionType) return;
+
+              return (
+                <View key={index} style={styles.squareBox}>
+                  <View style={styles.image} />
+                  <View style={styles.categoryNameStyle}>
+                    <Text style={styles.categoryNameText}>{item.categoryName}</Text>
+                  </View>
+                  <View style={styles.amountStyle}>
+                    <Text style={styles.amountText}>{item.amount}</Text>
+                  </View>
+                  <View style={styles.memoStyle}>
+                    <Text style={styles.memoText}>{item.memo}</Text>
+                  </View>
+                </View>
+              );
+            })}
           </>
         )}
       </ScrollView>
@@ -176,10 +238,11 @@ const styles = StyleSheet.create({
     color: '#1c482d',
   },
   squareBox: {
+    position: 'relative',
     width: screenWidth * 0.8,
     height: screenHeight * 0.4,
     backgroundColor: '#ffffff',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginRight: screenWidth * 0.05,
     borderRadius: (screenWidth * 0.3) / 4,
@@ -190,5 +253,92 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     // shadow at Android
     elevation: 5,
+  },
+  image: {
+    width: screenWidth * 0.76,
+    height: screenHeight * 0.28,
+    borderRadius: (screenWidth * 0.3) / 6,
+    marginTop: screenWidth * 0.02,
+    backgroundColor: 'gray',
+  },
+  categoryNameStyle: {
+    position: 'absolute',
+    top: screenHeight * 0.19,
+    left: screenWidth * 0.04,
+    width: screenWidth * 0.2,
+    height: screenHeight * 0.04,
+    borderRadius: screenWidth * 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F8FBC0',
+    zIndex: 1,
+  },
+  categoryNameText: {
+    fontSize: 12,
+    fontWeight: 600,
+    color: '#329257',
+  },
+  amountStyle: {
+    position: 'absolute',
+    top: screenHeight * 0.24,
+    left: screenWidth * 0.04,
+    width: screenWidth * 0.2,
+    height: screenHeight * 0.04,
+    borderRadius: screenWidth * 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FF8DC4',
+    zIndex: 1,
+  },
+  amountText: {
+    fontSize: 12,
+    fontWeight: 600,
+    color: '#FFFFFF',
+  },
+  memoStyle: {
+    width: screenWidth * 0.76,
+    height: screenHeight * 0.09,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingLeft: screenWidth * 0.03,
+    marginTop: screenWidth * 0.02,
+    borderBottomLeftRadius: (screenWidth * 0.3) / 6,
+    borderBottomRightRadius: (screenWidth * 0.3) / 6,
+  },
+  memoText: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: '#75BD91',
+  },
+  on: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: screenWidth * 0.18,
+    height: screenHeight * 0.036,
+    borderRadius: screenHeight * 0.018,
+    backgroundColor: '#6AD780',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84, // ios 그림자 효과
+    elevation: 6, // 안드로이드 그림자 효과
+  },
+  off: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: screenWidth * 0.18,
+    height: screenHeight * 0.036,
+    borderRadius: screenHeight * 0.018,
+    backgroundColor: '#FCFFF6',
+  },
+  onText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#FFFFFF',
+  },
+  offText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#329257',
   },
 });
