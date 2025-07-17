@@ -10,11 +10,13 @@ type CharacterState = {
 type ContextType = {
   character: CharacterState;
   setCharacter: (state: CharacterState) => void;
+  resetCharacter: () => void;
 };
 
 const CharacterContext = createContext<ContextType>({
   character: { skin: null, cloth: null, accessory: null },
   setCharacter: () => {},
+  resetCharacter: () => {},
 });
 
 export const CharacterProvider = ({ children }: { children: React.ReactNode }) => {
@@ -23,6 +25,12 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
     cloth: null,
     accessory: null,
   });
+
+  const resetCharacter = async () => {
+    const empty: CharacterState = { skin: null, cloth: null, accessory: null };
+    setCharacterState(empty);
+    await AsyncStorage.removeItem("character");
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,7 +48,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
   };
 
   return (
-    <CharacterContext.Provider value={{ character, setCharacter }}>
+    <CharacterContext.Provider value={{ character, setCharacter, resetCharacter }}>
       {children}
     </CharacterContext.Provider>
   );

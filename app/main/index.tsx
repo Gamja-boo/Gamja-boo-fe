@@ -108,10 +108,6 @@ export default function MainScreen() {
     <View style={styles.container}>
       {/* 고정 뷰 */}
       <View style={styles.fixedContainer}>
-        {/* 임시 로그인 화면 돌아가기 버튼 */}
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.push('/login_setting')}>
-          <BackBtn width={screenWidth * 0.14} height={screenHeight * 0.14} />
-        </TouchableOpacity>
 
         {/* 마이페이지 버튼 */}
         <TouchableOpacity style={styles.mypageBtn} onPress={() => router.push('/main/my_page')}>

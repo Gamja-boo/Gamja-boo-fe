@@ -42,14 +42,14 @@ export const accessoryItems = [
   {
     id: 'accessory5',
     Component: Accessory5,
-    position: { bottom: -screenHeight * 0.03, left: screenWidth * 0.05 },
-    size: { width: screenWidth * 0.3, height: screenHeight * 0.3 },
+    position: { bottom: screenHeight * 0.007, left: screenWidth * 0.073 },
+    size: { width: screenWidth * 0.25, height: screenHeight * 0.25 },
   },
   {
     id: 'accessory6',
     Component: Accessory6,
-    position: { bottom: screenHeight * 0.045, left: screenWidth * 0.055 },
-    size: { width: screenWidth * 0.3, height: screenHeight * 0.3 },
+    position: { bottom: screenHeight * 0.007, left: screenWidth * 0.073 },
+    size: { width: screenWidth * 0.25, height: screenHeight * 0.25 },
   },
   {
     id: 'accessory7',

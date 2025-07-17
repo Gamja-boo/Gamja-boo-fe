@@ -73,12 +73,12 @@ export function PurchaseItems({
             position: 'absolute',
             bottom:
               skinItem.position?.bottom !== undefined
-                ? skinItem.position.bottom + yOffset + 17
+                ? skinItem.position.bottom + yOffset + 21
                 : undefined,
             zIndex: 1,
 
             borderRadius: screenWidth * 0.5,
-            width: (skinItem.size?.width ?? screenWidth * 0.2) * 1.7,
+            width: (skinItem.size?.width ?? screenWidth * 0.2) * 1.5,
             height: (skinItem.size?.height ?? screenHeight * 0.2) / 2,
             backgroundColor: '#FFE9B8',
             justifyContent: 'center',
