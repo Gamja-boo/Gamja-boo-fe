@@ -29,7 +29,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
   const resetCharacter = async () => {
     const empty: CharacterState = { skin: null, cloth: null, accessory: null };
     setCharacterState(empty);
-    await AsyncStorage.removeItem("character");
+    await AsyncStorage.removeItem('character');
   };
 
   useEffect(() => {

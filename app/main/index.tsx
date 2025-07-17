@@ -18,7 +18,6 @@ import { CustomCalendarGrid } from '@/app_components/main_screen/CustomCalendarG
 import { generateCalendarGrid } from '@/app_utils/calendar/generateCalendarGrid';
 import { DailyBudget } from '@/app_components/main_screen/DailyBudget';
 import { ExpenseBar } from '@/app_components/main_screen/ExpenseBar';
-import BackBtn from '@/app_assets/setting_nickname_screen/button.svg';
 import { useTransactionInput } from '@/hooks/useTransactionInput';
 import { useMonthlyTransaction } from '@/hooks/useMonthlyTransaction';
 import apiClient from '@/api/apiClient';
@@ -108,7 +107,6 @@ export default function MainScreen() {
     <View style={styles.container}>
       {/* 고정 뷰 */}
       <View style={styles.fixedContainer}>
-
         {/* 마이페이지 버튼 */}
         <TouchableOpacity style={styles.mypageBtn} onPress={() => router.push('/main/my_page')}>
           <MyPageBtn width={screenWidth * 0.14} height={screenHeight * 0.14} />
