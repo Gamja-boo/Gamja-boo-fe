@@ -10,6 +10,8 @@ import {
   Easing,
   TouchableOpacity,
   Modal,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import Svg, { Path } from 'react-native-svg';
@@ -93,7 +95,7 @@ export default function ChartScreen() {
       };
     }) ?? [];
   const selectedCategryIndex = coloredData?.findIndex((item) => item.categoryName === categoryType);
-  const handleScroll = (event: any) => {
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
 
     if (scrollY >= screenHeight * 0.3 && !hideDoubleArrowDown) {
@@ -102,6 +104,10 @@ export default function ChartScreen() {
       setHideDoubleArrowDown(false);
     }
   };
+
+  useEffect(() => {
+    setYearOfCurrentInfo(year.toString());
+  }, [year]);
 
   useEffect(() => {
     Animated.loop(
@@ -244,10 +250,7 @@ export default function ChartScreen() {
           isExpenditure={isExpenditure}
           graphVisible={graphVisible}
           setgraphVisible={setgraphVisible}
-          monthOfCurrentInfo={monthOfCurrentInfo}
           setMonthOfCurrentInfo={setMonthOfCurrentInfo}
-          yearOfCurrentInfo={yearOfCurrentInfo}
-          setYearOfCurrentInfo={setYearOfCurrentInfo}
         />
 
         <Animated.View style={{ transform: [{ translateY: floatAnim }], opacity: hideAnim }}>
