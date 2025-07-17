@@ -34,7 +34,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 
   useEffect(() => {
     const loadData = async () => {
-      const saved = await AsyncStorage.getItem('character');
+      const saved = await AsyncStorage.getItem("character");
       if (saved) {
         setCharacterState(JSON.parse(saved));
       }
@@ -44,7 +44,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 
   const setCharacter = async (state: CharacterState) => {
     setCharacterState(state);
-    await AsyncStorage.setItem('character', JSON.stringify(state));
+    await AsyncStorage.setItem("character", JSON.stringify(state));
   };
 
   return (

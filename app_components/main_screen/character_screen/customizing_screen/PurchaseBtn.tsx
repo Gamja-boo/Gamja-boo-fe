@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import Cancel from "@/app_assets/expense_report_screen/write_screen/cancelBtn.svg";
 import { useRouter } from "expo-router";
 import { useCharacter } from "@/context/CharacterContext";
+import { useGamdoring } from "@/context/GamdoringContext";
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -24,13 +25,22 @@ export function PurchaseBtn({
   const closeModal = () => setIsModalVisible(false);
 
   const { setCharacter } = useCharacter();
+  const { gamdoring, substractGamdoring } = useGamdoring();
+  
+  const selectedCount =
+      (selectedSkin ? 3 : 0) +
+      (selectedCloth ? 3 : 0) +
+      (selectedAccessory ? 3 : 0);
 
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
+    await substractGamdoring(selectedCount);
+
     setCharacter({
       skin: selectedSkin,
       cloth: selectedCloth,
       accessory: selectedAccessory,
     });
+
     router.replace({
       pathname: "/main/character/customizing/purchase_item",
       params: {
@@ -61,12 +71,12 @@ export function PurchaseBtn({
         <View style={styles.modalContent}>
           <View style={styles.modalOption}>
             <Text style={styles.modalText}>필요 감도링</Text>
-            <Text style={styles.modalText}>03</Text>
+            <Text style={styles.modalText}>{selectedCount}</Text>
           </View>
 
           <View style={styles.modalOption}>
             <Text style={styles.modalText}>보유 감도링</Text>
-            <Text style={styles.modalText}>00</Text>
+            <Text style={styles.modalText}>{gamdoring}</Text>
           </View>
 
           <View style={styles.modalOption}>
@@ -75,7 +85,7 @@ export function PurchaseBtn({
 
           <View style={styles.modalOption}>
             <Text style={styles.modalText}>남는 감도링</Text>
-            <Text style={styles.modalText}>00</Text>
+            <Text style={styles.modalText}>{gamdoring - selectedCount}</Text>
           </View>
 
           <TouchableOpacity
