@@ -15,10 +15,10 @@ export default function Complete() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <PurchaseItems
-      selectedSkin={typeof skin === 'string' ? skin : null}
-      selectedCloth={typeof cloth === 'string' ? cloth : null}
-      selectedAccessory={typeof accessory === 'string' ? accessory : null}
-    />
+        selectedSkin={typeof skin === 'string' ? skin : null}
+        selectedCloth={typeof cloth === 'string' ? cloth : null}
+        selectedAccessory={typeof accessory === 'string' ? accessory : null}
+      />
 
       {/* 뒤로가기 버튼 */}
       <TouchableOpacity

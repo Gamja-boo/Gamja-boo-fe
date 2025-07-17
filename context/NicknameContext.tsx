@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NicknameContext = createContext({
   nickname: '',
@@ -7,11 +7,11 @@ const NicknameContext = createContext({
 });
 
 export function NicknameProvider({ children }: { children: React.ReactNode }) {
-  const [nickname, setNicknameState] = useState("");
+  const [nickname, setNicknameState] = useState('');
 
   useEffect(() => {
     const loadNickname = async () => {
-      const storedName = await AsyncStorage.getItem("nickname");
+      const storedName = await AsyncStorage.getItem('nickname');
       if (storedName) {
         setNicknameState(storedName);
       }
@@ -21,7 +21,7 @@ export function NicknameProvider({ children }: { children: React.ReactNode }) {
 
   const setNickname = async (name: string) => {
     setNicknameState(name);
-    await AsyncStorage.setItem("nickname", name);
+    await AsyncStorage.setItem('nickname', name);
   };
 
   return (

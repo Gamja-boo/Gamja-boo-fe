@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
-
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function WithdrawAgree() {
@@ -12,10 +11,10 @@ export function WithdrawAgree() {
   const { resetGamdoring } = useGamdoring();
   
   const handleWithdraw = async () => {
-    await AsyncStorage.removeItem("nickname");
+    await AsyncStorage.removeItem('nickname');
     resetCharacter();
     resetGamdoring();
-    router.replace("/");
+    router.replace('/');
   };
 
   return (

@@ -1,5 +1,5 @@
 import { View, StatusBar, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter } from 'expo-router';
 import Character from '@/app_assets/character_screen/character.svg';
 import { ShowNickname } from '@/app_components/main_screen/character_screen/ShowNickname';
 import Ground from '@/app_assets/character_screen/ground.svg';
@@ -19,11 +19,13 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 export default function CharacterScreen() {
   const router = useRouter();
 
-    const { character } = useCharacter();
+  const { character } = useCharacter();
 
-    const skinItem = character.skin ? skinItems.find((item) => item.id === character.skin) : null;
-    const clothItem = character.cloth ? clothItems.find((item) => item.id === character.cloth) : null;
-    const accessoryItem = character.accessory ? accessoryItems.find((item) => item.id === character.accessory) : null;
+  const skinItem = character.skin ? skinItems.find((item) => item.id === character.skin) : null;
+  const clothItem = character.cloth ? clothItems.find((item) => item.id === character.cloth) : null;
+  const accessoryItem = character.accessory
+    ? accessoryItems.find((item) => item.id === character.accessory)
+    : null;
   const yOffset = -screenHeight * 0.001;
 
   return (

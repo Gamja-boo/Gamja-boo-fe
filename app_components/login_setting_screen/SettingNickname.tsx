@@ -15,7 +15,6 @@ import { useRouter } from 'expo-router';
 import Button from '@/app_assets/setting_nickname_screen/button.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function SettingNickname() {
@@ -25,7 +24,7 @@ export function SettingNickname() {
 
   const handleSave = async () => {
     if (text.trim()) {
-      await AsyncStorage.setItem("nickname", text);
+      await AsyncStorage.setItem('nickname', text);
       setNickname(text);
       router.push('/main');
     }

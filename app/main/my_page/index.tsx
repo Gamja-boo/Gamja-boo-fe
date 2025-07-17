@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, StyleSheet, StatusBar, Dimensions } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter } from 'expo-router';
 import Character from '@/app_assets/character_screen/character.svg';
 import { skinItems } from '@/app_utils/items/skinItems';
 import { clothItems } from '@/app_utils/items/clothItems';
@@ -19,7 +19,9 @@ export default function MyPageScreen() {
 
   const skinItem = character.skin ? skinItems.find((item) => item.id === character.skin) : null;
   const clothItem = character.cloth ? clothItems.find((item) => item.id === character.cloth) : null;
-  const accessoryItem = character.accessory ? accessoryItems.find((item) => item.id === character.accessory) : null;
+  const accessoryItem = character.accessory
+    ? accessoryItems.find((item) => item.id === character.accessory)
+    : null;
 
   const yOffset = screenHeight * 0.01;
 
@@ -70,7 +72,7 @@ export default function MyPageScreen() {
               position: 'absolute',
               bottom:
                 clothItem.position?.bottom !== undefined
-                  ? clothItem.position.bottom + yOffset 
+                  ? clothItem.position.bottom + yOffset
                   : undefined,
               zIndex: 99,
             }}

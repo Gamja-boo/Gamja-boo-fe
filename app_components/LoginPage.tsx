@@ -15,7 +15,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export function LoginPage() {
   const router = useRouter();
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.nameContainer}>
@@ -30,9 +30,7 @@ export function LoginPage() {
         <Grass />
       </View>
 
-      <TouchableOpacity
-        onPress={() => router.push("/login_setting")}
-        style={styles.kakao}>
+      <TouchableOpacity onPress={() => router.push('/login_setting')} style={styles.kakao}>
         <KakaoTalk />
         <Text style={styles.kakaoText}>카카오 로그인</Text>
       </TouchableOpacity>

@@ -1,4 +1,4 @@
-import { Data } from '@/types/Data';
+import { Data } from '@/types/data';
 import { Transaction } from '@/types/transaction';
 
 type Bundle = {

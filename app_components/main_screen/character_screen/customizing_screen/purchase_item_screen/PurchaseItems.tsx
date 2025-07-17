@@ -30,17 +30,21 @@ export function PurchaseItems({
   const { setCharacter } = useCharacter();
 
   useEffect(() => {
-    console.log("받은 아이템:", selectedSkin, selectedCloth, selectedAccessory);
-    setCharacter({
-      skin: selectedSkin,
-      cloth: selectedCloth,
-      accessory: selectedAccessory,
-    });
-  }, [selectedSkin, selectedCloth, selectedAccessory]);
+    console.log('받은 아이템:', selectedSkin, selectedCloth, selectedAccessory);
+    if (selectedSkin || selectedCloth || selectedAccessory) {
+      setCharacter({
+        skin: selectedSkin,
+        cloth: selectedCloth,
+        accessory: selectedAccessory,
+      });
+    }
+  }, []);
 
   const skinItem = selectedSkin ? skinItems.find((item) => item.id === selectedSkin) : null;
   const clothItem = selectedCloth ? clothItems.find((item) => item.id === selectedCloth) : null;
-  const accessoryItem = selectedAccessory ? accessoryItems.find((item) => item.id === selectedAccessory) : null;
+  const accessoryItem = selectedAccessory
+    ? accessoryItems.find((item) => item.id === selectedAccessory)
+    : null;
 
   const xOffset = screenWidth * 0.3;
   const yOffset = screenHeight * 0.42;
@@ -52,7 +56,7 @@ export function PurchaseItems({
     if (selectedCloth) params.cloth = selectedCloth;
     if (selectedAccessory) params.accessory = selectedAccessory;
 
-    router.replace("/main/character");
+    router.replace('/main/character');
   };
 
   return (

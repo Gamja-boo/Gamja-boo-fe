@@ -27,10 +27,7 @@ interface typeOfProps {
   isExpenditure: boolean;
   graphVisible: boolean;
   setgraphVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  monthOfCurrentInfo: string;
   setMonthOfCurrentInfo: React.Dispatch<React.SetStateAction<string>>;
-  yearOfCurrentInfo: string;
-  setYearOfCurrentInfo: React.Dispatch<React.SetStateAction<string>>;
 }
 
 type dataType = {
@@ -46,10 +43,7 @@ export const BarGraph = ({
   isExpenditure,
   graphVisible,
   setgraphVisible,
-  monthOfCurrentInfo,
   setMonthOfCurrentInfo,
-  yearOfCurrentInfo,
-  setYearOfCurrentInfo,
 }: typeOfProps): JSX.Element => {
   const prevIndexRef = useRef(-1);
   const interval = screenWidth * 0.1325;
@@ -78,7 +72,7 @@ export const BarGraph = ({
       const dataArr: dataType[] = [];
       const dataNumArr: number[] = [0];
       const totalAmountArr: number[] = [];
-      let sum = 0;
+      let count = 0;
       for (const month of queue.slice(0, 6)) {
         const data = splitMonthlyDataByWeek(
           yearlyData[parseInt(month, 10) - 1],
@@ -88,7 +82,6 @@ export const BarGraph = ({
           ? yearlyData[parseInt(month, 10) - 1]?.totalSpent
           : yearlyData[parseInt(month, 10) - 1]?.totalIncome;
         totalAmountArr.push(monthlyTotalAmount!);
-        let count = 0;
         for (let i = 6; i > 0; i--) {
           let weeklySum = 0;
           const weekNum = `week${i}` as keyof Bundle;
@@ -104,19 +97,21 @@ export const BarGraph = ({
             });
           }
         }
-        sum = sum + count;
-        if (dataNumArr.includes(sum - 1)) {
-          dataNumArr.push(0);
-        } else {
-          dataNumArr.unshift(sum - 1);
-        }
+        dataNumArr.push(count);
       }
+      console.log('dataNumArr: ', dataNumArr);
+      const modifiedDataNumArr = dataNumArr.map((item) => count - item);
+      console.log('modifiedDataNumArr: ', modifiedDataNumArr);
       setData(dataArr);
-      setMonthlyDataNum(dataNumArr);
+      setMonthlyDataNum(modifiedDataNumArr);
       setMonthlyTotalAmount(totalAmountArr);
     };
     getInitData();
   }, [queue, isExpenditure, setgraphVisible, yearlyData]);
+
+  console.log('dataArr: ', data);
+  console.log('MonthlyDataNum: ', monthlyDataNum);
+  console.log('totalAmount: ', monthlyTotalAmount);
 
   useEffect(() => {
     if (monthlyTotalAmount.length === 0) return;
@@ -164,17 +159,17 @@ export const BarGraph = ({
             const x = e.nativeEvent.contentOffset.x;
             const index = Math.round(x / interval);
 
-            if (monthlyDataNum[0] >= index && index > monthlyDataNum[1]) {
+            if (monthlyDataNum[0] > index && index >= monthlyDataNum[1]) {
               setMonthOfCurrentInfo(queue[0]);
-            } else if (monthlyDataNum[1] >= index && index > monthlyDataNum[2]) {
+            } else if (monthlyDataNum[1] > index && index >= monthlyDataNum[2]) {
               setMonthOfCurrentInfo(queue[1]);
-            } else if (monthlyDataNum[2] >= index && index > monthlyDataNum[3]) {
+            } else if (monthlyDataNum[2] > index && index >= monthlyDataNum[3]) {
               setMonthOfCurrentInfo(queue[2]);
-            } else if (monthlyDataNum[3] >= index && index > monthlyDataNum[4]) {
+            } else if (monthlyDataNum[3] > index && index >= monthlyDataNum[4]) {
               setMonthOfCurrentInfo(queue[3]);
-            } else if (monthlyDataNum[4] >= index && index > monthlyDataNum[5]) {
+            } else if (monthlyDataNum[4] > index && index >= monthlyDataNum[5]) {
               setMonthOfCurrentInfo(queue[4]);
-            } else if (monthlyDataNum[5] >= index && index > monthlyDataNum[6]) {
+            } else if (monthlyDataNum[5] > index && index >= monthlyDataNum[6]) {
               setMonthOfCurrentInfo(queue[5]);
             }
 
