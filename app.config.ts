@@ -43,6 +43,19 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
         backgroundColor: '#ffffff',
       },
     ],
+    [
+      'expo-build-properties',
+      {
+        android: {
+          compileSdkVersion: 33,
+          targetSdkVersion: 33,
+          kotlinVersion: '1.8.10',
+        },
+        ios: {
+          deploymentTarget: '13.0',
+        },
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,
