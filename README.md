@@ -47,7 +47,7 @@
 
 #### 5. 상점
 
-<img width="320" height="674" alt="상점 메인" src="https://github.com/user-attachments/assets/068f5faa-f9eb-4b37-b014-30633b84fe47" />
+<img width="302" height="674" alt="상점 메인" src="https://github.com/user-attachments/assets/068f5faa-f9eb-4b37-b014-30633b84fe47" />
 <img width="302" height="674" alt="상점(1)" src="https://github.com/user-attachments/assets/fc4f701c-57b3-4988-9eb5-44bd89340167" />
 <img width="302" height="674" alt="상점(2)" src="https://github.com/user-attachments/assets/7ebe91ad-d922-4b29-b601-e8d146fe3e51" />
 
