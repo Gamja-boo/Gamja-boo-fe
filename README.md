@@ -40,6 +40,7 @@
 <img width="302" height="674" alt="통계(1)" src="https://github.com/user-attachments/assets/30381cb1-98d7-4dee-8724-3b6d9c60a875" />
 <img width="302" height="674" alt="통계(2)" src="https://github.com/user-attachments/assets/2c613dd6-9190-4850-b54c-adc7c8144f0e" />
 <img width="302" height="674" alt="통계_상세내역 팝업" src="https://github.com/user-attachments/assets/8790ddf5-59dc-4938-b94a-d6f9d9ed8fe5" />
+<img src="assets/gamjaboo-statistics-page-demonstration.gif" width="302"/>
 
 #### 5. 상점
 
